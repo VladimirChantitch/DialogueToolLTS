@@ -13,12 +13,13 @@ namespace dialogues
         [HideInInspector] public string guid;
         [HideInInspector] public Vector2 position;
 
-        [SerializeField] private List<TreeNode> directChilds = new List<TreeNode> ();
+        [SerializeField] private List<TreeNode> directChildren = new List<TreeNode> ();
+        public List<TreeNode> DirectChildren => directChildren;
         [SerializeField] private List<TreeNode> directParents = new List<TreeNode> ();
+        public List<TreeNode> DirectParents => directParents;   
 
         [SerializeField] List<EventContainer> eventContainers = new List<EventContainer>();
 
-        public event EventHandler<MethodInfo[]> OnEventContainerChanged;
         public event EventHandler OnNodeDelete;
 
         public virtual TreeNode Clone()
@@ -43,15 +44,15 @@ namespace dialogues
 
         public void AddChild(TreeNode newChild)
         {
-            if (!directChilds.Contains(newChild))
+            if (!directChildren.Contains(newChild))
             {
-                directChilds.Add(newChild);
+                directChildren.Add(newChild);
             }
         }
 
         public void RemoveChild(TreeNode removedChild)
         {
-            directChilds.Remove(removedChild);
+            directChildren.Remove(removedChild);
         }
 
         public void AddParent(TreeNode newParent)
@@ -75,7 +76,7 @@ namespace dialogues
         public virtual List<TreeNode> GetNextNode()
         {
             PlayAllEvents();
-            return directChilds;
+            return directChildren;
         }
 
         public virtual void PlayAllEvents()

@@ -71,9 +71,9 @@ namespace dialogues
 
         public List<TreeNode> GetChildren(TreeNode parent)
         {
-            if (parent.directChilds != null)
+            if (parent.DirectChildren != null)
             {
-                return parent.directChilds;
+                return parent.DirectChildren;
             }
             return new List<TreeNode>();
         }
