@@ -4,50 +4,55 @@ using System.Collections.Generic;
 using UnityEngine;
 using Utils;
 
-public class ConditionalNode : TreeNode
+namespace dialogues.node
 {
-    [SerializeField] List<ConditionContainer> conditionContainers = new List<ConditionContainer>();
-
-    public override bool AddChild(TreeNode newChild)
+    [CreateAssetMenu(menuName = "node/condition")]
+    public class ConditionalNode : TreeNode
     {
-        if (directChildren == null) directChildren = new List<TreeNode>();
-        if (DirectChildren.Count >= 2) return false;
+        [SerializeField] List<ConditionContainer> conditionContainers = new List<ConditionContainer>();
 
-        directChildren.Add(newChild);
-        return true;
-    }
+        public override bool AddChild(TreeNode newChild)
+        {
+            if (directChildren == null) directChildren = new List<TreeNode>();
+            if (DirectChildren.Count >= 2) return false;
 
-    public override List<TreeNode> GetNextNode()
-    {
-        List<TreeNode> res = new List<TreeNode>();
-        if (PlayAllConditions())
-        {
-            res.Add(base.GetNextNode()[0]);
-        }
-        else
-        {
-            res.Add(base.GetNextNode()[1]);
-        }
-        return res;
-    }
-
-    public virtual bool PlayAllConditions()
-    {
-        bool isTrue = false;    
-        for (int i = 0; i < conditionContainers.Count; i++)
-        {
-            isTrue = conditionContainers[i].ActivateSelectedMethod();
-            if (isTrue == false)
-            {
-                return false;
-            }
-        }
-
-        if (isTrue == true)
-        {
+            directChildren.Add(newChild);
             return true;
         }
 
-        return false;
+        public override List<TreeNode> GetNextNode()
+        {
+            List<TreeNode> res = new List<TreeNode>();
+            if (PlayAllConditions())
+            {
+                res.Add(base.GetNextNode()[0]);
+            }
+            else
+            {
+                res.Add(base.GetNextNode()[1]);
+            }
+            return res;
+        }
+
+        public virtual bool PlayAllConditions()
+        {
+            bool isTrue = false;
+            for (int i = 0; i < conditionContainers.Count; i++)
+            {
+                isTrue = conditionContainers[i].ActivateSelectedMethod();
+                if (isTrue == false)
+                {
+                    return false;
+                }
+            }
+
+            if (isTrue == true)
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 }
+

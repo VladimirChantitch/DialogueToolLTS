@@ -6,10 +6,18 @@ using System.Reflection;
 using UnityEngine;
 using Utils;
 
-[CreateAssetMenu(menuName = "Dialogue")]
-public class DialogueNode : TreeNode
+namespace dialogues.node
 {
-    [SerializeField] string speakerName;
-    [SerializeField] Sprite speakerIcone;
-    [SerializeField] string Dialogue;
+    [CreateAssetMenu(menuName = "node/dialogue")]
+    public class DialogueNode : TreeNode
+    {
+        [SerializeField] string speakerName;
+        [SerializeField] Sprite speakerIcone;
+        [SerializeField] string Dialogue;
+
+        public void ReadDialogue()
+        {
+
+        }
+    }
 }

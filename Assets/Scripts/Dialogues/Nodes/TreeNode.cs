@@ -5,7 +5,7 @@ using System.Reflection;
 using UnityEngine;
 using Utils;
 
-namespace dialogues
+namespace dialogues.node
 {
     public abstract class TreeNode : ScriptableObject
     {

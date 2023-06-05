@@ -1,9 +1,16 @@
-using dialogues;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EndNode : TreeNode
+namespace dialogues.node
 {
+    [CreateAssetMenu(menuName = "node/end")]
+    public class EndNode : TreeNode
+    {
+        public override bool AddChild(TreeNode newChild)
+        {
+            return false;
+        }
+    }
 
 }

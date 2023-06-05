@@ -3,20 +3,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RootNode : TreeNode
+namespace dialogues.node
 {
-    public override bool AddChild(TreeNode newChild)
+    [CreateAssetMenu(menuName = "node/root")]
+    public class RootNode : TreeNode
     {
-        if (directChildren == null) directChildren = new List<TreeNode>();
-        if (DirectChildren.Count >= 1)
+        public override bool AddChild(TreeNode newChild)
         {
-            directChildren[0] = newChild;
-        }
-        else
-        {
-            directChildren.Add(newChild);
-        }
+            if (directChildren == null) directChildren = new List<TreeNode>();
+            if (DirectChildren.Count >= 1)
+            {
+                directChildren[0] = newChild;
+            }
+            else
+            {
+                directChildren.Add(newChild);
+            }
 
-        return true;
+            return true;
+        }
     }
 }
+
