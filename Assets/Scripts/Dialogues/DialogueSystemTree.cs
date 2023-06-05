@@ -37,21 +37,21 @@ namespace dialogues
 
         public TreeNode CreateNode(System.Type type, NodeData nodeData)
         {
-            //TreeNode node = ScriptableObject.CreateInstance(type) as TreeNode;
-            //node.name = type.Name;
-            //node.guid = GUID.Generate().ToString();
-            //node.SetUpData(nodeData);
+            TreeNode node = ScriptableObject.CreateInstance(type) as TreeNode;
+            node.name = type.Name;
+            node.guid = GUID.Generate().ToString();
+            node.SetUpData(nodeData);
 
-            //Undo.RecordObject(this, "Dialogue Tree (CreateNode)");
-            //nodes.Add(node);
+            Undo.RecordObject(this, "Dialogue Tree (CreateNode)");
+            nodes.Add(node);
 
-            //if (!Application.isPlaying) AssetDatabase.AddObjectToAsset(node, this);
+            if (!Application.isPlaying) AssetDatabase.AddObjectToAsset(node, this);
 
-            //Undo.RegisterCreatedObjectUndo(node, "Behaviour Tree (CreateNode)");
+            Undo.RegisterCreatedObjectUndo(node, "Behaviour Tree (CreateNode)");
 
-            //AssetDatabase.SaveAssets();
+            AssetDatabase.SaveAssets();
 
-            //return node;
+            return node;
         }
 
         public void DeleteNode(TreeNode node)

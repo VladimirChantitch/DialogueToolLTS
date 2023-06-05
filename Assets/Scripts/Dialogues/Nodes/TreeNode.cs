@@ -13,7 +13,7 @@ namespace dialogues
         [HideInInspector] public string guid;
         [HideInInspector] public Vector2 position;
 
-        [SerializeField] private List<TreeNode> directChildren = new List<TreeNode> ();
+        [SerializeField] protected List<TreeNode> directChildren = new List<TreeNode> ();
         public List<TreeNode> DirectChildren => directChildren;
         [SerializeField] private List<TreeNode> directParents = new List<TreeNode> ();
         public List<TreeNode> DirectParents => directParents;   
@@ -42,12 +42,14 @@ namespace dialogues
             position = nodeData.Position;
         }
 
-        public void AddChild(TreeNode newChild)
+        public virtual bool AddChild(TreeNode newChild)
         {
             if (!directChildren.Contains(newChild))
             {
                 directChildren.Add(newChild);
+                return true;
             }
+            return false;
         }
 
         public void RemoveChild(TreeNode removedChild)

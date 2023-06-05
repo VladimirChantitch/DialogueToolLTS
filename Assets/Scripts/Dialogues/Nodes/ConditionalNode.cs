@@ -8,9 +8,27 @@ public class ConditionalNode : TreeNode
 {
     [SerializeField] List<ConditionContainer> conditionContainers = new List<ConditionContainer>();
 
+    public override bool AddChild(TreeNode newChild)
+    {
+        if (directChildren == null) directChildren = new List<TreeNode>();
+        if (DirectChildren.Count >= 2) return false;
+
+        directChildren.Add(newChild);
+        return true;
+    }
+
     public override List<TreeNode> GetNextNode()
     {
-        return base.GetNextNode();
+        List<TreeNode> res = new List<TreeNode>();
+        if (PlayAllConditions())
+        {
+            res.Add(base.GetNextNode()[0]);
+        }
+        else
+        {
+            res.Add(base.GetNextNode()[1]);
+        }
+        return res;
     }
 
     public virtual bool PlayAllConditions()
