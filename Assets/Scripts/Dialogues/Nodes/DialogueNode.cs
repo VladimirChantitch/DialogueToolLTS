@@ -15,9 +15,9 @@ namespace dialogues.node
         [SerializeField] Sprite speakerIcone;
         [SerializeField] string Dialogue;
 
-        public void ReadDialogue()
+        public string GetDialogue()
         {
-
+            return Dialogue;    
         }
     }
 }

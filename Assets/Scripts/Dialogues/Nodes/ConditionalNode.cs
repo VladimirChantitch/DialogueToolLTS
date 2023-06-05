@@ -20,16 +20,16 @@ namespace dialogues.node
             return true;
         }
 
-        public override List<TreeNode> GetNextNode()
+        public override List<TreeNode> GetNextNodes()
         {
             List<TreeNode> res = new List<TreeNode>();
             if (PlayAllConditions())
             {
-                res.Add(base.GetNextNode()[0]);
+                res.Add(base.GetNextNodes()[1]);
             }
             else
             {
-                res.Add(base.GetNextNode()[1]);
+                res.Add(base.GetNextNodes()[0]);
             }
             return res;
         }

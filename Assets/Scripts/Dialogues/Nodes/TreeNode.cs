@@ -75,7 +75,7 @@ namespace dialogues.node
             OnNodeDelete?.Invoke(this, EventArgs.Empty);
         }
 
-        public virtual List<TreeNode> GetNextNode()
+        public virtual List<TreeNode> GetNextNodes()
         {
             PlayAllEvents();
             return directChildren;

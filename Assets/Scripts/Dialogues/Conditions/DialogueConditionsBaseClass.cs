@@ -5,9 +5,9 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Condition/DialogueBaseCondition")]
 public class DialogueConditionsBaseClass : ScriptableObject, IConditionable
 {
+    [SerializeField] bool isIt;
     public virtual bool PlayCondition()
     {
-        Debug.Log("Condition");
-        return true;
+        return isIt;
     }
 }
