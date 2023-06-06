@@ -101,7 +101,7 @@ namespace dialogues.node
     public class NodeData
     {
         public NodeData() { }
-        public NodeData Clone(NodeData nodeData)
+        public virtual NodeData Clone(NodeData nodeData)
         {
             NodeData node = new NodeData();
             node.position = nodeData.Position;
@@ -111,9 +111,9 @@ namespace dialogues.node
             return node;
         }
 
-        [SerializeField] Vector2 position;
-        [SerializeField] string guid;
-        [SerializeField] List<EventContainer> eventContainers = new List<EventContainer>();
+        [SerializeField] protected Vector2 position;
+        [SerializeField] protected string guid;
+        [SerializeField] protected List<EventContainer> eventContainers = new List<EventContainer>();
 
         public Vector2 Position { get => position; set => position = value; }
         public string Guid { get => guid; set => guid = value; }

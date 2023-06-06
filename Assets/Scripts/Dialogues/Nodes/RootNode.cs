@@ -1,4 +1,5 @@
 using dialogues;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,5 +24,8 @@ namespace dialogues.node
             return true;
         }
     }
+
+    [Serializable]
+    public class RootData : NodeData{}
 }
 

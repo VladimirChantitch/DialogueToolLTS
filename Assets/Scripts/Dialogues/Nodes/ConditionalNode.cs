@@ -54,5 +54,24 @@ namespace dialogues.node
             return false;
         }
     }
+
+    public class ConditionalData : NodeData
+    {
+        public override NodeData Clone(NodeData nodeData)
+        {
+            ConditionalData Original = (ConditionalData)nodeData;
+            ConditionalData conditionalData = new ConditionalData();
+
+            conditionalData.position = Original.Position;
+            conditionalData.guid = Original.Guid;
+            conditionalData.eventContainers = Original.EventContainers;
+            conditionalData.conditionContainers = Original.conditionContainers;
+
+            return conditionalData;
+        }
+
+        [SerializeField] protected List<ConditionContainer> conditionContainers = new List<ConditionContainer>();
+        public List<ConditionContainer> ConditionContainers { get => conditionContainers; set => conditionContainers = value; }
+    }
 }
 
