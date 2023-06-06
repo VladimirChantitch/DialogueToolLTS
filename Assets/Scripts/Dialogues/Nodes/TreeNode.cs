@@ -39,7 +39,7 @@ namespace dialogues.node
         {
             position = nodeData.Position;
             guid = nodeData.Guid;
-            eventContainers = nodeData.EventContainers;     
+            eventContainers.AddRange(nodeData.EventContainers);     
         }
 
         public virtual bool AddChild(TreeNode newChild)

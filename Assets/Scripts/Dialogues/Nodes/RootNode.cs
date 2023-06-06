@@ -41,6 +41,11 @@ namespace dialogues.node
 
             return true;
         }
+
+        public override NodeData GetData()
+        {
+            return base.GetData();
+        }
     }
 
     [Serializable]

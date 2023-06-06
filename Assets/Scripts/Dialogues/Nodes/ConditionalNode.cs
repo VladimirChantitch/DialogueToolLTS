@@ -34,6 +34,14 @@ namespace dialogues.node
             return res;
         }
 
+        public override NodeData GetData()
+        {
+            NodeData nodeData = base.GetData();
+            ConditionalData conditionalData = new ConditionalData(nodeData);
+            conditionalData.ConditionContainers.AddRange(conditionContainers);
+            return conditionalData;
+        }
+
         public virtual bool PlayAllConditions()
         {
             bool isTrue = false;
@@ -57,6 +65,15 @@ namespace dialogues.node
 
     public class ConditionalData : NodeData
     {
+        public ConditionalData() { }
+
+        public ConditionalData(NodeData nodeData)
+        {
+            this.position = nodeData.Position;
+            this.guid = nodeData.Guid;
+            this.eventContainers = nodeData.EventContainers;
+        }
+
         public override NodeData Clone(NodeData nodeData)
         {
             ConditionalData Original = (ConditionalData)nodeData;

@@ -12,6 +12,11 @@ namespace dialogues.node
         {
             return false;
         }
+
+        public override NodeData GetData()
+        {
+            return base.GetData();
+        }
     }
 
     [Serializable]

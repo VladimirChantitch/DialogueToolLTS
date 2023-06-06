@@ -15,6 +15,16 @@ namespace dialogues.node
         [SerializeField] Sprite speakerIcone;
         [SerializeField] string dialogue;
 
+        public override NodeData GetData()
+        {
+            NodeData nodeData = base.GetData();
+            DialogueData dialogueData = new DialogueData(nodeData);
+            dialogueData.SpeakerIcone = speakerIcone;
+            dialogueData.Dialogue = dialogue;
+            dialogueData.SpeakerName = speakerName;
+            return nodeData;
+        }
+
         public string GetDialogue()
         {
             return dialogue;    
@@ -23,6 +33,15 @@ namespace dialogues.node
 
     public class DialogueData : NodeData
     {
+        public DialogueData() { }
+
+        public DialogueData(NodeData nodeData)
+        {
+            this.position = nodeData.Position;
+            this.guid = nodeData.Guid;
+            this.eventContainers = nodeData.EventContainers;
+        }
+
         public override NodeData Clone(NodeData nodeData)
         {
             DialogueData Original = (DialogueData)nodeData;
