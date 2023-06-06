@@ -1,30 +1,34 @@
+using System;
 using UnityEditor;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class DialogueSystemEditorWindow : EditorWindow
 {
-    [SerializeField]
-    private VisualTreeAsset m_VisualTreeAsset = default;
+    [SerializeField] private VisualTreeAsset m_VisualTreeAsset = default;
 
-    [MenuItem("Window/UI Toolkit/DialogueSystemEditorWindow")]
-    public static void ShowExample()
+    DialogueSystemEditorGraphView graphView = null;
+
+    [MenuItem("Tool/DialogueTool")]
+    public static void DisplayWindow()
     {
         DialogueSystemEditorWindow wnd = GetWindow<DialogueSystemEditorWindow>();
-        wnd.titleContent = new GUIContent("DialogueSystemEditorWindow");
+        wnd.titleContent = new GUIContent("DialogueSystem");
     }
 
     public void CreateGUI()
     {
-        // Each editor window contains a root VisualElement object
         VisualElement root = rootVisualElement;
+        m_VisualTreeAsset.CloneTree(rootVisualElement);
 
-        // VisualElements objects can contain other VisualElement following a tree hierarchy.
-        VisualElement label = new Label("Hello World! From C#");
-        root.Add(label);
+        GetReferences();
 
-        // Instantiate UXML
-        VisualElement labelFromUXML = m_VisualTreeAsset.Instantiate();
-        root.Add(labelFromUXML);
+    }
+
+    private void GetReferences()
+    {
+        DialogueSystemEditorGraphView graphView = rootVisualElement.Q<DialogueSystemEditorGraphView>();
+        graphView.relatedEditorWin = this;
     }
 }
