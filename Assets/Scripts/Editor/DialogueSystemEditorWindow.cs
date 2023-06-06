@@ -1,3 +1,4 @@
+using dialogues.editor;
 using System;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
@@ -9,6 +10,8 @@ public class DialogueSystemEditorWindow : EditorWindow
     [SerializeField] private VisualTreeAsset m_VisualTreeAsset = default;
 
     DialogueSystemEditorGraphView graphView = null;
+    StyleSheet styleSheet = null;
+    TreeHandler treeHandler = null;
 
     [MenuItem("Tool/DialogueTool")]
     public static void DisplayWindow()
@@ -22,13 +25,19 @@ public class DialogueSystemEditorWindow : EditorWindow
         VisualElement root = rootVisualElement;
         m_VisualTreeAsset.CloneTree(rootVisualElement);
 
+        styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/Templates/DialogueSystemEditorWindow.uss");
+        InstantiateServices();
         GetReferences();
+    }
 
+    private void InstantiateServices()
+    {
+        treeHandler = new TreeHandler();
     }
 
     private void GetReferences()
     {
-        DialogueSystemEditorGraphView graphView = rootVisualElement.Q<DialogueSystemEditorGraphView>();
-        graphView.relatedEditorWin = this;
+        DialogueSystemEditorGraphView graphView = rootVisualElement.Q<DialogueSystemEditorGraphView>("DialogueGraphView");
+        graphView.Init(styleSheet, this);
     }
 }

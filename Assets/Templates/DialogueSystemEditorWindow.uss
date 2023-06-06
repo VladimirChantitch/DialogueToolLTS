@@ -4,9 +4,33 @@
     color: rgb(68, 138, 255);
 }
 
-.GridBackground {
-	--grid-background-color: rgb(40,40,40);
-	--line-color: rgba(193,196,192,0.1);
-	--thick-line-color: rgba(193,196,192,0.1);
-	--spacing: 15;
+GridBackground {
+    --grid-background-color: rgb(40, 40, 40);
+    --line-color: rgba(193, 196, 192, 0.1);
+    --thick-line-color: rgba(193, 196, 192, 0.2);
+    --spacing: 15;
+}
+
+.sectionTitle {
+    background-color: rgb(53, 53, 53);
+    color: rgb(255, 255, 255);
+    -unity-font-style: bold;
+    -unity-background-scale-mode: stretch-to-fill;
+    -unity-slice-scale: 1px;
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    margin-left: 2px;
+    margin-right: 2px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    padding-left: 4px;
+    padding-right: 4px;
+    padding-top: 4px;
+    padding-bottom: 4px;
 }

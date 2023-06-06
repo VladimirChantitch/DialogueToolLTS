@@ -1,7 +1,18 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Templates/DialogueSystemEditorWindow.uss?fileID=7433441132597879392&amp;guid=72f0084c6716df24480ec9131ca7812e&amp;type=3#DialogueSystemEditorWindow" />
-    <SplitView fixed-pane-initial-dimension="1500">
-        <DialogueSystemEditorGraphView focusable="true" class="GridBackground" />
-        <DialogueSystemEditorInspector />
+    <ui:VisualElement name="ToolBar" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
+        <uie:Toolbar>
+            <uie:ToolbarMenu tabindex="-1" display-tooltip-when-elided="true" text="Files" />
+        </uie:Toolbar>
+    </ui:VisualElement>
+    <SplitView fixed-pane-initial-dimension="300" style="height: 95%;">
+        <ui:VisualElement name="GraphView" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
+            <ui:Label tabindex="-1" text="Viewport" display-tooltip-when-elided="true" name="Label" class="sectionTitle" />
+            <DialogueSystemEditorGraphView focusable="true" name="DialogueGraphView" style="flex-grow: 1; height: auto; flex-shrink: 1;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="Inspector" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
+            <ui:Label tabindex="-1" text="Inspector" display-tooltip-when-elided="true" name="Label" class="sectionTitle" />
+            <DialogueSystemEditorInspector style="flex-shrink: 1; flex-grow: 1;" />
+        </ui:VisualElement>
     </SplitView>
 </ui:UXML>

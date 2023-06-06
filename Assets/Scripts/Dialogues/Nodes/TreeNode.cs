@@ -9,7 +9,6 @@ namespace dialogues.node
 {
     public abstract class TreeNode : ScriptableObject
     {
-        [HideInInspector] public bool started = false;
         [HideInInspector] public string guid;
         [HideInInspector] public Vector2 position;
 
@@ -19,8 +18,6 @@ namespace dialogues.node
         public List<TreeNode> DirectParents => directParents;   
 
         [SerializeField] List<EventContainer> eventContainers = new List<EventContainer>();
-
-        public event EventHandler OnNodeDelete;
 
         public virtual TreeNode Clone()
         {
@@ -32,7 +29,8 @@ namespace dialogues.node
             NodeData nodeData = new NodeData()
             {
                 Position = position,
-                OldGuid = guid
+                Guid = guid,
+                EventContainers = eventContainers          
             };
             return nodeData;
         }
@@ -40,6 +38,8 @@ namespace dialogues.node
         public virtual void SetUpData(NodeData nodeData)
         {
             position = nodeData.Position;
+            guid = nodeData.Guid;
+            eventContainers = nodeData.EventContainers;     
         }
 
         public virtual bool AddChild(TreeNode newChild)
@@ -47,6 +47,7 @@ namespace dialogues.node
             if (!directChildren.Contains(newChild))
             {
                 directChildren.Add(newChild);
+                newChild.AddParent(this);
                 return true;
             }
             return false;
@@ -54,25 +55,31 @@ namespace dialogues.node
 
         public void RemoveChild(TreeNode removedChild)
         {
-            directChildren.Remove(removedChild);
+            if (directChildren.Contains(removedChild))
+            {
+                directChildren.Remove(removedChild);
+                removedChild.RemoveParent(this);
+            }
         }
 
-        public void AddParent(TreeNode newParent)
+        public virtual bool AddParent(TreeNode newParent)
         {
             if (!directParents.Contains(newParent))
             {
                 directParents.Add(newParent);
+                newParent.AddChild(this);
+                return true;
             }
+            return false;
         }
 
         public void RemoveParent(TreeNode removedParent)
         {
-            directParents.Remove(removedParent);
-        }
-
-        public void Delete()
-        {
-            OnNodeDelete?.Invoke(this, EventArgs.Empty);
+            if (directParents.Contains(removedParent))
+            {
+                directParents.Remove(removedParent);
+                removedParent.RemoveChild(this);
+            }
         }
 
         public virtual List<TreeNode> GetNextNodes()
@@ -94,17 +101,23 @@ namespace dialogues.node
     public class NodeData
     {
         public NodeData() { }
-        public NodeData(NodeData nodeData)
+        public NodeData Clone(NodeData nodeData)
         {
-            this.position = nodeData.Position;
-            this.oldGuid = nodeData.OldGuid;
+            NodeData node = new NodeData();
+            node.position = nodeData.Position;
+            node.guid = nodeData.Guid;
+            node.eventContainers = nodeData.EventContainers;
+
+            return node;
         }
 
         [SerializeField] Vector2 position;
-        [SerializeField] string oldGuid;
+        [SerializeField] string guid;
+        [SerializeField] List<EventContainer> eventContainers = new List<EventContainer>();
 
         public Vector2 Position { get => position; set => position = value; }
-        public string OldGuid  {get => oldGuid; set => oldGuid = value; }
+        public string Guid { get => guid; set => guid = value; }
+        public List<EventContainer> EventContainers { get => eventContainers; set => eventContainers = value; }
     }
 }
 
