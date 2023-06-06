@@ -9,6 +9,24 @@ namespace dialogues.node
     [CreateAssetMenu(menuName = "node/root")]
     public class RootNode : TreeNode
     {
+        public List<TreeNode> nodesModel = new List<TreeNode>();
+
+        public List<TreeNode> GetNodeModel()
+        {
+            UpdateNodeModel();
+            return nodesModel;
+        }
+
+        public void AddNodeToModel(TreeNode node)
+        {
+            nodesModel.Add(node);
+        }
+
+        private void UpdateNodeModel()
+        {
+            nodesModel = GetChildrenNodeModel();
+        }
+
         public override bool AddChild(TreeNode newChild)
         {
             if (directChildren == null) directChildren = new List<TreeNode>();

@@ -12,7 +12,7 @@ namespace dialogues.editor
     {
         [SerializeField] private string Name;
         TreeNodeGenerator nodeGenerator = null;
-        public TreeNode RootNode;
+        public RootNode RootNode;
         public List<TreeNode> nodes = new List<TreeNode>();
 
         public event EventHandler<TreeNode> OnChildAdded;
@@ -25,41 +25,15 @@ namespace dialogues.editor
 
         public void UseAnotherRoot(RootNode newRoot)
         {
-            SavePreviousTree();
             RootNode = newRoot;
             LoadNewTree();
         }
 
-        private void SavePreviousTree()
-        {
-            if (RootNode != null)
-            {
-                // Save previous tree in its current state
-            }
-        }
-
         private void LoadNewTree()
         {
-            throw new NotImplementedException();
-        }
-
-        public TreeNode CreateNode(System.Type type, NodeData nodeData)
-        {
-            TreeNode node = ScriptableObject.CreateInstance(type) as TreeNode;
-            node.name = type.Name;
-            node.guid = GUID.Generate().ToString();
-            node.SetUpData(nodeData);
-
-            Undo.RecordObject(this, "Dialogue Tree (CreateNode)");
-            nodes.Add(node);
-
-            if (!Application.isPlaying) AssetDatabase.AddObjectToAsset(node, this);
-
-            Undo.RegisterCreatedObjectUndo(node, "Behaviour Tree (CreateNode)");
-
-            AssetDatabase.SaveAssets();
-
-            return node;
+            nodes.Clear();
+            nodes.AddRange(RootNode.GetNodeModel());
+            //Instantiate all nodes ???
         }
 
         public bool DeleteNode(NodeData data)
@@ -121,11 +95,8 @@ namespace dialogues.editor
         public List<NodeData> GetChildren(NodeData parent)
         {
             TreeNode parentNode = LookForNode(parent);
-            List<NodeData> datas = new List<NodeData>();    
-            //if (parent.DirectChildren != null)
-            //{
-            //    return parent.DirectChildren;
-            //}
+            List<NodeData> datas = parentNode.GetChildrenData();   
+            
             return datas;
         }
 
@@ -150,57 +121,33 @@ namespace dialogues.editor
 
         private void UpdateNodeFromData(NodeData data, TreeNode node)
         {
-            switch (node)
-            {
-                case ConditionalNode conditionalNode:
-
-                    break;
-
-                case DialogueNode dialogueNode:
-
-                    break;
-
-                case EndNode endNode:
-
-                    break;
-
-                case RootNode rootNode:
-
-                    break;
-            }
+            node.SetUpData(data);
         }
 
-        private TreeNode CreateNodeFromData(NodeData data)
+        public TreeNode CreateNodeFromData(NodeData data)
         {
-            return nodeGenerator.GenerateNodeFromData(data);
+            TreeNode node = nodeGenerator.GenerateNodeFromData(data);
+            RootNode.AddNodeToModel(node);
+            return node;
         }
 
-        private NodeData CreateNode(Type type)
+        public NodeData CreateNodeCopyFromData(NodeData data)
         {
-            return nodeGenerator.GenerateNode(type);
+            AssetDatabase.SaveAssets();
+            TreeNode node = nodeGenerator.GenerateNodeCopyFromData(data);
+            nodes.Add(node);
+            RootNode.AddNodeToModel(node);
+            return node.GetData();
+        }
+
+        public NodeData CreateNode(Type type)
+        {
+            AssetDatabase.SaveAssets();
+            TreeNode node = nodeGenerator.GenerateNode(type);
+            nodes.Add(node);
+            RootNode.AddNodeToModel(node);
+            return node.GetData();
         }
     }
 }
-
-//public void Traverse(TreeNode node, System.Action<TreeNode> visiter)
-//{
-//    if (node)
-//    {
-//        visiter.Invoke(node);
-//        var children = GetChildren(node);
-//        children.ForEach((n) => Traverse(n, visiter));
-//    }
-//}
-
-//public DialogueSystemTree Clone()
-//{
-//    DialogueSystemTree tree = Instantiate(this);
-//    tree.RootNode = tree.RootNode.Clone();
-//    tree.nodes = new List<TreeNode>();
-//    Traverse(tree.RootNode, (n) =>
-//    {
-//        tree.nodes.Add(n);
-//    });
-//    return tree;
-//}
 

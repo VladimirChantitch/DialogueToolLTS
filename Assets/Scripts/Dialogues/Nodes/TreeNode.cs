@@ -95,6 +95,26 @@ namespace dialogues.node
                 eventContainers[i].ActivateSelectedMethod();
             }
         }
+
+        public virtual List<TreeNode> GetChildrenNodeModel()
+        {
+            List<TreeNode> children = new List<TreeNode>();
+            DirectChildren.ForEach(dc =>
+            {
+                children.AddRange(dc.GetChildrenNodeModel());
+            });
+            return children;
+        }
+
+        public List<NodeData> GetChildrenData()
+        {
+            List<NodeData> datas = new List<NodeData>();
+            DirectChildren.ForEach(dc =>
+            {
+                datas.Add(dc.GetData());
+            });
+            return datas;
+        }
     }
 
     [Serializable]

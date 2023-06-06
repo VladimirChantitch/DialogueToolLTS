@@ -4,33 +4,53 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using static Codice.Client.Common.Connection.AskCredentialsToUser;
 
 public class TreeNodeGenerator
 {
-    public TreeNode GenerateNodeFromData(NodeData data)
-    {
-        switch (data)
-        {
-            default:
-                return null;
-        }
-    }
-
-    internal NodeData GenerateNode(Type type)
+    internal TreeNode GenerateNode(Type type)
     {
         TreeNode node = ScriptableObject.CreateInstance(type) as TreeNode;
         node.name = type.Name;
         node.guid = GUID.Generate().ToString();
+        return node;
+    }
 
-        Undo.RecordObject(this, "Behaviour Tree (CreateNode)");
-        nodes.Add(node);
+    public TreeNode GenerateNodeFromData(NodeData data)
+    {
+        TreeNode node = null;
+        switch (data)
+        {
+            case DialogueData dialogueData:
+                node = ScriptableObject.CreateInstance<DialogueNode>();
+                node.SetUpData(dialogueData);
+                return node;
+            case ConditionalData conditionalData:
+                node = ScriptableObject.CreateInstance<ConditionalNode>();
+                node.SetUpData(conditionalData);
+                return node;
+            case EndData endData:
+                node = ScriptableObject.CreateInstance<EndNode>();
+                node.SetUpData(endData);
+                return node;
+            case RootData rootData:
+                node = ScriptableObject.CreateInstance<RootNode>();
+                node.SetUpData(rootData);
+                return node;
+            default: 
+                return node;
+        }
+    }
 
-        if (!Application.isPlaying) AssetDatabase.AddObjectToAsset(node, this);
+    public TreeNode GenerateNodeCopyFromData(NodeData data)
+    {
+        TreeNode node = GenerateNodeFromData(data);
 
-        Undo.RegisterCreatedObjectUndo(node, "Behaviour Tree (CreateNode)");
-
-        AssetDatabase.SaveAssets();
+        node.name = node.GetType().Name;
+        node.guid = GUID.Generate().ToString();
 
         return node;
     }
+
+
 }
