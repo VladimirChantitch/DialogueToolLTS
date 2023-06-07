@@ -14,6 +14,7 @@ namespace dialogues.node
         [SerializeField] string speakerName;
         [SerializeField] Sprite speakerIcone;
         [SerializeField] string dialogue;
+        [SerializeField] DialogueSpeakerType dialogueSpeakerType;
 
         public override NodeData GetData()
         {
@@ -22,6 +23,7 @@ namespace dialogues.node
             dialogueData.SpeakerIcone = speakerIcone;
             dialogueData.Dialogue = dialogue;
             dialogueData.SpeakerName = speakerName;
+            dialogueData.DialogueSpeakerType = dialogueSpeakerType;
             return nodeData;
         }
 
@@ -60,9 +62,16 @@ namespace dialogues.node
         [SerializeField] string speakerName;
         [SerializeField] Sprite speakerIcone;
         [SerializeField] string dialogue;
+        [SerializeField] DialogueSpeakerType dialogueSpeakerType;
 
         public string SpeakerName { get => speakerName; set => speakerName = value; }
         public Sprite SpeakerIcone { get => speakerIcone; set => speakerIcone = value; }
         public string Dialogue { get => dialogue; set => dialogue = value; }
+        public DialogueSpeakerType DialogueSpeakerType { get => dialogueSpeakerType; set => dialogueSpeakerType = value; }
+    }
+
+    public enum DialogueSpeakerType
+    {
+        NPC, Player
     }
 }

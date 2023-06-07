@@ -4,6 +4,7 @@ using dialogues.node;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Plastic.Antlr3.Runtime.Tree;
 using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
@@ -18,7 +19,7 @@ public class DialogueSystemEditorGraphView : GraphView
 
     }
 
-    public event Action OnNodeSelected;
+    public event EventHandler<NodeData> OnNodeSelected;
     public DialogueSystemEditorWindow relatedEditorWin;
     StyleSheet ss = null;
     TreeNode currentRoot = null;
@@ -117,5 +118,32 @@ public class DialogueSystemEditorGraphView : GraphView
     public override void BuildContextualMenu(ContextualMenuPopulateEvent evt)
     {
         base.BuildContextualMenu(evt);
+
+        var position = viewTransform.matrix.inverse.MultiplyPoint(evt.localMousePosition);
+        Rect mousePose = new Rect { x = position.x, y = position.y };
+        {
+            var types = TypeCache.GetTypesDerivedFrom<TreeNode>();
+            foreach (var type in types)
+            {
+                evt.menu.AppendAction($"[{type.BaseType.Name}]{type.Name}", (a) => CreateNode(type, mousePose));
+            }
+        }
+    }
+
+    void CreateNode(System.Type type, Rect mousePose)
+    {
+        NodeData node = treeHandler.CreateNode(type);
+        CreateNodeView(node, mousePose);
+    }
+
+    void CreateNodeView(NodeData nodeData, Rect mousePose)
+    {
+        DialogueNodeView nodeView = new DialogueNodeView();
+
+        nodeView.OnNodeSelected += OnNodeSelected;
+        nodeView.SetPosition(mousePose);
+        nodeData.SetPosition(mousePose);
+        nodeView.Init(nodeData);
+        AddElement(nodeView);
     }
 }

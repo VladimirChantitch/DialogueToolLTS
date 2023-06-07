@@ -7,7 +7,9 @@ using UnityEngine.UIElements;
 
 public class DialogueSystemEditorWindow : EditorWindow
 {
-    [SerializeField] private VisualTreeAsset m_VisualTreeAsset = default;
+    [SerializeField] private VisualTreeAsset m_editorWindow = default;
+    [SerializeField] private VisualTreeAsset m_nodeView = default;
+    [SerializeField] private StyleSheet ss = default;
 
     DialogueSystemEditorGraphView graphView = null;
     StyleSheet styleSheet = null;
@@ -23,9 +25,9 @@ public class DialogueSystemEditorWindow : EditorWindow
     public void CreateGUI()
     {
         VisualElement root = rootVisualElement;
-        m_VisualTreeAsset.CloneTree(rootVisualElement);
+        m_editorWindow.CloneTree(rootVisualElement);
 
-        styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/Templates/DialogueSystemEditorWindow.uss");
+        styleSheet = ss;
         InstantiateServices();
         GetReferences();
     }

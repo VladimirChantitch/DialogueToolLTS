@@ -1,0 +1,14 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Templates/DialogueSystemEditorWindow.uss?fileID=7433441132597879392&amp;guid=72f0084c6716df24480ec9131ca7812e&amp;type=3#DialogueSystemEditorWindow" />
+    <Style src="project://database/Assets/Templates/nodeviewStyle.uss?fileID=7433441132597879392&amp;guid=682ab7d43902d904489fc3e45cc29605&amp;type=3#nodeviewStyle" />
+    <ui:VisualElement name="Back" class="NodeBack background" style="flex-grow: 1; border-top-left-radius: 8px; border-bottom-left-radius: 8px; border-top-right-radius: 8px; border-bottom-right-radius: 8px; padding-left: 2px; padding-right: 2px;">
+        <ui:VisualElement name="Top" class="Container" style="height: 10%;" />
+        <ui:VisualElement name="middle" class="Container" style="flex-grow: 1;">
+            <ui:VisualElement name="VisualElement" class="subContainer" style="margin-top: 0;">
+                <ui:Label tabindex="-1" text="Node Name" display-tooltip-when-elided="true" name="Name" class="custom-label" />
+            </ui:VisualElement>
+            <ui:VisualElement name="Body" />
+        </ui:VisualElement>
+        <ui:VisualElement name="bottom" class="Container" style="height: 10%;" />
+    </ui:VisualElement>
+</ui:UXML>

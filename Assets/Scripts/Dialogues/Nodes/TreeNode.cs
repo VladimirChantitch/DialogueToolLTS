@@ -138,6 +138,12 @@ namespace dialogues.node
         public Vector2 Position { get => position; set => position = value; }
         public string Guid { get => guid; set => guid = value; }
         public List<EventContainer> EventContainers { get => eventContainers; set => eventContainers = value; }
+
+        public void SetPosition(Rect position)
+        {
+            Vector2 updatedPosition = new Vector2(position.x, position.y);
+            Position = updatedPosition;
+        }
     }
 }
 
