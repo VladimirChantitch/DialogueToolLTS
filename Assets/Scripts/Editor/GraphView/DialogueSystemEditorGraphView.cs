@@ -141,9 +141,9 @@ public class DialogueSystemEditorGraphView : GraphView
         DialogueNodeView nodeView = new DialogueNodeView();
 
         nodeView.OnNodeSelected += OnNodeSelected;
+        nodeView.Init(nodeData);
         nodeView.SetPosition(mousePose);
         nodeData.SetPosition(mousePose);
-        nodeView.Init(nodeData);
         AddElement(nodeView);
     }
 }

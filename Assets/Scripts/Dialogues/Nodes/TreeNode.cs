@@ -121,6 +121,14 @@ namespace dialogues.node
     public class NodeData
     {
         public NodeData() { }
+
+        public NodeData(NodeData nodeData)
+        {
+            this.position = nodeData.Position;
+            this.guid = nodeData.Guid;
+            this.eventContainers = nodeData.EventContainers;
+        }
+
         public virtual NodeData Clone(NodeData nodeData)
         {
             NodeData node = new NodeData();

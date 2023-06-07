@@ -12,7 +12,7 @@ namespace dialogues.editor
     {
         [SerializeField] private string Name;
         TreeNodeGenerator nodeGenerator = null;
-        public RootNode RootNode;
+        public RootNode rootNode;
         public List<TreeNode> nodes = new List<TreeNode>();
 
         public event EventHandler<TreeNode> OnChildAdded;
@@ -21,18 +21,20 @@ namespace dialogues.editor
         public TreeHandler()
         {
             nodeGenerator = new TreeNodeGenerator();
+            rootNode = ScriptableObject.CreateInstance<RootNode>();
+            AssetDatabase.SaveAssets();
         }
 
         public void UseAnotherRoot(RootNode newRoot)
         {
-            RootNode = newRoot;
+            rootNode = newRoot;
             LoadNewTree();
         }
 
         private void LoadNewTree()
         {
             nodes.Clear();
-            nodes.AddRange(RootNode.GetNodeModel());
+            nodes.AddRange(rootNode.GetNodeModel());
             //Instantiate all nodes ???
         }
 
@@ -127,7 +129,7 @@ namespace dialogues.editor
         public TreeNode CreateNodeFromData(NodeData data)
         {
             TreeNode node = nodeGenerator.GenerateNodeFromData(data);
-            RootNode.AddNodeToModel(node);
+            rootNode.AddNodeToModel(node);
             return node;
         }
 
@@ -136,7 +138,7 @@ namespace dialogues.editor
             AssetDatabase.SaveAssets();
             TreeNode node = nodeGenerator.GenerateNodeCopyFromData(data);
             nodes.Add(node);
-            RootNode.AddNodeToModel(node);
+            rootNode.AddNodeToModel(node);
             return node.GetData();
         }
 
@@ -145,7 +147,7 @@ namespace dialogues.editor
             AssetDatabase.SaveAssets();
             TreeNode node = nodeGenerator.GenerateNode(type);
             nodes.Add(node);
-            RootNode.AddNodeToModel(node);
+            rootNode.AddNodeToModel(node);
             return node.GetData();
         }
     }

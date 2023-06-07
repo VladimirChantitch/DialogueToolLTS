@@ -43,6 +43,7 @@ public class DialogueNodeView : Node
 
     public void Init(NodeData nodeData)
     {
+        this.nodeData = nodeData;
         CreateInputPorts();
         CreateOutputPorts();
         SetUI();
@@ -74,20 +75,19 @@ public class DialogueNodeView : Node
         switch (nodeData)
         {
             case ConditionalData conditionalData:
+                nodeType.text = "Condition";
                 portType.PortSecondaryType = PortSecondaryType.Condition;
                 inPort = InstantiatePort(Orientation.Vertical, Direction.Input, Port.Capacity.Multi, typeof(bool), portType);
                 break;
             case DialogueData dialogueData:
+                nodeType.text = "Dialogue";
                 if (dialogueData.DialogueSpeakerType == DialogueSpeakerType.NPC) portType.PortSecondaryType = PortSecondaryType.Npc;
                 if (dialogueData.DialogueSpeakerType == DialogueSpeakerType.Player) portType.PortSecondaryType = PortSecondaryType.Player;
                 inPort = InstantiatePort(Orientation.Vertical, Direction.Input, Port.Capacity.Multi, typeof(bool), portType);
                 break;
             case EndData endData:
+                nodeType.text = "End";
                 portType.PortSecondaryType = PortSecondaryType.End;
-                inPort = InstantiatePort(Orientation.Vertical, Direction.Input, Port.Capacity.Multi, typeof(bool), portType);
-                break;
-            case RootData rootData:
-                portType.PortSecondaryType = PortSecondaryType.Root;
                 inPort = InstantiatePort(Orientation.Vertical, Direction.Input, Port.Capacity.Multi, typeof(bool), portType);
                 break;
             default:
@@ -97,7 +97,7 @@ public class DialogueNodeView : Node
         if (inPort != null)
         {
             inPort.portName = "";
-            inPort.style.flexDirection = FlexDirection.Column;
+            inPort.style.flexDirection = FlexDirection.Row;
             topContainer.Add(inPort);
         }
     }
@@ -107,6 +107,7 @@ public class DialogueNodeView : Node
         PortType portType = new PortType();
         portType.portIndex = 0;
         portType.PortPrimaryType = PortPrimaryType.OutPort;
+
         switch (nodeData)
         {
             case ConditionalData conditionalData:
@@ -130,6 +131,7 @@ public class DialogueNodeView : Node
 
                 break;
             case RootData rootData:
+                nodeType.text = "Root";
                 portType.PortSecondaryType = PortSecondaryType.Root;
                 outPorts.Add(InstantiatePort(Orientation.Vertical, Direction.Input, Port.Capacity.Single, typeof(bool), portType));
                 break;
@@ -142,7 +144,7 @@ public class DialogueNodeView : Node
             outPorts.ForEach(op =>
             {
                 op.portName = "";
-                op.style.flexDirection = FlexDirection.Column;
+                op.style.flexDirection = FlexDirection.Row;
                 bottomContainer.Add(op);
             });
         }

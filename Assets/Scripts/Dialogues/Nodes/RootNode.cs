@@ -44,11 +44,17 @@ namespace dialogues.node
 
         public override NodeData GetData()
         {
-            return base.GetData();
+            return new RootData(base.GetData());
         }
     }
 
     [Serializable]
-    public class RootData : NodeData{}
+    public class RootData : NodeData
+    {
+        public RootData(NodeData nodeData) : base(nodeData)
+        {
+
+        }
+    }
 }
 

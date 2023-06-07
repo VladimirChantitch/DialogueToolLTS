@@ -67,12 +67,7 @@ namespace dialogues.node
     {
         public ConditionalData() { }
 
-        public ConditionalData(NodeData nodeData)
-        {
-            this.position = nodeData.Position;
-            this.guid = nodeData.Guid;
-            this.eventContainers = nodeData.EventContainers;
-        }
+        public ConditionalData(NodeData nodeData) : base(nodeData){}
 
         public override NodeData Clone(NodeData nodeData)
         {

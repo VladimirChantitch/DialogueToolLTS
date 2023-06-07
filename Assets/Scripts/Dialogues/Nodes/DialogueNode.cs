@@ -24,7 +24,7 @@ namespace dialogues.node
             dialogueData.Dialogue = dialogue;
             dialogueData.SpeakerName = speakerName;
             dialogueData.DialogueSpeakerType = dialogueSpeakerType;
-            return nodeData;
+            return dialogueData;
         }
 
         public string GetDialogue()
@@ -37,12 +37,7 @@ namespace dialogues.node
     {
         public DialogueData() { }
 
-        public DialogueData(NodeData nodeData)
-        {
-            this.position = nodeData.Position;
-            this.guid = nodeData.Guid;
-            this.eventContainers = nodeData.EventContainers;
-        }
+        public DialogueData(NodeData nodeData): base(nodeData) { }
 
         public override NodeData Clone(NodeData nodeData)
         {

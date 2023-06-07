@@ -15,10 +15,13 @@ namespace dialogues.node
 
         public override NodeData GetData()
         {
-            return base.GetData();
+            return new EndData(base.GetData());
         }
     }
 
     [Serializable]
-    public class EndData : NodeData { }
+    public class EndData : NodeData 
+    {
+        public EndData(NodeData nodeData) : base(nodeData) { }
+    }
 }
