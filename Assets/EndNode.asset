@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcb9bac03379d774eb84cefdc7d93101, type: 3}
   m_Name: EndNode
   m_EditorClassIdentifier: 
-  guid: 722478ebb7ff3fb4cad74e008e67c60c
+  guid: df48b16c611cb8a4d804bbe5b9bbed1d
   position: {x: 0, y: 0}
   directChildren: []
   directParents: []

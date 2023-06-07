@@ -19,6 +19,8 @@ public class DialogueSystemEditorWindow : EditorWindow
     TreeHandler treeHandler = null;
 
     static RootNode currentRootNode = null;
+    public static string nodeViewStylePath = "Assets/Templates/NodeTemplates/nodeviewStyle.uss";
+    public static string nodeViewTemplate = "Assets/Templates/NodeTemplates/NodeViewTemplate.uxml";
 
     [MenuItem("Tool/DialogueTool")]
     public static void DisplayWindow()

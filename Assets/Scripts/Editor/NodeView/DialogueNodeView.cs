@@ -17,6 +17,7 @@ public class DialogueNodeView : Node
     VisualElement topContainer = null;
     VisualElement bottomContainer = null;
     VisualElement bodyContainer = null;
+    VisualElement back = null;
 
     Label nodeType = null;
 
@@ -26,14 +27,16 @@ public class DialogueNodeView : Node
 
     NodeData nodeData;
 
-    public DialogueNodeView() : base("Assets/Templates/NodeTemplates/NodeViewTemplate.uxml")
+    public DialogueNodeView() : base(DialogueSystemEditorWindow.nodeViewTemplate)
     {
         UseDefaultStyling();
+        styleSheets.Add(AssetDatabase.LoadAssetAtPath<StyleSheet>(DialogueSystemEditorWindow.nodeViewStylePath));
         GetUI();
     }
 
     private void GetUI()
     {
+        back = this.Q<VisualElement>("Back");
         topContainer = this.Q<VisualElement>("Top");
         bottomContainer = this.Q<VisualElement>("bottom");
         bodyContainer = this.Q<VisualElement>("Body");
@@ -65,6 +68,13 @@ public class DialogueNodeView : Node
     {
         base.OnSelected();
         OnNodeSelected?.Invoke(this, nodeData);
+        back.AddToClassList("selected");
+    }
+
+    public override void OnUnselected()
+    {
+        base.OnUnselected();
+        back.RemoveFromClassList("selected");
     }
 
     private void CreateInputPorts()
