@@ -144,6 +144,8 @@ public class DialogueSystemEditorGraphView : GraphView
 
     void CreateNodeView(NodeData nodeData, Rect mousePose)
     {
+        if (nodeData == null) return;
+
         DialogueNodeView nodeView = new DialogueNodeView();
 
         nodeView.OnNodeSelected += OnNodeSelected;

@@ -16,7 +16,6 @@ public class TreeNodeGenerator
         TreeNode node = ScriptableObject.CreateInstance(type) as TreeNode;
         node.name = type.Name;
         node.guid = GUID.Generate().ToString();
-        CreateAssetInDataBase(node);
         return node;
     }
 
@@ -43,7 +42,6 @@ public class TreeNodeGenerator
                 break;
         }
 
-        CreateAssetInDataBase(node);
         return node;
     }
 
@@ -54,15 +52,6 @@ public class TreeNodeGenerator
         node.name = node.GetType().Name;
         node.guid = GUID.Generate().ToString();
 
-        CreateAssetInDataBase(node);
         return node;
-    }
-
-    public void CreateAssetInDataBase(TreeNode node)
-    {
-        string path = "Assets/";
-        path += node.name;
-        path += ".asset";
-        AssetDatabase.CreateAsset(node, path);      
     }
 }

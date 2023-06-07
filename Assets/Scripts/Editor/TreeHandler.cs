@@ -135,6 +135,8 @@ namespace dialogues.editor
         {
             TreeNode node = nodeGenerator.GenerateNodeFromData(data);
             rootNode.AddNodeToModel(node);
+
+            AddAssetToRootNode(node);
             return node;
         }
 
@@ -144,6 +146,8 @@ namespace dialogues.editor
             TreeNode node = nodeGenerator.GenerateNodeCopyFromData(data);
             nodes.Add(node);
             rootNode.AddNodeToModel(node);
+
+            AddAssetToRootNode(node);
             return node.GetData();
         }
 
@@ -151,8 +155,16 @@ namespace dialogues.editor
         {
             AssetDatabase.SaveAssets();
             TreeNode node = nodeGenerator.GenerateNode(type);
+
+            if (node is RootNode)
+            {
+                return null;
+            }
+
             nodes.Add(node);
             rootNode.AddNodeToModel(node);
+
+            AddAssetToRootNode(node);
             return node.GetData();
         }
 
@@ -163,10 +175,26 @@ namespace dialogues.editor
                 rootNode = (RootNode)nodeGenerator.GenerateNode(typeof(RootNode));
                 nodes.Add(rootNode);
                 rootNode.AddNodeToModel(rootNode);
+                CreateAssetInDataBase(rootNode);
                 return (false, rootNode.GetData());
             }
 
             return (true,rootNode.GetData());
+        }
+
+        public void CreateAssetInDataBase(TreeNode node)
+        {
+            string path = "Assets/";
+            path += node.name;
+            path += ".asset";
+            AssetDatabase.CreateAsset(node, path);
+            AssetDatabase.SaveAssets();
+        }
+
+        public void AddAssetToRootNode(TreeNode node)
+        {
+            AssetDatabase.AddObjectToAsset(node, rootNode);
+            AssetDatabase.SaveAssets();
         }
     }
 }
