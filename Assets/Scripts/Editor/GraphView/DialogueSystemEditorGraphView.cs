@@ -132,6 +132,12 @@ public class DialogueSystemEditorGraphView : GraphView
 
     void CreateNode(System.Type type, Rect mousePose)
     {
+        (bool,NodeData) nodeCheck = treeHandler.CheckForRootNode();
+        if (nodeCheck.Item1 == false)
+        {
+            CreateNodeView(nodeCheck.Item2, mousePose);
+        }
+
         NodeData node = treeHandler.CreateNode(type);
         CreateNodeView(node, mousePose);
     }

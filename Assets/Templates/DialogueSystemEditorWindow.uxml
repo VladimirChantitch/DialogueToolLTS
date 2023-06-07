@@ -5,14 +5,14 @@
             <uie:ToolbarMenu tabindex="-1" display-tooltip-when-elided="true" text="Files" />
         </uie:Toolbar>
     </ui:VisualElement>
-    <SplitView fixed-pane-initial-dimension="300" style="height: 95%;">
-        <ui:VisualElement name="GraphView" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
-            <ui:Label tabindex="-1" text="Viewport" display-tooltip-when-elided="true" name="Label" class="sectionTitle" />
-            <DialogueSystemEditorGraphView focusable="true" name="DialogueGraphView" style="flex-grow: 1; height: auto; flex-shrink: 1;" />
-        </ui:VisualElement>
+    <SplitView fixed-pane-initial-dimension="250" style="height: 95%;">
         <ui:VisualElement name="Inspector" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
             <ui:Label tabindex="-1" text="Inspector" display-tooltip-when-elided="true" name="Label" class="sectionTitle" />
             <DialogueSystemEditorInspector style="flex-shrink: 1; flex-grow: 1;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="GraphView" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
+            <ui:Label tabindex="-1" text="Viewport" display-tooltip-when-elided="true" name="Label" class="sectionTitle" />
+            <DialogueSystemEditorGraphView focusable="true" name="DialogueGraphView" style="flex-grow: 1; height: auto; flex-shrink: 1;" />
         </ui:VisualElement>
     </SplitView>
 </ui:UXML>

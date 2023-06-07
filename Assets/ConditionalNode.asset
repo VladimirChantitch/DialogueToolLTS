@@ -9,7 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8eedee7f943b4114cbcfbc51ffe28f14, type: 3}
-  m_Name: std_condition
+  m_Script: {fileID: 11500000, guid: 59fd3209e5210924cbe988db83d45a84, type: 3}
+  m_Name: ConditionalNode
   m_EditorClassIdentifier: 
-  isIt: 1
+  guid: 77d94cb860bfd0749b5762d6acb8df48
+  position: {x: 0, y: 0}
+  directChildren: []
+  directParents: []
+  eventContainers: []
+  conditionContainers: []

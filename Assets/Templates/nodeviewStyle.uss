@@ -50,4 +50,8 @@
     padding-right: 2px;
     padding-top: 2px;
     padding-bottom: 2px;
+    border-left-color: rgba(121, 121, 121, 0);
+    border-right-color: rgba(121, 121, 121, 0);
+    border-top-color: rgba(121, 121, 121, 0);
+    border-bottom-color: rgba(121, 121, 121, 0);
 }

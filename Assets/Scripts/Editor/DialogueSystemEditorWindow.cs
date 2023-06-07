@@ -1,6 +1,9 @@
 using dialogues.editor;
+using dialogues.node;
 using System;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEditor;
+using UnityEditor.Callbacks;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -15,11 +18,25 @@ public class DialogueSystemEditorWindow : EditorWindow
     StyleSheet styleSheet = null;
     TreeHandler treeHandler = null;
 
+    static RootNode currentRootNode = null;
+
     [MenuItem("Tool/DialogueTool")]
     public static void DisplayWindow()
     {
         DialogueSystemEditorWindow wnd = GetWindow<DialogueSystemEditorWindow>();
         wnd.titleContent = new GUIContent("DialogueSystem");
+    }
+
+    [OnOpenAsset]
+    public static bool OnOpenAsset(int instanceID, int lineNumber)
+    {
+        if (Selection.activeObject is RootNode rootNode)
+        {
+            currentRootNode = rootNode;
+            DisplayWindow();
+            return true;
+        }
+        return false;
     }
 
     public void CreateGUI()
@@ -30,16 +47,51 @@ public class DialogueSystemEditorWindow : EditorWindow
         styleSheet = ss;
         InstantiateServices();
         GetReferences();
+        SetReferences();
     }
 
     private void InstantiateServices()
     {
-        treeHandler = new TreeHandler();
+        if (currentRootNode != null)
+        {
+            treeHandler = new TreeHandler(currentRootNode);
+        }
+        else
+        {
+            treeHandler = new TreeHandler();
+        }
+
     }
 
     private void GetReferences()
     {
         DialogueSystemEditorGraphView graphView = rootVisualElement.Q<DialogueSystemEditorGraphView>("DialogueGraphView");
         graphView.Init(styleSheet, this, treeHandler);
+    }
+
+    private void SetReferences()
+    {
+        graphView.OnNodeSelected += (sender, data) => OnNodeSelectionChanged(data);
+    }
+
+    private void OnSelectionChange()
+    {
+        if (Selection.activeContext is RootNode rootNode)
+        {
+            ReadAsset(rootNode);
+        }
+    }
+
+    private void ReadAsset(RootNode rootNode)
+    {
+        if (AssetDatabase.CanOpenAssetInEditor(rootNode.GetInstanceID()))
+        {
+            treeHandler?.UseAnotherRoot(rootNode);
+        }
+    }
+
+    void OnNodeSelectionChanged(NodeData nodeData)
+    {
+
     }
 }

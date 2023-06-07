@@ -1,10 +1,13 @@
 using dialogues.node;
+using log4net;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.AccessControl;
 using UnityEditor;
 using UnityEngine;
 using static Codice.Client.Common.Connection.AskCredentialsToUser;
+using static UnityEditor.Progress;
 
 public class TreeNodeGenerator
 {
@@ -13,6 +16,7 @@ public class TreeNodeGenerator
         TreeNode node = ScriptableObject.CreateInstance(type) as TreeNode;
         node.name = type.Name;
         node.guid = GUID.Generate().ToString();
+        CreateAssetInDataBase(node);
         return node;
     }
 
@@ -24,22 +28,23 @@ public class TreeNodeGenerator
             case DialogueData dialogueData:
                 node = ScriptableObject.CreateInstance<DialogueNode>();
                 node.SetUpData(dialogueData);
-                return node;
+                break;
             case ConditionalData conditionalData:
                 node = ScriptableObject.CreateInstance<ConditionalNode>();
                 node.SetUpData(conditionalData);
-                return node;
+                break;
             case EndData endData:
                 node = ScriptableObject.CreateInstance<EndNode>();
                 node.SetUpData(endData);
-                return node;
+                break;
             case RootData rootData:
                 node = ScriptableObject.CreateInstance<RootNode>();
                 node.SetUpData(rootData);
-                return node;
-            default: 
-                return node;
+                break;
         }
+
+        CreateAssetInDataBase(node);
+        return node;
     }
 
     public TreeNode GenerateNodeCopyFromData(NodeData data)
@@ -49,8 +54,15 @@ public class TreeNodeGenerator
         node.name = node.GetType().Name;
         node.guid = GUID.Generate().ToString();
 
+        CreateAssetInDataBase(node);
         return node;
     }
 
-
+    public void CreateAssetInDataBase(TreeNode node)
+    {
+        string path = "Assets/";
+        path += node.name;
+        path += ".asset";
+        AssetDatabase.CreateAsset(node, path);      
+    }
 }

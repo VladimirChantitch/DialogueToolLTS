@@ -21,9 +21,14 @@ namespace dialogues.editor
         public TreeHandler()
         {
             nodeGenerator = new TreeNodeGenerator();
-            rootNode = ScriptableObject.CreateInstance<RootNode>();
-            AssetDatabase.SaveAssets();
         }
+
+        public TreeHandler(RootNode currentRootNode)
+        {
+            rootNode = currentRootNode;
+            nodeGenerator = new TreeNodeGenerator();
+        }
+
 
         public void UseAnotherRoot(RootNode newRoot)
         {
@@ -35,7 +40,7 @@ namespace dialogues.editor
         {
             nodes.Clear();
             nodes.AddRange(rootNode.GetNodeModel());
-            //Instantiate all nodes ???
+            Debug.Log("TO DO :: Instantiate all nodes");
         }
 
         public bool DeleteNode(NodeData data)
@@ -149,6 +154,19 @@ namespace dialogues.editor
             nodes.Add(node);
             rootNode.AddNodeToModel(node);
             return node.GetData();
+        }
+
+        public (bool,NodeData) CheckForRootNode()
+        {
+            if (rootNode == null)
+            {
+                rootNode = (RootNode)nodeGenerator.GenerateNode(typeof(RootNode));
+                nodes.Add(rootNode);
+                rootNode.AddNodeToModel(rootNode);
+                return (false, rootNode.GetData());
+            }
+
+            return (true,rootNode.GetData());
         }
     }
 }
