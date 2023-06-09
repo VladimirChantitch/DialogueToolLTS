@@ -25,6 +25,10 @@ public class EdgeConnectorListener : IEdgeConnectorListener
 
     public void OnDrop(GraphView graphView, Edge edge)
     {
+        Debug.Log("Ondrop");
+        Debug.Log(edge);
+        Debug.Log("input :: " + edge.input);
+        Debug.Log("output :: " + edge.output);
         m_EdgesToCreate.Clear();
         m_EdgesToCreate.Add(edge);
         m_EdgesToDelete.Clear();

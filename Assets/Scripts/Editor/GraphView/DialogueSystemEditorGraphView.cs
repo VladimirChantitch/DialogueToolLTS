@@ -81,11 +81,14 @@ public class DialogueSystemEditorGraphView : GraphView
 
     private GraphViewChange OnGraphViewChanged(GraphViewChange graphViewChange)
     {
+        Debug.Log("OnGraphViewChanged");
         return graphViewChangedHandler.HandleGraphViewChanged(graphViewChange);
     }
 
     public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter adapter)
     {
+        Debug.Log("GetCompatiblePorts");
+        Debug.Log(ports.Count());
         return ports.ToList();
     }
 
