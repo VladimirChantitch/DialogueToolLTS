@@ -52,6 +52,7 @@ public class DialogueSystemEditorGraphView : GraphView
 
     public void Init(StyleSheet styleSheet, DialogueSystemEditorWindow relatedEditorWin, TreeHandler treeHandler)
     {
+        Debug.Log("gazegzraeg");
         this.ss = styleSheet;
         styleSheets.Add(ss);
         this.relatedEditorWin = relatedEditorWin;

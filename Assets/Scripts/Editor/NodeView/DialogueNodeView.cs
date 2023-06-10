@@ -108,7 +108,7 @@ public class DialogueNodeView : Node
         {
             inPort.portName = "";
             inPort.style.flexDirection = FlexDirection.Row;
-            topContainer.Add(inPort);
+            inputContainer.Add(inPort);
         }
     }
 
@@ -122,28 +122,28 @@ public class DialogueNodeView : Node
         {
             case ConditionalData conditionalData:
                 portType.PortSecondaryType = PortSecondaryType.Condition;
-                outPorts.Add(InstantiatePort(Orientation.Vertical, Direction.Input, Port.Capacity.Multi, typeof(bool), portType));
+                outPorts.Add(InstantiatePort(Orientation.Vertical, Direction.Output, Port.Capacity.Multi, typeof(bool), portType));
                 portType.portIndex = 1;
                 portType.PortSecondaryType = PortSecondaryType.Condition;
-                outPorts.Add(InstantiatePort(Orientation.Vertical, Direction.Input, Port.Capacity.Multi, typeof(bool), portType));
+                outPorts.Add(InstantiatePort(Orientation.Vertical, Direction.Output, Port.Capacity.Multi, typeof(bool), portType));
                 break;
             case DialogueData dialogueData:
                 if (dialogueData.DialogueSpeakerType == DialogueSpeakerType.NPC)
                 {
                     portType.PortSecondaryType = PortSecondaryType.Npc;
-                    outPorts.Add(InstantiatePort(Orientation.Vertical, Direction.Input, Port.Capacity.Multi, typeof(bool), portType));
+                    outPorts.Add(InstantiatePort(Orientation.Vertical, Direction.Output, Port.Capacity.Multi, typeof(bool), portType));
                 }
                 else if (dialogueData.DialogueSpeakerType == DialogueSpeakerType.Player)
                 {
                     portType.PortSecondaryType = PortSecondaryType.Player;
-                    outPorts.Add(InstantiatePort(Orientation.Vertical, Direction.Input, Port.Capacity.Single, typeof(bool), portType));
+                    outPorts.Add(InstantiatePort(Orientation.Vertical, Direction.Output, Port.Capacity.Single, typeof(bool), portType));
                 }
 
                 break;
             case RootData rootData:
                 nodeType.text = "Root";
                 portType.PortSecondaryType = PortSecondaryType.Root;
-                outPorts.Add(InstantiatePort(Orientation.Vertical, Direction.Input, Port.Capacity.Single, typeof(bool), portType));
+                outPorts.Add(InstantiatePort(Orientation.Vertical, Direction.Output, Port.Capacity.Single, typeof(bool), portType));
                 break;
             default:
                 break;
@@ -152,10 +152,10 @@ public class DialogueNodeView : Node
         if (outPorts != null)
         {
             outPorts.ForEach(op =>
-            {
+            { 
                 op.portName = "";
                 op.style.flexDirection = FlexDirection.Row;
-                bottomContainer.Add(op);
+                outputContainer.Add(op);
             });
         }
     }

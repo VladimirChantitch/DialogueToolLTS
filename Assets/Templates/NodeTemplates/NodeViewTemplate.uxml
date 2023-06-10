@@ -2,13 +2,13 @@
     <Style src="project://database/Assets/Templates/NodeTemplates/nodeviewStyle.uss?fileID=7433441132597879392&amp;guid=682ab7d43902d904489fc3e45cc29605&amp;type=3#nodeviewStyle" />
     <Style src="project://database/Assets/Templates/DialogueSystemEditorWindow.uss?fileID=7433441132597879392&amp;guid=72f0084c6716df24480ec9131ca7812e&amp;type=3#DialogueSystemEditorWindow" />
     <ui:VisualElement name="Back" class="background NodeBack" style="flex-grow: 1; padding-left: 2px; padding-right: 2px;">
-        <ui:VisualElement name="Top" class="Container" style="height: 20%; flex-direction: row; justify-content: center;" />
+        <ui:VisualElement name="input" class="Container" style="height: 20%; flex-direction: row; justify-content: center;" />
         <ui:VisualElement name="middle" class="Container" style="flex-grow: 1;">
             <ui:VisualElement name="VisualElement" class="subContainer" style="margin-top: 0;">
                 <ui:Label tabindex="-1" text="Node Name" display-tooltip-when-elided="true" name="Name" class="custom-label" />
             </ui:VisualElement>
             <ui:VisualElement name="Body" />
         </ui:VisualElement>
-        <ui:VisualElement name="bottom" class="Container" style="height: 20%; flex-direction: row; justify-content: center;" />
+        <ui:VisualElement name="output" class="Container" style="height: 20%; flex-direction: row; justify-content: center;" />
     </ui:VisualElement>
 </ui:UXML>

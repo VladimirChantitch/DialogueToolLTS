@@ -67,7 +67,7 @@ public class DialogueSystemEditorWindow : EditorWindow
 
     private void GetReferences()
     {
-        DialogueSystemEditorGraphView graphView = rootVisualElement.Q<DialogueSystemEditorGraphView>("DialogueGraphView");
+        graphView = rootVisualElement.Q<DialogueSystemEditorGraphView>();
         graphView.Init(styleSheet, this, treeHandler);
     }
 

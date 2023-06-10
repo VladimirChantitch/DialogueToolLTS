@@ -1,5 +1,23 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8475735048817709314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59fd3209e5210924cbe988db83d45a84, type: 3}
+  m_Name: ConditionalNode
+  m_EditorClassIdentifier: 
+  guid: 50b6d8d1f8dd7c7418215c2aec71e8cb
+  position: {x: 0, y: 0}
+  directChildren: []
+  directParents: []
+  eventContainers: []
+  conditionContainers: []
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12,28 +30,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d8a43ba0861a394e980dde613549137, type: 3}
   m_Name: RootNode
   m_EditorClassIdentifier: 
-  guid: e69324a8e4def574481ce2ee77c22a18
+  guid: 1c46daabc049f034b871b4d1bef3b819
   position: {x: 0, y: 0}
   directChildren: []
   directParents: []
   eventContainers: []
   nodesModel:
   - {fileID: 11400000}
-  - {fileID: 4327759110367203723}
---- !u!114 &4327759110367203723
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dcb9bac03379d774eb84cefdc7d93101, type: 3}
-  m_Name: EndNode
-  m_EditorClassIdentifier: 
-  guid: c8c5db3bc27644c47bedf7ff6fda34a6
-  position: {x: 0, y: 0}
-  directChildren: []
-  directParents: []
-  eventContainers: []
+  - {fileID: -8475735048817709314}
