@@ -11,10 +11,10 @@ public class PortView : Port
 {
     protected PortView(Orientation portOrientation, Direction portDirection, Capacity portCapacity, Type type, PortType portType) : base(portOrientation, portDirection, portCapacity, type)
     {
-        this.portType = portType;
+        this.portTypeInnerClass = portType;
     }
 
-    public PortType portType;
+    public PortType portTypeInnerClass;
     public event EventHandler OnConnect;
     public event EventHandler OnDisconnect;
 

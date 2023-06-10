@@ -89,7 +89,14 @@ public class DialogueSystemEditorGraphView : GraphView
     public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter adapter)
     {
         Debug.Log("GetCompatiblePorts");
-        Debug.Log(ports.Count());
+        if ((startPort as PortView).portTypeInnerClass.PortSecondaryType == PortSecondaryType.Player)
+        {
+
+        }
+        else if ((startPort as PortView).portTypeInnerClass.PortSecondaryType == PortSecondaryType.Npc)
+        {
+
+        }
         return ports.ToList();
     }
 
