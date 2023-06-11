@@ -101,6 +101,7 @@ public class PortType
     public PortPrimaryType PortPrimaryType { get; set; }
     public PortSecondaryType PortSecondaryType { get; set; }
     public int portIndex;
+    public int portParentIndex;
 }
 
 public enum PortPrimaryType

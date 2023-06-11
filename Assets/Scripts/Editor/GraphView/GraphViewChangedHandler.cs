@@ -1,11 +1,19 @@
+using dialogues.node;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.Plastic.Antlr3.Runtime.Tree;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class GraphViewChangedHandler
 {
+    public event EventHandler<NodeParentingArgs> OnNodeParented;
+    public event EventHandler<NodeParentingArgs> OnNodeUnParented;
+    public event EventHandler<NodeData> OnNodeDeleted;
+
     internal GraphViewChange HandleGraphViewChanged(GraphViewChange graphViewChange)
     {
         if (graphViewChange.elementsToRemove != null)
@@ -47,50 +55,57 @@ public class GraphViewChangedHandler
     private List<Edge> HandleRemoveElement(GraphElement elem)
     {
         List<Edge> edge_remove = new List<Edge>();
-        //if (elem is NodeView nodeView)
-        //{
-        //    if (!(nodeView.node is RootNode))
-        //    {
-        //        nodeView.output.ForEach(op =>
-        //        {
-        //            edge_remove = op.connections.ToList();
-        //        });
+        if (elem is DialogueNodeView dialogueNodeView)
+        {
+            DialogueNodeView parentView = dialogueNodeView.inPort.node as DialogueNodeView;
+            OnNodeUnParented?.Invoke(this, new NodeParentingArgs() { parentNode = parentView.nodeData, childNode = dialogueNodeView.nodeData, outPortIndex = dialogueNodeView.inPort.portTypeInnerClass.portParentIndex });
+            edge_remove.AddRange(dialogueNodeView.inPort.connections.ToList());
 
-        //        tree.DeleteNode(nodeView.node);
-        //    }
-        //}
+            dialogueNodeView.outPorts.ForEach(op =>
+            {
+                DialogueNodeView childView = op.node as DialogueNodeView;
+                OnNodeUnParented?.Invoke(this, new NodeParentingArgs() { parentNode = dialogueNodeView.nodeData, childNode = childView.nodeData, outPortIndex = op.portTypeInnerClass.portIndex });
+                edge_remove.AddRange(op.connections.ToList());
+            });
 
-        //if (elem is Edge edge)
-        //{
-        //    edge.layer = 10;
-        //    NodeView parentView = edge.output.node as NodeView;
-        //    NodeView childView = edge.input.node as NodeView;
-        //    if (parentView.node is ConditionalNode)
-        //    {
-        //        if (edge.output.name == "outTrue")
-        //        {
-        //            tree.RemoveChild(parentView.node, childView.node, true);
-        //        }
-        //        else
-        //        {
-        //            tree.RemoveChild(parentView.node, childView.node, false);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        tree.RemoveChild(parentView.node, childView.node);
-        //    }
-        //}
+            OnNodeDeleted?.Invoke(this, dialogueNodeView.nodeData);
+        }
+        else if (elem is Edge e)
+        {
+            DialogueNodeView parentView = e.output.node as DialogueNodeView;
+            DialogueNodeView childView = e.input.node as DialogueNodeView;
+
+            OnNodeUnParented?.Invoke(this, new NodeParentingArgs() { parentNode = parentView.nodeData, childNode = childView.nodeData, outPortIndex = (e.output as PortView).portTypeInnerClass.portIndex });
+        }
+
         return edge_remove;
     }
 
     private void HandleCreateEdge(List<Edge> edgesToCreate)
     {
-        throw new NotImplementedException();
+        edgesToCreate.ForEach(e =>
+        {
+            PortView parentPort = e.output as PortView;
+            PortView childPort = e.input as PortView;
+
+            childPort.portTypeInnerClass.portParentIndex = parentPort.portTypeInnerClass.portIndex;
+
+            DialogueNodeView parentView = parentPort.node as DialogueNodeView;
+            DialogueNodeView childView = childPort.node as DialogueNodeView;
+
+            OnNodeParented?.Invoke(this, new NodeParentingArgs() { parentNode = parentView.nodeData, childNode = childView.nodeData, outPortIndex = (e.output as PortView).portTypeInnerClass.portIndex});
+        });
     }
 
     private void HandleMovedElements(List<GraphElement> movedElements)
     {
 
     }
+}
+
+public class NodeParentingArgs
+{
+    public NodeData parentNode;
+    public NodeData childNode;
+    public int outPortIndex = 0;
 }

@@ -25,7 +25,7 @@ public class DialogueNodeView : Node
     public PortView inPort = null;
     public List<PortView> outPorts = new List<PortView>();
 
-    NodeData nodeData;
+    public NodeData nodeData;
 
     public DialogueNodeView() : base(DialogueSystemEditorWindow.nodeViewTemplate)
     {

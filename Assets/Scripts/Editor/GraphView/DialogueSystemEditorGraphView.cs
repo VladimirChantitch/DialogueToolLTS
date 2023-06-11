@@ -89,13 +89,16 @@ public class DialogueSystemEditorGraphView : GraphView
     public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter adapter)
     {
         Debug.Log("GetCompatiblePorts");
+        List<Port> selectedPorts = new List<Port>();
         if ((startPort as PortView).portTypeInnerClass.PortSecondaryType == PortSecondaryType.Player)
         {
-
+            selectedPorts.AddRange(ports.Where(p => (p as PortView).portTypeInnerClass.PortSecondaryType != PortSecondaryType.Player));
+            return selectedPorts;
         }
         else if ((startPort as PortView).portTypeInnerClass.PortSecondaryType == PortSecondaryType.Npc)
         {
-
+            selectedPorts.AddRange(ports.Where(p => (p as PortView).portTypeInnerClass.PortSecondaryType != PortSecondaryType.Npc));
+            return selectedPorts; ;
         }
         return ports.ToList();
     }
@@ -128,7 +131,7 @@ public class DialogueSystemEditorGraphView : GraphView
 
     public override void BuildContextualMenu(ContextualMenuPopulateEvent evt)
     {
-        base.BuildContextualMenu(evt);
+        //base.BuildContextualMenu(evt);
 
         var position = viewTransform.matrix.inverse.MultiplyPoint(evt.localMousePosition);
         Rect mousePose = new Rect { x = position.x, y = position.y };
