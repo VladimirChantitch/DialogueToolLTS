@@ -49,7 +49,18 @@ namespace dialogues.editor
             {
                 TreeNode node = LookForNode(data);
                 string path = AssetDatabase.GetAssetPath(node.GetInstanceID());
-                AssetDatabase.DeleteAsset(path);
+                if (node is RootNode)
+                {
+                    AssetDatabase.DeleteAsset(path);
+                }
+                else
+                {
+                    rootNode.nodesModel.Remove(node);
+                    AssetDatabase.RemoveObjectFromAsset(node);
+                }
+
+                AssetDatabase.SaveAssets();
+
                 return true;
             }
             catch (Exception ex)

@@ -48,25 +48,26 @@ public class DialogueSystemEditorGraphView : GraphView
         RegisterCallback<PointerMoveEvent>(OnPointerMoveEvent, TrickleDown.TrickleDown);
         Undo.undoRedoPerformed += OnUndoRedo;
         graphViewChangedHandler = new GraphViewChangedHandler();
+        graphViewChangedHandler.OnNodeParented += (handler, args) => OnNodeParented(args);
+        graphViewChangedHandler.OnNodeDeleted += (handler, args) => OnNodeDeleted(args);
+        graphViewChangedHandler.OnNodeUnParented += (handler, args) => OnNodeUnParented(args);
     }
 
     public void Init(StyleSheet styleSheet, DialogueSystemEditorWindow relatedEditorWin, TreeHandler treeHandler)
     {
-        Debug.Log("gazegzraeg");
         this.ss = styleSheet;
         styleSheets.Add(ss);
         this.relatedEditorWin = relatedEditorWin;
         this.treeHandler = treeHandler;
+        PopulateView();
     }
 
-    public void PopulateView(TreeNode currentRoot)
+    public void PopulateView()
     {
-        this.currentRoot = currentRoot;
+        //this.currentRoot = currentRoot;
         graphViewChanged -= OnGraphViewChanged;
         DeleteElements(graphElements); 
         graphViewChanged += OnGraphViewChanged;
-
-
     }
 
     private void OnPointerMoveEvent(PointerMoveEvent evt)
@@ -76,19 +77,17 @@ public class DialogueSystemEditorGraphView : GraphView
 
     private void OnUndoRedo()
     {
-        PopulateView(currentRoot);
         AssetDatabase.SaveAssets();
     }
 
     private GraphViewChange OnGraphViewChanged(GraphViewChange graphViewChange)
     {
-        Debug.Log("OnGraphViewChanged");
+        Debug.Log("HEY");
         return graphViewChangedHandler.HandleGraphViewChanged(graphViewChange);
     }
 
     public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter adapter)
     {
-        Debug.Log("GetCompatiblePorts");
         List<Port> selectedPorts = new List<Port>();
         if ((startPort as PortView).portTypeInnerClass.PortSecondaryType == PortSecondaryType.Player)
         {
@@ -167,5 +166,21 @@ public class DialogueSystemEditorGraphView : GraphView
         nodeView.SetPosition(mousePose);
         nodeData.SetPosition(mousePose);
         AddElement(nodeView);
+    }
+
+
+    private void OnNodeParented(NodeParentingArgs args)
+    {
+        treeHandler.AddOrUpdateChild(args.parentNode, args.childNode);
+    }
+
+    private void OnNodeDeleted(NodeData args)
+    {
+        treeHandler.DeleteNode(args);
+    }
+
+    private void OnNodeUnParented(NodeParentingArgs args)
+    {
+        treeHandler.RemoveChild(args.parentNode, args.childNode);
     }
 }

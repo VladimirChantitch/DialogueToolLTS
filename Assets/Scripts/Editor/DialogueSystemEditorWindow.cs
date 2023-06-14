@@ -15,6 +15,7 @@ public class DialogueSystemEditorWindow : EditorWindow
     [SerializeField] private StyleSheet ss = default;
 
     DialogueSystemEditorGraphView graphView = null;
+    DialogueSystemEditorInspector inspector = null;
     StyleSheet styleSheet = null;
     TreeHandler treeHandler = null;
 
@@ -69,6 +70,8 @@ public class DialogueSystemEditorWindow : EditorWindow
     {
         graphView = rootVisualElement.Q<DialogueSystemEditorGraphView>();
         graphView.Init(styleSheet, this, treeHandler);
+
+        inspector = rootVisualElement.Q<DialogueSystemEditorInspector>();
     }
 
     private void SetReferences()
@@ -78,7 +81,7 @@ public class DialogueSystemEditorWindow : EditorWindow
 
     private void OnSelectionChange()
     {
-        if (Selection.activeContext is RootNode rootNode)
+        if (Selection.activeObject is RootNode rootNode)
         {
             ReadAsset(rootNode);
         }
@@ -86,14 +89,11 @@ public class DialogueSystemEditorWindow : EditorWindow
 
     private void ReadAsset(RootNode rootNode)
     {
-        if (AssetDatabase.CanOpenAssetInEditor(rootNode.GetInstanceID()))
-        {
-            treeHandler?.UseAnotherRoot(rootNode);
-        }
+        treeHandler?.UseAnotherRoot(rootNode);
     }
 
     void OnNodeSelectionChanged(NodeData nodeData)
     {
-
+        inspector.ChangeInspectorBinding(nodeData);
     }
 }

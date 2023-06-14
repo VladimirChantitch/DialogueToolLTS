@@ -1,3 +1,4 @@
+using dialogues.node;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.UI;
@@ -11,8 +12,8 @@ public class DialogueSystemEditorInspector : VisualElement
 
     }
 
-    public void Init()
+    public void ChangeInspectorBinding(NodeData nodeData)
     {
-
+        Debug.Log("TODO ::: Show inspector");
     }
 }
