@@ -1,0 +1,11 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Templates/NodeTemplates/nodeviewStyle.uss?fileID=7433441132597879392&amp;guid=682ab7d43902d904489fc3e45cc29605&amp;type=3#nodeviewStyle" />
+    <ui:VisualElement class="Container" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
+        <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ContainerName" />
+        <ui:ScrollView scroll-deceleration-rate="0,135" elasticity="0,1" name="Container" class="subContainer" />
+        <ui:VisualElement name="controls" class="subContainer" style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); color: rgba(36, 36, 36, 0.43); align-self: flex-end; flex-direction: row; align-items: center;">
+            <ui:Button text="+" display-tooltip-when-elided="true" name="Add" class="button" />
+            <ui:Button text="-" display-tooltip-when-elided="true" name="Remove" class="button" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

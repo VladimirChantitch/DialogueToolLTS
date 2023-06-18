@@ -1,3 +1,4 @@
+using dialogues.eventSystem;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -151,6 +152,16 @@ namespace dialogues.node
         {
             Vector2 updatedPosition = new Vector2(position.x, position.y);
             Position = updatedPosition;
+        }
+
+        public void InsertEventAtIndex(DialogueEventsBaseClass eventsBaseClass, int index)
+        {
+
+        }
+
+        public void RemoveEventAtIndex(int index)
+        {
+
         }
     }
 }

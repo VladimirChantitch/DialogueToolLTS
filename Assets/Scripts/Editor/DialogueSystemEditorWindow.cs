@@ -22,6 +22,7 @@ public class DialogueSystemEditorWindow : EditorWindow
     static RootNode currentRootNode = null;
     public static string nodeViewStylePath = "Assets/Templates/NodeTemplates/nodeviewStyle.uss";
     public static string nodeViewTemplate = "Assets/Templates/NodeTemplates/NodeViewTemplate.uxml";
+    public static string listTemplate = "Assets/Templates/InspectorsTemplates/E_CTemplate.uxml";
 
     [MenuItem("Tool/DialogueTool")]
     public static void DisplayWindow()

@@ -1,3 +1,4 @@
+using dialogues.eventSystem;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace Utils
 {
     [Serializable]
     public class EventContainer {
-        [SerializeReference] ScriptableObject eventableObject;
+        [SerializeReference] DialogueEventsBaseClass eventableObject;
         public event Action selectedMethod;
 
         public IEventable EventableObject

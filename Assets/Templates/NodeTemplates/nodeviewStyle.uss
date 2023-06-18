@@ -18,7 +18,7 @@
     border-right-color: rgb(0, 0, 0);
     border-top-color: rgb(0, 0, 0);
     border-bottom-color: rgb(0, 0, 0);
-    background-color: rgba(0, 0, 0, 0.69);
+    background-color: rgba(0, 0, 0, 0.7);
     width: 250px;
     height: 100px;
     max-height: 400px;
@@ -69,4 +69,29 @@
     border-bottom-left-radius: 8px;
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
+}
+
+.button {
+    width: 15px;
+    height: 15px;
+    border-left-color: rgba(77, 77, 77, 0.88);
+    border-right-color: rgba(77, 77, 77, 0.88);
+    border-top-color: rgba(77, 77, 77, 0.88);
+    border-bottom-color: rgba(77, 77, 77, 0.88);
+    background-color: rgba(0, 0, 0, 0.63);
+    border-left-width: 2px;
+    border-right-width: 2px;
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+    color: rgb(255, 255, 255);
+    -unity-font-style: bold;
+}
+
+.button:hover {
+    background-color: rgb(180, 180, 180);
+    color: rgb(0, 0, 0);
 }
