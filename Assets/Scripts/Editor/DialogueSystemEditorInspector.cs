@@ -160,6 +160,10 @@ public class DialogueSystemEditorInspector : VisualElement
             dialogueData.SpeakerIcone = data.newValue as Sprite;
             OnNodeDataChanged?.Invoke(this, currentNodeData);
         });
+
+        tf_dialogue.value = dialogueData.Dialogue;
+        tf_name.value = dialogueData.SpeakerName;
+        of_spriteIcone.value = dialogueData.SpeakerIcone;
     }
 
     private void SetUpEventList()
