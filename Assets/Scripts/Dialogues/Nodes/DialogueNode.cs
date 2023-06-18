@@ -27,6 +27,15 @@ namespace dialogues.node
             return dialogueData;
         }
 
+        public override void SetUpData(NodeData nodeData)
+        {
+            base.SetUpData(nodeData);
+            DialogueData dialogueData = nodeData as DialogueData;
+            this.speakerName = dialogueData.SpeakerName;
+            this.dialogue = dialogueData.Dialogue;
+            this.speakerIcone = dialogueData.SpeakerIcone;
+        }
+
         public string GetDialogue()
         {
             return dialogue;    

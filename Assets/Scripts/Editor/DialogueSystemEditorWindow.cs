@@ -78,6 +78,7 @@ public class DialogueSystemEditorWindow : EditorWindow
     private void SetReferences()
     {
         graphView.OnNodeSelected += (sender, data) => OnNodeSelectionChanged(data);
+        inspector.OnNodeDataChanged += (sender, data) => OnNodeDataChanged(data);
     }
 
     private void OnSelectionChange()
@@ -96,5 +97,10 @@ public class DialogueSystemEditorWindow : EditorWindow
     void OnNodeSelectionChanged(NodeData nodeData)
     {
         inspector.ChangeInspectorBinding(nodeData);
+    }
+
+    void OnNodeDataChanged(NodeData nodeData)
+    {
+        treeHandler?.UpdateNode(nodeData);
     }
 }

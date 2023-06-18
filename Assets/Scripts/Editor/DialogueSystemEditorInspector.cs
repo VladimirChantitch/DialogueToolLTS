@@ -27,6 +27,7 @@ public class DialogueSystemEditorInspector : VisualElement
     public event EventHandler<NodeData> OnNodeDataChanged;
 
     private int eventIndex = -1;
+    private int conditionIndex = -1;
 
     public DialogueSystemEditorInspector()
     {
@@ -38,6 +39,7 @@ public class DialogueSystemEditorInspector : VisualElement
     public void ChangeInspectorBinding(NodeData nodeData)
     {
         eventIndex = -1;
+        conditionIndex = -1;
         currentNodeData = nodeData;
         Clear();
         switch (nodeData)
@@ -197,12 +199,12 @@ public class DialogueSystemEditorInspector : VisualElement
 
         add_btn.clicked += () =>
         {
-            eventIndex++;
+            conditionIndex++;
             ObjectField of = new ObjectField();
             of.objectType = typeof(DialogueConditionsBaseClass);
             of.RegisterValueChangedCallback((data) =>
             {
-                conditionalData.InsertConditionAtIndex(data.newValue as DialogueConditionsBaseClass, eventIndex);
+                conditionalData.InsertConditionAtIndex(data.newValue as DialogueConditionsBaseClass, conditionIndex);
                 OnNodeDataChanged?.Invoke(this, currentNodeData);
             });
             of.label = "Condition Object";
@@ -212,19 +214,19 @@ public class DialogueSystemEditorInspector : VisualElement
 
         rem_btn.clicked += () =>
         {
-            if (eventIndex >= 0)
+            if (conditionIndex >= 0)
             {
-                conditionalData.RemoveConditionAtIndex(eventIndex);
-                ObjectField oField = oFields[eventIndex];
+                conditionalData.RemoveConditionAtIndex(conditionIndex);
+                ObjectField oField = oFields[conditionIndex];
                 oFields.Remove(oField);
                 oField.RemoveFromHierarchy();
                 OnNodeDataChanged?.Invoke(this, currentNodeData);
             }
 
-            eventIndex--;
-            if (eventIndex < 0)
+            conditionIndex--;
+            if (conditionIndex < 0)
             {
-                eventIndex = -1;
+                conditionIndex = -1;
             }
         };
     }

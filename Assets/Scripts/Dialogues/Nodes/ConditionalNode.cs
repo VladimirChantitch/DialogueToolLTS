@@ -2,6 +2,7 @@ using dialogues;
 using dialogues.eventSystem;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Build;
 using UnityEngine;
 using Utils;
 
@@ -41,6 +42,13 @@ namespace dialogues.node
             ConditionalData conditionalData = new ConditionalData(nodeData);
             conditionalData.ConditionContainers.AddRange(conditionContainers);
             return conditionalData;
+        }
+
+        public override void SetUpData(NodeData nodeData)
+        {
+            base.SetUpData(nodeData);
+            ConditionalData conditionalData = nodeData as ConditionalData;
+            this.conditionContainers = conditionalData.ConditionContainers;
         }
 
         public virtual bool PlayAllConditions()

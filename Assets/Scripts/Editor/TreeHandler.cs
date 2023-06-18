@@ -139,6 +139,21 @@ namespace dialogues.editor
 
         private void UpdateNodeFromData(NodeData data, TreeNode node)
         {
+            switch (node)
+            {
+                case RootNode rootNode:
+                    rootNode.SetUpData(data as RootData);
+                    break;
+                case EndNode endNode:
+                    endNode.SetUpData(data as EndData);
+                    break;
+                case DialogueNode dialogueNode:
+                    dialogueNode.SetUpData(data as DialogueData);
+                    break;
+                case ConditionalNode conditionalNode:
+                    conditionalNode.SetUpData(data as ConditionalData);
+                    break;
+            }
             node.SetUpData(data);
         }
 
