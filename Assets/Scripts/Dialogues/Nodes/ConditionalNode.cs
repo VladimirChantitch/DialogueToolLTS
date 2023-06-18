@@ -1,4 +1,5 @@
 using dialogues;
+using dialogues.eventSystem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -84,6 +85,19 @@ namespace dialogues.node
 
         [SerializeField] protected List<ConditionContainer> conditionContainers = new List<ConditionContainer>();
         public List<ConditionContainer> ConditionContainers { get => conditionContainers; set => conditionContainers = value; }
+
+        public void InsertConditionAtIndex(DialogueConditionsBaseClass conditionsBaseClass, int index)
+        {
+            conditionContainers.Insert(index, new ConditionContainer(conditionsBaseClass));        
+        }
+
+        public void RemoveConditionAtIndex(int index)
+        {
+            if (index >= 0 && index < conditionContainers.Count)
+            {
+                conditionContainers.RemoveAt(index);
+            }
+        }
     }
 }
 

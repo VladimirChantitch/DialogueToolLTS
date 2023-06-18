@@ -19,6 +19,7 @@ public class DialogueSystemEditorInspector : VisualElement
     VisualElement firstChild;
     StyleSheet styleSheet;
     ScrollView eventContainer;
+    ScrollView conditionContainer;
     VisualTreeAsset listTree;
 
     NodeData currentNodeData = null;
@@ -79,6 +80,7 @@ public class DialogueSystemEditorInspector : VisualElement
     private void ShowConditionInspector(ConditionalData conditionalData)
     {
         ShowBasicInspector("Condition Node");
+        SetUpConditionList(conditionalData);
     }
 
     private void ShowRootInspector(RootData conditionalData)
@@ -123,6 +125,51 @@ public class DialogueSystemEditorInspector : VisualElement
             {
                 Debug.Log(eventIndex);
                 currentNodeData.RemoveEventAtIndex(eventIndex);
+                ObjectField oField = oFields[eventIndex];
+                oFields.Remove(oField);
+                oField.RemoveFromHierarchy();
+            }
+
+            eventIndex--;
+            if (eventIndex < 0)
+            {
+                eventIndex = -1;
+            }
+        };
+    }
+
+    private void SetUpConditionList(ConditionalData conditionalData)
+    {
+        VisualElement ve = new VisualElement();
+        listTree.CloneTree(ve);
+        conditionContainer = ve.Q<ScrollView>("Container");
+        Button add_btn = ve.Q<Button>("Add");
+        Button rem_btn = ve.Q<Button>("Remove");
+        Label containerName = ve.Q<Label>("ContainerName");
+        containerName.text = "Conditions";
+        containerName.AddToClassList("subContainer");
+
+        Add(ve);
+
+        add_btn.clicked += () =>
+        {
+            eventIndex++;
+            ObjectField of = new ObjectField();
+            of.objectType = typeof(DialogueConditionsBaseClass);
+            of.RegisterValueChangedCallback((data) =>
+            {
+                conditionalData.InsertConditionAtIndex(data.newValue as DialogueConditionsBaseClass, eventIndex);
+            });
+            oFields.Add(of);
+            conditionContainer.Add(of);
+        };
+
+        rem_btn.clicked += () =>
+        {
+            if (eventIndex >= 0)
+            {
+                Debug.Log(eventIndex);
+                conditionalData.RemoveConditionAtIndex(eventIndex);
                 ObjectField oField = oFields[eventIndex];
                 oFields.Remove(oField);
                 oField.RemoveFromHierarchy();

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-180201541226756785
+--- !u!114 &-8813597258131691624
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,14 +9,36 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dcb9bac03379d774eb84cefdc7d93101, type: 3}
-  m_Name: EndNode
+  m_Script: {fileID: 11500000, guid: 59fd3209e5210924cbe988db83d45a84, type: 3}
+  m_Name: ConditionalNode
   m_EditorClassIdentifier: 
-  guid: 4d775ef77b4930d44a6a14d9b3be0009
+  guid: e37887f27430dd145ab285cdaad06776
   position: {x: 0, y: 0}
   directChildren: []
   directParents: []
   eventContainers: []
+  conditionContainers: []
+--- !u!114 &-5497910702894791239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dbde80ba66519b4d9ece113a0ce9cd7, type: 3}
+  m_Name: DialogueNode
+  m_EditorClassIdentifier: 
+  guid: 77a18ce1cff317446972ddfb7850d58a
+  position: {x: 0, y: 0}
+  directChildren: []
+  directParents: []
+  eventContainers: []
+  speakerName: 
+  speakerIcone: {fileID: 0}
+  dialogue: 
+  dialogueSpeakerType: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29,11 +51,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d8a43ba0861a394e980dde613549137, type: 3}
   m_Name: RootNode
   m_EditorClassIdentifier: 
-  guid: 15cd2374fd32d924786100f972891c34
+  guid: dbd2b5fdfc44dbc43836988dbe86c1ee
   position: {x: 0, y: 0}
   directChildren: []
   directParents: []
   eventContainers: []
   nodesModel:
   - {fileID: 11400000}
-  - {fileID: -180201541226756785}
+  - {fileID: -5497910702894791239}
+  - {fileID: -8813597258131691624}

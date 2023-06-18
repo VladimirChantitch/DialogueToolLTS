@@ -11,8 +11,15 @@ namespace Utils
     [Serializable]
     public class ConditionContainer
     {
-        [SerializeReference] ScriptableObject conditionableObject;
+        [SerializeReference] DialogueConditionsBaseClass conditionableObject;
         public event Action selectedMethod;
+
+        public ConditionContainer() { }
+
+        public ConditionContainer(DialogueConditionsBaseClass conditionableObject)
+        {
+            this.conditionableObject = conditionableObject;
+        }
 
         public IConditionable ConditionableObject
         {

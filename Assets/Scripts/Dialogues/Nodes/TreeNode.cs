@@ -156,12 +156,15 @@ namespace dialogues.node
 
         public void InsertEventAtIndex(DialogueEventsBaseClass eventsBaseClass, int index)
         {
-
+            eventContainers.Insert(index, new EventContainer(eventsBaseClass));
         }
 
         public void RemoveEventAtIndex(int index)
         {
-
+            if (index >= 0 && index < eventContainers.Count)
+            {
+                eventContainers.RemoveAt(index);
+            }
         }
     }
 }

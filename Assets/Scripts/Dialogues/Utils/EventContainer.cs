@@ -14,6 +14,13 @@ namespace Utils
         [SerializeReference] DialogueEventsBaseClass eventableObject;
         public event Action selectedMethod;
 
+        public EventContainer() { }
+
+        public EventContainer(DialogueEventsBaseClass eventableObject)
+        {
+            this.eventableObject = eventableObject;
+        }
+
         public IEventable EventableObject
         {
             get { return eventableObject as IEventable; }
