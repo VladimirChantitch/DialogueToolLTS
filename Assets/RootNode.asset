@@ -12,10 +12,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d8a43ba0861a394e980dde613549137, type: 3}
   m_Name: RootNode
   m_EditorClassIdentifier: 
-  guid: dbdca1028e9ca1b4baed4a07846a3eb7
+  guid: 4b56a88263fa78b4ba93d93ef9961186
   position: {x: 0, y: 0}
   directChildren: []
   directParents: []
   eventContainers: []
   nodesModel:
   - {fileID: 11400000}
+  - {fileID: 3099405693625856636}
+--- !u!114 &3099405693625856636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59fd3209e5210924cbe988db83d45a84, type: 3}
+  m_Name: ConditionalNode
+  m_EditorClassIdentifier: 
+  guid: ed88e3e07d8de3345bf0cad4b563943a
+  position: {x: 0, y: 0}
+  directChildren: []
+  directParents: []
+  eventContainers: []
+  conditionContainers: []

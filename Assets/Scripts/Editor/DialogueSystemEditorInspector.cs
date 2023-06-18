@@ -78,6 +78,16 @@ public class DialogueSystemEditorInspector : VisualElement
         Add(name);
 
         SetUpEventList();
+        LoadUpEventLists();
+    }
+
+    private void LoadUpEventLists()
+    {
+        currentNodeData.EventContainers.ForEach(ec =>
+        {
+            AddAnEventField().value = ec.EventableObject as DialogueEventsBaseClass;
+
+        });
     }
 
     private void ShowEndInspector(EndData endData)
@@ -89,6 +99,15 @@ public class DialogueSystemEditorInspector : VisualElement
     {
         ShowBasicInspector("Condition Node");
         SetUpConditionList(conditionalData);
+        LoadUpConditionsList(conditionalData);
+    }
+
+    private void LoadUpConditionsList(ConditionalData conditionalData)
+    {
+        conditionalData.ConditionContainers.ForEach(cc =>
+        { 
+            AddAnConditionField().value = cc?.ConditionableObject as DialogueConditionsBaseClass;
+        });
     }
 
     private void ShowRootInspector(RootData rootData)
@@ -158,16 +177,7 @@ public class DialogueSystemEditorInspector : VisualElement
 
         add_btn.clicked += () =>
         {
-            eventIndex++;
-            ObjectField of = new ObjectField();
-            of.objectType = typeof(DialogueEventsBaseClass);
-            of.RegisterValueChangedCallback((data) =>
-            {
-                UpdateEvents();
-            });
-            of.label = "Event Object";
-            oEventFields.Add(of);
-            eventContainer.Add(of);
+            AddAnEventField();
             UpdateEvents();
         };
 
@@ -190,17 +200,6 @@ public class DialogueSystemEditorInspector : VisualElement
         };
     }
 
-    private void UpdateEvents()
-    {
-        List<DialogueEventsBaseClass> dialogueEventsBaseClasses = new List<DialogueEventsBaseClass>();
-        oEventFields.ForEach(o =>
-        {
-            dialogueEventsBaseClasses.Add(o.value as DialogueEventsBaseClass);
-        });
-        currentNodeData.UpdateEventsBasedOnFields(dialogueEventsBaseClasses);
-        OnNodeDataChanged?.Invoke(this, currentNodeData);
-    }
-
     private void SetUpConditionList(ConditionalData conditionalData)
     {
         VisualElement ve = new VisualElement();
@@ -216,16 +215,7 @@ public class DialogueSystemEditorInspector : VisualElement
 
         add_btn.clicked += () =>
         {
-            conditionIndex++;
-            ObjectField of = new ObjectField();
-            of.objectType = typeof(DialogueConditionsBaseClass);
-            of.RegisterValueChangedCallback((data) =>
-            {
-                UpdateConditions();
-            });
-            of.label = "Condition Object";
-            oConditionFields.Add(of);
-            conditionContainer.Add(of);
+            AddAnConditionField();
             UpdateConditions();
         };
 
@@ -247,6 +237,18 @@ public class DialogueSystemEditorInspector : VisualElement
             }
         };
     }
+
+    private void UpdateEvents()
+    {
+        List<DialogueEventsBaseClass> dialogueEventsBaseClasses = new List<DialogueEventsBaseClass>();
+        oEventFields.ForEach(o =>
+        {
+            dialogueEventsBaseClasses.Add(o.value as DialogueEventsBaseClass);
+        });
+        currentNodeData.UpdateEventsBasedOnFields(dialogueEventsBaseClasses);
+        OnNodeDataChanged?.Invoke(this, currentNodeData);
+    }
+
     private void UpdateConditions()
     {
         List<DialogueConditionsBaseClass> dialogueConditionsBaseClasses = new List<DialogueConditionsBaseClass>();
@@ -256,6 +258,38 @@ public class DialogueSystemEditorInspector : VisualElement
         });
         (currentNodeData as ConditionalData).UpdateConditionsBasedOnFields(dialogueConditionsBaseClasses);
         OnNodeDataChanged?.Invoke(this, currentNodeData);
+    }
+
+    private ObjectField AddAnEventField()
+    {
+        eventIndex++;
+        ObjectField of = new ObjectField();
+        of.objectType = typeof(DialogueEventsBaseClass);
+        of.RegisterValueChangedCallback((data) =>
+        {
+            UpdateEvents();
+        });
+        of.label = "Event Object";
+        oEventFields.Add(of);
+        eventContainer.Add(of);
+
+        return of;
+    }
+
+    private ObjectField AddAnConditionField()
+    {
+        conditionIndex++;
+        ObjectField of = new ObjectField();
+        of.objectType = typeof(DialogueConditionsBaseClass);
+        of.RegisterValueChangedCallback((data) =>
+        {
+            UpdateConditions();
+        });
+        of.label = "Condition Object";
+        oConditionFields.Add(of);
+        conditionContainer.Add(of);
+
+        return of;
     }
 }
 
