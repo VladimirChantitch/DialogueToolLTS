@@ -1,44 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8813597258131691624
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59fd3209e5210924cbe988db83d45a84, type: 3}
-  m_Name: ConditionalNode
-  m_EditorClassIdentifier: 
-  guid: e37887f27430dd145ab285cdaad06776
-  position: {x: 0, y: 0}
-  directChildren: []
-  directParents: []
-  eventContainers: []
-  conditionContainers: []
---- !u!114 &-5497910702894791239
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dbde80ba66519b4d9ece113a0ce9cd7, type: 3}
-  m_Name: DialogueNode
-  m_EditorClassIdentifier: 
-  guid: 77a18ce1cff317446972ddfb7850d58a
-  position: {x: 0, y: 0}
-  directChildren: []
-  directParents: []
-  eventContainers: []
-  speakerName: 
-  speakerIcone: {fileID: 0}
-  dialogue: 
-  dialogueSpeakerType: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -51,12 +12,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d8a43ba0861a394e980dde613549137, type: 3}
   m_Name: RootNode
   m_EditorClassIdentifier: 
-  guid: dbd2b5fdfc44dbc43836988dbe86c1ee
+  guid: cc49626cd1f0b214d9a47e17c305d429
   position: {x: 0, y: 0}
   directChildren: []
   directParents: []
   eventContainers: []
   nodesModel:
   - {fileID: 11400000}
-  - {fileID: -5497910702894791239}
-  - {fileID: -8813597258131691624}
+  - {fileID: 5885025942282493817}
+--- !u!114 &5885025942282493817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dbde80ba66519b4d9ece113a0ce9cd7, type: 3}
+  m_Name: DialogueNode
+  m_EditorClassIdentifier: 
+  guid: d0a8590cb8a37544296ac7078a7512c6
+  position: {x: 0, y: 0}
+  directChildren: []
+  directParents: []
+  eventContainers: []
+  speakerName: 
+  speakerIcone: {fileID: 0}
+  dialogue: 
+  dialogueSpeakerType: 0

@@ -83,14 +83,56 @@ public class DialogueSystemEditorInspector : VisualElement
         SetUpConditionList(conditionalData);
     }
 
-    private void ShowRootInspector(RootData conditionalData)
+    private void ShowRootInspector(RootData rootData)
     {
         ShowBasicInspector("Root Node");
     }
 
-    private void ShowDialogueInspector(DialogueData conditionalData)
+    private void ShowDialogueInspector(DialogueData dialogueData)
     {
         ShowBasicInspector("Dialogue Node");
+
+        TextField tf_name = new TextField();
+        tf_name.AddToClassList("subContainer");
+        tf_name.label = "speakerName";
+        Add(tf_name);
+        TextField tf_dialogue = new TextField();
+        tf_dialogue.AddToClassList("subContainer");
+        tf_dialogue.label = "dialogue";
+        tf_dialogue.style.flexDirection = FlexDirection.Column;
+        tf_dialogue.multiline = true;
+        tf_dialogue.style.flexShrink = 1;
+        tf_dialogue.style.overflow = Overflow.Hidden;
+        tf_dialogue.style.textOverflow = TextOverflow.Ellipsis;
+
+        tf_dialogue.Q<VisualElement>("unity-text-input").style.whiteSpace = WhiteSpace.Normal;
+
+        tf_dialogue.style.height = 200;
+        Add(tf_dialogue);
+
+        ObjectField of_spriteIcone = new ObjectField();
+        of_spriteIcone.AddToClassList("subContainer");
+        of_spriteIcone.label = "Speaker Sprite";
+        of_spriteIcone.objectType = typeof(Sprite);
+        Add(of_spriteIcone);
+
+        tf_name.RegisterValueChangedCallback((data) =>
+        {
+            dialogueData.SpeakerName = data.newValue;
+            OnNodeDataChanged?.Invoke(this, currentNodeData);
+        });
+
+        tf_dialogue.RegisterValueChangedCallback((data) =>
+        {
+            dialogueData.Dialogue = data.newValue;
+            OnNodeDataChanged?.Invoke(this, currentNodeData);
+        });
+
+        of_spriteIcone.RegisterValueChangedCallback((data) =>
+        {
+            dialogueData.SpeakerIcone = data.newValue as Sprite;
+            OnNodeDataChanged?.Invoke(this, currentNodeData);
+        });
     }
 
     private void SetUpEventList()
@@ -114,7 +156,9 @@ public class DialogueSystemEditorInspector : VisualElement
             of.RegisterValueChangedCallback((data) =>
             {
                 currentNodeData.InsertEventAtIndex(data.newValue as DialogueEventsBaseClass, eventIndex);
+                OnNodeDataChanged?.Invoke(this,currentNodeData);
             });
+            of.label = "Event Object";
             oFields.Add(of);
             eventContainer.Add(of);
         };
@@ -123,11 +167,11 @@ public class DialogueSystemEditorInspector : VisualElement
         {
             if (eventIndex >= 0)
             {
-                Debug.Log(eventIndex);
                 currentNodeData.RemoveEventAtIndex(eventIndex);
                 ObjectField oField = oFields[eventIndex];
                 oFields.Remove(oField);
                 oField.RemoveFromHierarchy();
+                OnNodeDataChanged?.Invoke(this, currentNodeData);
             }
 
             eventIndex--;
@@ -159,7 +203,9 @@ public class DialogueSystemEditorInspector : VisualElement
             of.RegisterValueChangedCallback((data) =>
             {
                 conditionalData.InsertConditionAtIndex(data.newValue as DialogueConditionsBaseClass, eventIndex);
+                OnNodeDataChanged?.Invoke(this, currentNodeData);
             });
+            of.label = "Condition Object";
             oFields.Add(of);
             conditionContainer.Add(of);
         };
@@ -168,11 +214,11 @@ public class DialogueSystemEditorInspector : VisualElement
         {
             if (eventIndex >= 0)
             {
-                Debug.Log(eventIndex);
                 conditionalData.RemoveConditionAtIndex(eventIndex);
                 ObjectField oField = oFields[eventIndex];
                 oFields.Remove(oField);
                 oField.RemoveFromHierarchy();
+                OnNodeDataChanged?.Invoke(this, currentNodeData);
             }
 
             eventIndex--;
