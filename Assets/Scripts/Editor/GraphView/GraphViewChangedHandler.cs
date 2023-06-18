@@ -39,7 +39,10 @@ public class GraphViewChangedHandler
         List<Edge> edge_remove = new List<Edge>();
         elementsToRemove.ForEach(elem =>
         {
-            edge_remove.AddRange(HandleRemoveElement(elem));
+            if ((elem as DialogueNodeView).nodeData is not RootData)
+            {
+                edge_remove.AddRange(HandleRemoveElement(elem));
+            }
         });
         if (edge_remove.Count > 0)
         {
@@ -58,8 +61,6 @@ public class GraphViewChangedHandler
 
         if (elem is DialogueNodeView dialogueNodeView)
         {
-            if (dialogueNodeView.nodeData is RootData) return edge_remove;
-
             DialogueNodeView parentView = dialogueNodeView.inPort.node as DialogueNodeView;
             OnNodeUnParented?.Invoke(this, new NodeParentingArgs() { parentNode = parentView.nodeData, childNode = dialogueNodeView.nodeData, outPortIndex = dialogueNodeView.inPort.portTypeInnerClass.portParentIndex });
             edge_remove.AddRange(dialogueNodeView.inPort.connections.ToList());

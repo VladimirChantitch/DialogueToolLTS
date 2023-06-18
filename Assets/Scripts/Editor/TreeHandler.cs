@@ -45,6 +45,7 @@ namespace dialogues.editor
 
         public bool DeleteNode(NodeData data)
         {
+            if (data is RootData) return false;
             try
             {
                 TreeNode node = LookForNode(data);

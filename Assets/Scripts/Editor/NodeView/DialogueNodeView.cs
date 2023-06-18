@@ -47,6 +47,10 @@ public class DialogueNodeView : Node
     public void Init(NodeData nodeData)
     {
         this.nodeData = nodeData;
+        if (nodeData is RootData)
+        {
+            capabilities = Capabilities.Selectable;
+        }
         CreateInputPorts();
         CreateOutputPorts();
         SetUI();
