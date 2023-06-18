@@ -29,6 +29,9 @@ public class DialogueSystemEditorInspector : VisualElement
     private int eventIndex = -1;
     private int conditionIndex = -1;
 
+    List<ObjectField> oEventFields = new List<ObjectField>();
+    List<ObjectField> oConditionFields = new List<ObjectField>();
+
     public DialogueSystemEditorInspector()
     {
         this.styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>(DialogueSystemEditorWindow.nodeViewStylePath);
@@ -41,6 +44,9 @@ public class DialogueSystemEditorInspector : VisualElement
         eventIndex = -1;
         conditionIndex = -1;
         currentNodeData = nodeData;
+
+        oEventFields.Clear();
+        oConditionFields.Clear();
         Clear();
         switch (nodeData)
         {
@@ -62,7 +68,7 @@ public class DialogueSystemEditorInspector : VisualElement
         }
     }
 
-    List<ObjectField> oFields = new List<ObjectField>();
+
     private void ShowBasicInspector(string nodeName)
     {
         AddToClassList("Container");
@@ -157,23 +163,23 @@ public class DialogueSystemEditorInspector : VisualElement
             of.objectType = typeof(DialogueEventsBaseClass);
             of.RegisterValueChangedCallback((data) =>
             {
-                currentNodeData.InsertEventAtIndex(data.newValue as DialogueEventsBaseClass, eventIndex);
-                OnNodeDataChanged?.Invoke(this,currentNodeData);
+                UpdateEvents();
             });
             of.label = "Event Object";
-            oFields.Add(of);
+            oEventFields.Add(of);
             eventContainer.Add(of);
+            UpdateEvents();
         };
 
         rem_btn.clicked += () =>
         {
             if (eventIndex >= 0)
             {
-                currentNodeData.RemoveEventAtIndex(eventIndex);
-                ObjectField oField = oFields[eventIndex];
-                oFields.Remove(oField);
+                ObjectField oField = oEventFields[eventIndex];
+                oEventFields.Remove(oField);
                 oField.RemoveFromHierarchy();
-                OnNodeDataChanged?.Invoke(this, currentNodeData);
+
+                UpdateEvents();
             }
 
             eventIndex--;
@@ -182,6 +188,17 @@ public class DialogueSystemEditorInspector : VisualElement
                 eventIndex = -1;
             }
         };
+    }
+
+    private void UpdateEvents()
+    {
+        List<DialogueEventsBaseClass> dialogueEventsBaseClasses = new List<DialogueEventsBaseClass>();
+        oEventFields.ForEach(o =>
+        {
+            dialogueEventsBaseClasses.Add(o.value as DialogueEventsBaseClass);
+        });
+        currentNodeData.UpdateEventsBasedOnFields(dialogueEventsBaseClasses);
+        OnNodeDataChanged?.Invoke(this, currentNodeData);
     }
 
     private void SetUpConditionList(ConditionalData conditionalData)
@@ -204,23 +221,23 @@ public class DialogueSystemEditorInspector : VisualElement
             of.objectType = typeof(DialogueConditionsBaseClass);
             of.RegisterValueChangedCallback((data) =>
             {
-                conditionalData.InsertConditionAtIndex(data.newValue as DialogueConditionsBaseClass, conditionIndex);
-                OnNodeDataChanged?.Invoke(this, currentNodeData);
+                UpdateConditions();
             });
             of.label = "Condition Object";
-            oFields.Add(of);
+            oConditionFields.Add(of);
             conditionContainer.Add(of);
+            UpdateConditions();
         };
 
         rem_btn.clicked += () =>
         {
             if (conditionIndex >= 0)
             {
-                conditionalData.RemoveConditionAtIndex(conditionIndex);
-                ObjectField oField = oFields[conditionIndex];
-                oFields.Remove(oField);
+                ObjectField oField = oConditionFields[conditionIndex];
+                oConditionFields.Remove(oField);
                 oField.RemoveFromHierarchy();
-                OnNodeDataChanged?.Invoke(this, currentNodeData);
+
+                UpdateConditions();
             }
 
             conditionIndex--;
@@ -229,6 +246,16 @@ public class DialogueSystemEditorInspector : VisualElement
                 conditionIndex = -1;
             }
         };
+    }
+    private void UpdateConditions()
+    {
+        List<DialogueConditionsBaseClass> dialogueConditionsBaseClasses = new List<DialogueConditionsBaseClass>();
+        oConditionFields.ForEach(o =>
+        {
+            dialogueConditionsBaseClasses.Add(o.value as DialogueConditionsBaseClass);
+        });
+        (currentNodeData as ConditionalData).UpdateConditionsBasedOnFields(dialogueConditionsBaseClasses);
+        OnNodeDataChanged?.Invoke(this, currentNodeData);
     }
 }
 

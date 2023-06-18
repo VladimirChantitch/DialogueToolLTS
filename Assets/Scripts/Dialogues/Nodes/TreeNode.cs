@@ -10,7 +10,7 @@ namespace dialogues.node
 {
     public abstract class TreeNode : ScriptableObject
     {
-        [HideInInspector] public string guid;
+        [SerializeField] public string guid;
         [HideInInspector] public Vector2 position;
 
         [SerializeField] protected List<TreeNode> directChildren = new List<TreeNode> ();
@@ -30,9 +30,10 @@ namespace dialogues.node
             NodeData nodeData = new NodeData()
             {
                 Position = position,
-                Guid = guid,
-                EventContainers = eventContainers          
+                Guid = guid   
             };
+            nodeData.EventContainers.AddRange(eventContainers);
+
             return nodeData;
         }
 
@@ -40,6 +41,7 @@ namespace dialogues.node
         {
             position = nodeData.Position;
             guid = nodeData.Guid;
+            eventContainers.Clear();
             eventContainers.AddRange(nodeData.EventContainers);     
         }
 
@@ -165,6 +167,15 @@ namespace dialogues.node
             {
                 eventContainers.RemoveAt(index);
             }
+        }
+
+        public void UpdateEventsBasedOnFields(List<DialogueEventsBaseClass> dialogueEventsBaseClasses)
+        {
+            EventContainers.Clear();
+            dialogueEventsBaseClasses.ForEach((de) =>
+            {
+                EventContainers.Add(new EventContainer(de));
+            });
         }
     }
 }

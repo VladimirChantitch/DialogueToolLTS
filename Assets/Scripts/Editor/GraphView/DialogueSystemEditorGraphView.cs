@@ -82,7 +82,6 @@ public class DialogueSystemEditorGraphView : GraphView
 
     private GraphViewChange OnGraphViewChanged(GraphViewChange graphViewChange)
     {
-        Debug.Log("HEY");
         return graphViewChangedHandler.HandleGraphViewChanged(graphViewChange);
     }
 

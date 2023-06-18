@@ -48,7 +48,8 @@ namespace dialogues.node
         {
             base.SetUpData(nodeData);
             ConditionalData conditionalData = nodeData as ConditionalData;
-            this.conditionContainers = conditionalData.ConditionContainers;
+            conditionContainers.Clear();
+            this.conditionContainers.AddRange(conditionalData.ConditionContainers);
         }
 
         public virtual bool PlayAllConditions()
@@ -105,6 +106,15 @@ namespace dialogues.node
             {
                 conditionContainers.RemoveAt(index);
             }
+        }
+
+        public void UpdateConditionsBasedOnFields(List<DialogueConditionsBaseClass> dialogueConditionsBaseClasses)
+        {
+            ConditionContainers.Clear();
+            dialogueConditionsBaseClasses.ForEach((dc) =>
+            {
+                ConditionContainers.Add(new ConditionContainer(dc));
+            });
         }
     }
 }
