@@ -1,6 +1,7 @@
 using dialogues.editor;
 using dialogues.node;
 using System;
+using System.Collections.Generic;
 using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEditor;
 using UnityEditor.Callbacks;
@@ -46,12 +47,13 @@ public class DialogueSystemEditorWindow : EditorWindow
     public void CreateGUI()
     {
         VisualElement root = rootVisualElement;
-        m_editorWindow.CloneTree(rootVisualElement);
+        m_editorWindow.CloneTree(rootVisualElement);    
 
         styleSheet = ss;
         InstantiateServices();
         GetReferences();
         SetReferences();
+        LoadNodeView(currentRootNode.nodesModel);
     }
 
     private void InstantiateServices()
@@ -64,7 +66,6 @@ public class DialogueSystemEditorWindow : EditorWindow
         {
             treeHandler = new TreeHandler();
         }
-
     }
 
     private void GetReferences()
@@ -79,6 +80,7 @@ public class DialogueSystemEditorWindow : EditorWindow
     {
         graphView.OnNodeSelected += (sender, data) => OnNodeSelectionChanged(data);
         inspector.OnNodeDataChanged += (sender, data) => OnNodeDataChanged(data);
+        treeHandler.OnNodeModelLoaded += (sender, data) => LoadNodeView(data);
     }
 
     private void OnSelectionChange()
@@ -102,5 +104,10 @@ public class DialogueSystemEditorWindow : EditorWindow
     void OnNodeDataChanged(NodeData nodeData)
     {
         treeHandler?.UpdateNode(nodeData);
+    }
+
+    private void LoadNodeView(List<TreeNode> nodeModel)
+    {
+        graphView.LoadNodeView(nodeModel);
     }
 }

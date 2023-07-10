@@ -39,9 +39,12 @@ public class GraphViewChangedHandler
         List<Edge> edge_remove = new List<Edge>();
         elementsToRemove.ForEach(elem =>
         {
-            if ((elem as DialogueNodeView).nodeData is not RootData)
+            if (elem != null)
             {
-                edge_remove.AddRange(HandleRemoveElement(elem));
+                if ((elem as DialogueNodeView)?.nodeData is not RootData)
+                {
+                    edge_remove.AddRange(HandleRemoveElement(elem));
+                }
             }
         });
         if (edge_remove.Count > 0)

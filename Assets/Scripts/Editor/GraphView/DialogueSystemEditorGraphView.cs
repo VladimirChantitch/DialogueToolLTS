@@ -20,6 +20,7 @@ public class DialogueSystemEditorGraphView : GraphView
     }
 
     public event EventHandler<NodeData> OnNodeSelected;
+
     public DialogueSystemEditorWindow relatedEditorWin;
     StyleSheet ss = null;
     TreeNode currentRoot = null;
@@ -167,6 +168,18 @@ public class DialogueSystemEditorGraphView : GraphView
         AddElement(nodeView);
     }
 
+    DialogueNodeView CreateNodeView(TreeNode treeNode)
+    {
+        if (treeNode == null) return new();
+
+        DialogueNodeView nodeView = new DialogueNodeView();
+
+        nodeView.OnNodeSelected += OnNodeSelected;
+        nodeView.Init(treeNode.GetData());
+        nodeView.SetPosition(new Rect() { x = treeNode.position.x, y = treeNode.position.y });
+        AddElement(nodeView);
+        return nodeView;
+    }
 
     private void OnNodeParented(NodeParentingArgs args)
     {
@@ -181,5 +194,39 @@ public class DialogueSystemEditorGraphView : GraphView
     private void OnNodeUnParented(NodeParentingArgs args)
     {
         treeHandler.RemoveChild(args.parentNode, args.childNode);
+    }
+
+    internal void LoadNodeView(List<TreeNode> nodeModel)
+    {
+        List<NodeData> nodeDataModel = new List<NodeData>();
+        List<DialogueNodeView> dialogueNodeViews = new List<DialogueNodeView>();
+
+        nodeModel.ForEach(n =>
+        {
+            dialogueNodeViews.Add(CreateNodeView(n));
+        });
+
+        nodeModel.ForEach(n =>
+        {
+            DialogueNodeView dialogueNodeView = dialogueNodeViews.Find(dnv => dnv.nodeData.Guid == n.guid);
+
+            switch (n)
+            {
+                case ConditionalNode conditionalNode:
+                    Edge trueEdge = dialogueNodeView.outPorts[0].ConnectTo(dialogueNodeViews.Find(dnv => dnv.nodeData.Guid == conditionalNode.DirectChildren[0].guid).inPort);
+                    Edge falseEdge = dialogueNodeView.outPorts[1].ConnectTo(dialogueNodeViews.Find(dnv => dnv.nodeData.Guid == conditionalNode.DirectChildren[1].guid).inPort);
+                    AddElement(trueEdge);
+                    AddElement(falseEdge);
+                    break;
+                default:
+                    n.DirectChildren.ForEach(dc =>
+                    {
+                        Edge edge = dialogueNodeView.outPorts[0].ConnectTo(dialogueNodeViews.Find(dnv => dnv.nodeData.Guid == dc.guid).inPort);
+                        AddElement(edge);
+                    });
+ 
+                break;
+            }
+        });
     }
 }

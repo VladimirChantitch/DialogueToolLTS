@@ -13,10 +13,11 @@ namespace dialogues.editor
         [SerializeField] private string Name;
         TreeNodeGenerator nodeGenerator = null;
         public RootNode rootNode;
-        public List<TreeNode> nodes = new List<TreeNode>();
+        public List<TreeNode> nodes = new List<TreeNode>(); 
 
         public event EventHandler<TreeNode> OnChildAdded;
         public event EventHandler<TreeNode> OnChildRemoved;
+        public event EventHandler<List<TreeNode>> OnNodeModelLoaded;
 
         public TreeHandler()
         {
@@ -40,7 +41,7 @@ namespace dialogues.editor
         {
             nodes.Clear();
             nodes.AddRange(rootNode.GetNodeModel());
-            Debug.Log("TO DO :: Instantiate all nodes");
+            OnNodeModelLoaded?.Invoke(this, nodes);
         }
 
         public bool DeleteNode(NodeData data)
