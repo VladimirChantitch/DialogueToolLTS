@@ -34,8 +34,13 @@ public class DialogueSystemEditorInspector : VisualElement
 
     public DialogueSystemEditorInspector()
     {
-        this.styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>(DialogueSystemEditorWindow.nodeViewStylePath);
-        this.listTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(DialogueSystemEditorWindow.listTemplate);
+
+    }
+
+    public void Init(StyleSheet styleSheet, VisualTreeAsset listTree)
+    {
+        this.styleSheet = styleSheet;
+        this.listTree = listTree;
         styleSheets.Add(styleSheet);
     }
 

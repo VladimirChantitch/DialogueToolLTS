@@ -14,6 +14,9 @@ public class DialogueSystemEditorWindow : EditorWindow
     [SerializeField] private VisualTreeAsset m_editorWindow = default;
     [SerializeField] private VisualTreeAsset m_nodeView = default;
     [SerializeField] private StyleSheet ss = default;
+    [SerializeField] private StyleSheet nodeViewStyle = default;
+    [SerializeField] private VisualTreeAsset NodeViewTemplate = default;
+    [SerializeField] private VisualTreeAsset E_CTemplate = default;
 
     DialogueSystemEditorGraphView graphView = null;
     DialogueSystemEditorInspector inspector = null;
@@ -21,9 +24,8 @@ public class DialogueSystemEditorWindow : EditorWindow
     TreeHandler treeHandler = null;
 
     static RootNode currentRootNode = null;
-    public static string nodeViewStylePath = "Assets/Templates/NodeTemplates/nodeviewStyle.uss";
-    public static string nodeViewTemplate = "Assets/Templates/NodeTemplates/NodeViewTemplate.uxml";
-    public static string listTemplate = "Assets/Templates/InspectorsTemplates/E_CTemplate.uxml";
+    public static string nodeViewStylePath = "Assets/DialogueTool/Templates/NodeTemplates/nodeviewStyle.uss";
+    public static string nodeViewTemplate = "Assets/DialogueTool/Templates/NodeTemplates/NodeViewTemplate.uxml";
 
     [MenuItem("Tool/DialogueTool")]
     public static void DisplayWindow()
@@ -53,7 +55,10 @@ public class DialogueSystemEditorWindow : EditorWindow
         InstantiateServices();
         GetReferences();
         SetReferences();
-        LoadNodeView(currentRootNode.nodesModel);
+        if (currentRootNode != null)
+        {
+            LoadNodeView(currentRootNode.nodesModel);
+        }
     }
 
     private void InstantiateServices()
@@ -81,6 +86,8 @@ public class DialogueSystemEditorWindow : EditorWindow
         graphView.OnNodeSelected += (sender, data) => OnNodeSelectionChanged(data);
         inspector.OnNodeDataChanged += (sender, data) => OnNodeDataChanged(data);
         treeHandler.OnNodeModelLoaded += (sender, data) => LoadNodeView(data);
+
+        inspector.Init(nodeViewStyle, E_CTemplate);
     }
 
     private void OnSelectionChange()
