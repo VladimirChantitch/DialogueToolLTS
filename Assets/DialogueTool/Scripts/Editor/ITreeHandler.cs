@@ -17,7 +17,7 @@ namespace dialogues.editor.treeHandler
         NodeData CreateNode(Type type);
         NodeData CreateNodeCopyFromData(NodeData data);
         TreeNode CreateNodeFromData(NodeData data);
-        bool DeleteNode(NodeData data);
+        bool DeleteNodeFromData(NodeData data);
         List<NodeData> GetChildren(NodeData parent);
         bool RemoveChild(NodeData parent, NodeData child);
         void UpdateNode(NodeData data);

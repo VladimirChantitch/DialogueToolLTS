@@ -45,7 +45,7 @@ namespace dialogues.editor.treeHandler
             OnNodeModelLoaded?.Invoke(this, nodes);
         }
 
-        public bool DeleteNode(NodeData data)
+        public bool DeleteNodeFromData(NodeData data)
         {
             if (data is RootData) return false;
             try

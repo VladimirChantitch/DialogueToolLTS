@@ -189,7 +189,7 @@ public class DialogueSystemEditorGraphView : GraphView
 
     private void OnNodeDeleted(NodeData args)
     {
-        treeHandlerService.DeleteNode(args);
+        treeHandlerService.DeleteNodeFromData(args);
     }
 
     private void OnNodeUnParented(NodeParentingArgs args)
