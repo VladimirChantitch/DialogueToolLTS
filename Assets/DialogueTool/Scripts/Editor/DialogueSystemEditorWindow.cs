@@ -22,7 +22,7 @@ public class DialogueSystemEditorWindow : EditorWindow
     DialogueSystemEditorGraphView graphView = null;
     DialogueSystemEditorInspector inspector = null;
     StyleSheet styleSheet = null;
-    TreeHandler treeHandler = null;
+    ITreeHandler treeHandlerService = null;
 
     static RootNode currentRootNode = null;
     public static string nodeViewStylePath = "Assets/DialogueTool/Templates/NodeTemplates/nodeviewStyle.uss";
@@ -66,18 +66,18 @@ public class DialogueSystemEditorWindow : EditorWindow
     {
         if (currentRootNode != null)
         {
-            treeHandler = new TreeHandler(currentRootNode);
+            treeHandlerService = new TreeHandler(currentRootNode);
         }
         else
         {
-            treeHandler = new TreeHandler();
+            treeHandlerService = new TreeHandler();
         }
     }
 
     private void GetReferences()
     {
         graphView = rootVisualElement.Q<DialogueSystemEditorGraphView>();
-        graphView.Init(styleSheet, this, treeHandler);
+        graphView.Init(styleSheet, this, treeHandlerService);
 
         inspector = rootVisualElement.Q<DialogueSystemEditorInspector>();
     }
@@ -86,7 +86,7 @@ public class DialogueSystemEditorWindow : EditorWindow
     {
         graphView.OnNodeSelected += (sender, data) => OnNodeSelectionChanged(data);
         inspector.OnNodeDataChanged += (sender, data) => OnNodeDataChanged(data);
-        treeHandler.OnNodeModelLoaded += (sender, data) => LoadNodeView(data);
+        treeHandlerService.OnNodeModelLoaded += (sender, data) => LoadNodeView(data);
 
         inspector.Init(nodeViewStyle, E_CTemplate);
     }
@@ -101,7 +101,7 @@ public class DialogueSystemEditorWindow : EditorWindow
 
     private void ReadAsset(RootNode rootNode)
     {
-        treeHandler?.UseAnotherRoot(rootNode);
+        treeHandlerService?.UseAnotherRoot(rootNode);
     }
 
     void OnNodeSelectionChanged(NodeData nodeData)
@@ -111,7 +111,7 @@ public class DialogueSystemEditorWindow : EditorWindow
 
     void OnNodeDataChanged(NodeData nodeData)
     {
-        treeHandler?.UpdateNode(nodeData);
+        treeHandlerService?.UpdateNode(nodeData);
     }
 
     private void LoadNodeView(List<TreeNode> nodeModel)

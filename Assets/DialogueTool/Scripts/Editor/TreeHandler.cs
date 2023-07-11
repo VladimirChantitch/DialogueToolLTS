@@ -9,12 +9,12 @@ using System.Linq;
 
 namespace dialogues.editor.treeHandler
 {
-    public class TreeHandler
+    public class TreeHandler : ITreeHandler
     {
         [SerializeField] private string Name;
         TreeNodeGenerator nodeGenerator = null;
         public RootNode rootNode;
-        public List<TreeNode> nodes = new List<TreeNode>(); 
+        public List<TreeNode> nodes = new List<TreeNode>();
 
         public event EventHandler<TreeNode> OnChildAdded;
         public event EventHandler<TreeNode> OnChildRemoved;
@@ -86,7 +86,7 @@ namespace dialogues.editor.treeHandler
                 }
                 return false;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Debug.Log($"<color=orange> {ex} </color>");
                 return false;
@@ -105,7 +105,7 @@ namespace dialogues.editor.treeHandler
 
                 return true;
             }
-            catch(Exception ex )
+            catch (Exception ex)
             {
                 Debug.Log($"<color=orange> {ex} </color>");
                 return false;
@@ -116,8 +116,8 @@ namespace dialogues.editor.treeHandler
         public List<NodeData> GetChildren(NodeData parent)
         {
             TreeNode parentNode = LookForNode(parent);
-            List<NodeData> datas = parentNode.GetChildrenData();   
-            
+            List<NodeData> datas = parentNode.GetChildrenData();
+
             return datas;
         }
 
@@ -193,7 +193,7 @@ namespace dialogues.editor.treeHandler
             return node.GetData();
         }
 
-        public (bool,NodeData) CheckForRootNode()
+        public (bool, NodeData) CheckForRootNode()
         {
             if (rootNode == null)
             {
@@ -204,7 +204,7 @@ namespace dialogues.editor.treeHandler
                 return (false, rootNode.GetData());
             }
 
-            return (true,rootNode.GetData());
+            return (true, rootNode.GetData());
         }
 
         public void CreateAssetInDataBase(TreeNode node)

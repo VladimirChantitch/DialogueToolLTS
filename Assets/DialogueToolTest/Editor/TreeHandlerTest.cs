@@ -9,12 +9,12 @@ using dialogues.editor.treeHandler;
 
 public class TreeHandlerTest
 {
-    TreeHandler treeHandler = null;
+    ITreeHandler treeHandlerService = null;
 
     [SetUp]
     public void SetUp()
     {
-        treeHandler = new TreeHandler();
+        treeHandlerService = new TreeHandler();
     }
 
     [TearDown]
@@ -27,7 +27,7 @@ public class TreeHandlerTest
     [Test]
     public void TestCreateNullNodeFromData()
     {
-        TreeNode node = treeHandler.CreateNodeFromData(null);
+        TreeNode node = treeHandlerService.CreateNodeFromData(null);
         Assert.IsTrue(node == null);
     }
 
@@ -48,7 +48,7 @@ public class TreeHandlerTest
         RootData rootData = new RootData(nodeData);
 
         //When
-        TreeNode treeNode = treeHandler.CreateNodeFromData(rootData);
+        TreeNode treeNode = treeHandlerService.CreateNodeFromData(rootData);
 
         //Then
         Assert.IsTrue(treeNode is RootNode);
@@ -72,7 +72,7 @@ public class TreeHandlerTest
         };
 
         RootData rootData = new RootData(nodeData);
-        TreeNode rootNode = treeHandler.CreateNodeFromData(rootData);
+        TreeNode rootNode = treeHandlerService.CreateNodeFromData(rootData);
         Assert.IsTrue(rootNode is RootNode);
 
         DialogueData dialogueData = new DialogueData(nodeData)
@@ -82,7 +82,7 @@ public class TreeHandlerTest
         };
 
         //When
-        TreeNode treeNode = treeHandler.CreateNodeFromData(dialogueData);
+        TreeNode treeNode = treeHandlerService.CreateNodeFromData(dialogueData);
 
         //Then
         Assert.IsTrue(treeNode is DialogueNode);
@@ -108,13 +108,13 @@ public class TreeHandlerTest
         };
 
         RootData rootData = new RootData(nodeData);
-        TreeNode rootNode = treeHandler.CreateNodeFromData(rootData);
+        TreeNode rootNode = treeHandlerService.CreateNodeFromData(rootData);
         Assert.IsTrue(rootNode is RootNode);
 
         EndData dialogueData = new EndData(nodeData);
 
         //When
-        TreeNode treeNode = treeHandler.CreateNodeFromData(dialogueData);
+        TreeNode treeNode = treeHandlerService.CreateNodeFromData(dialogueData);
 
         //Then
         Assert.IsTrue(treeNode is EndNode);
@@ -138,7 +138,7 @@ public class TreeHandlerTest
         };
 
         RootData rootData = new RootData(nodeData);
-        TreeNode rootNode = treeHandler.CreateNodeFromData(rootData);
+        TreeNode rootNode = treeHandlerService.CreateNodeFromData(rootData);
         Assert.IsTrue(rootNode is RootNode);
 
         ConditionData conditionData = new ConditionData(nodeData)
@@ -150,7 +150,7 @@ public class TreeHandlerTest
         };
 
         //When
-        TreeNode treeNode = treeHandler.CreateNodeFromData(conditionData);
+        TreeNode treeNode = treeHandlerService.CreateNodeFromData(conditionData);
 
         //Then
         Assert.IsTrue(treeNode is ConditionNode);

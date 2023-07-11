@@ -25,7 +25,7 @@ public class DialogueSystemEditorGraphView : GraphView
     public DialogueSystemEditorWindow relatedEditorWin;
     StyleSheet ss = null;
     TreeNode currentRoot = null;
-    TreeHandler treeHandler = null;
+    ITreeHandler treeHandlerService = null;
 
     private Vector2 localMousePosition;
 
@@ -55,12 +55,12 @@ public class DialogueSystemEditorGraphView : GraphView
         graphViewChangedHandler.OnNodeUnParented += (handler, args) => OnNodeUnParented(args);
     }
 
-    public void Init(StyleSheet styleSheet, DialogueSystemEditorWindow relatedEditorWin, TreeHandler treeHandler)
+    public void Init(StyleSheet styleSheet, DialogueSystemEditorWindow relatedEditorWin, ITreeHandler treeHandlerService)
     {
         this.ss = styleSheet;
         styleSheets.Add(ss);
         this.relatedEditorWin = relatedEditorWin;
-        this.treeHandler = treeHandler;
+        this.treeHandlerService = treeHandlerService;
         PopulateView();
     }
 
@@ -146,13 +146,13 @@ public class DialogueSystemEditorGraphView : GraphView
 
     void CreateNode(System.Type type, Rect mousePose)
     {
-        (bool,NodeData) nodeCheck = treeHandler.CheckForRootNode();
+        (bool,NodeData) nodeCheck = treeHandlerService.CheckForRootNode();
         if (nodeCheck.Item1 == false)
         {
             CreateNodeView(nodeCheck.Item2, mousePose);
         }
 
-        NodeData node = treeHandler.CreateNode(type);
+        NodeData node = treeHandlerService.CreateNode(type);
         CreateNodeView(node, mousePose);
     }
 
@@ -184,17 +184,17 @@ public class DialogueSystemEditorGraphView : GraphView
 
     private void OnNodeParented(NodeParentingArgs args)
     {
-        treeHandler.AddOrUpdateChild(args.parentNode, args.childNode);
+        treeHandlerService.AddOrUpdateChild(args.parentNode, args.childNode);
     }
 
     private void OnNodeDeleted(NodeData args)
     {
-        treeHandler.DeleteNode(args);
+        treeHandlerService.DeleteNode(args);
     }
 
     private void OnNodeUnParented(NodeParentingArgs args)
     {
-        treeHandler.RemoveChild(args.parentNode, args.childNode);
+        treeHandlerService.RemoveChild(args.parentNode, args.childNode);
     }
 
     internal void LoadNodeView(List<TreeNode> nodeModel)
