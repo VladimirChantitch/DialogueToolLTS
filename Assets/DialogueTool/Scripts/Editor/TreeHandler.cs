@@ -14,6 +14,7 @@ namespace dialogues.editor.treeHandler
         [SerializeField] private string Name;
         TreeNodeGenerator nodeGenerator = null;
         public RootNode rootNode;
+        public RootNode RootNode => rootNode;
         public List<TreeNode> nodes = new List<TreeNode>();
 
         public event EventHandler<TreeNode> OnChildAdded;
@@ -73,10 +74,12 @@ namespace dialogues.editor.treeHandler
             }
         }
 
-        public bool AddOrUpdateChild(NodeData parent, NodeData child)
+        public bool CreateOrUpdateChild(NodeData parent, NodeData child)
         {
             try
             {
+                if (child == null) throw new Exception("child is null");
+                if (parent == null) throw new Exception("parent is null");
                 TreeNode parentNode = LookForNode(parent);
                 TreeNode childNode = LookForNode(child);
 
@@ -91,7 +94,6 @@ namespace dialogues.editor.treeHandler
                 Debug.Log($"<color=orange> {ex} </color>");
                 return false;
             }
-
         }
 
         public bool RemoveChild(NodeData parent, NodeData child)
@@ -123,6 +125,7 @@ namespace dialogues.editor.treeHandler
 
         private TreeNode LookForNode(NodeData data)
         {
+            if (data == null) return null;
             if (!nodes.Contains(rootNode)) nodes.Add(rootNode);
             TreeNode node = nodes.Find(n => n.guid == data.Guid);
 
@@ -158,8 +161,9 @@ namespace dialogues.editor.treeHandler
             }
             if (node != null)
             {
+                nodes.Add(node);
                 this.rootNode.AddNodeToModel(node);
-                AddAssetToRootNode(node);
+                CreateAssetToRootNode(node);
             }
 
             return node;
@@ -172,7 +176,7 @@ namespace dialogues.editor.treeHandler
             nodes.Add(node);
             rootNode.AddNodeToModel(node);
 
-            AddAssetToRootNode(node);
+            CreateAssetToRootNode(node);
             return node.GetData();
         }
 
@@ -189,7 +193,7 @@ namespace dialogues.editor.treeHandler
             nodes.Add(node);
             rootNode.AddNodeToModel(node);
 
-            AddAssetToRootNode(node);
+            CreateAssetToRootNode(node);
             return node.GetData();
         }
 
@@ -199,8 +203,8 @@ namespace dialogues.editor.treeHandler
             {
                 rootNode = (RootNode)nodeGenerator.GenerateNode(typeof(RootNode));
                 nodes.Add(rootNode);
-                rootNode.AddNodeToModel(rootNode);
                 CreateAssetInDataBase(rootNode);
+                rootNode.AddNodeToModel(rootNode);
                 return (false, rootNode.GetData());
             }
 
@@ -216,7 +220,7 @@ namespace dialogues.editor.treeHandler
             AssetDatabase.SaveAssets();
         }
 
-        public void AddAssetToRootNode(TreeNode node)
+        public void CreateAssetToRootNode(TreeNode node)
         {
             if (node == rootNode) return;
 

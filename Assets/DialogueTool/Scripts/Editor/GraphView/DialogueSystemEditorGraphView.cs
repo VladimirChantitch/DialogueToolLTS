@@ -184,12 +184,12 @@ public class DialogueSystemEditorGraphView : GraphView
 
     private void OnNodeParented(NodeParentingArgs args)
     {
-        treeHandlerService.AddOrUpdateChild(args.parentNode, args.childNode);
+        treeHandlerService.CreateOrUpdateChild(args.parentNode, args.childNode);
     }
 
-    private void OnNodeDeleted(NodeData args)
+    private void OnNodeDeleted(NodeData nodeData)
     {
-        treeHandlerService.DeleteNodeFromData(args);
+        treeHandlerService.DeleteNodeFromData(nodeData);
     }
 
     private void OnNodeUnParented(NodeParentingArgs args)
@@ -213,11 +213,18 @@ public class DialogueSystemEditorGraphView : GraphView
 
             switch (n)
             {
-                case ConditionNode conditionalNode:
-                    Edge trueEdge = dialogueNodeView.outPorts[0].ConnectTo(dialogueNodeViews.Find(dnv => dnv.nodeData.Guid == conditionalNode.DirectChildren[0].guid).inPort);
-                    Edge falseEdge = dialogueNodeView.outPorts[1].ConnectTo(dialogueNodeViews.Find(dnv => dnv.nodeData.Guid == conditionalNode.DirectChildren[1].guid).inPort);
-                    AddElement(trueEdge);
-                    AddElement(falseEdge);
+                case ConditionNode conditionNode:
+                    if (conditionNode.DirectChildren.Count > 0)
+                    {
+                        Edge trueEdge = dialogueNodeView.outPorts[0].ConnectTo(dialogueNodeViews.Find(dnv => dnv.nodeData.Guid == conditionNode.DirectChildren[0].guid).inPort);
+                        AddElement(trueEdge);
+                    }
+                    if (conditionNode.DirectChildren.Count > 1)
+                    {
+                        Edge falseEdge = dialogueNodeView.outPorts[1].ConnectTo(dialogueNodeViews.Find(dnv => dnv.nodeData.Guid == conditionNode.DirectChildren[1].guid).inPort);
+                        AddElement(falseEdge);
+                    }
+
                     break;
                 default:
                     n.DirectChildren.ForEach(dc =>

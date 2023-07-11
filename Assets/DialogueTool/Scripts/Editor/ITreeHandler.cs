@@ -10,8 +10,8 @@ namespace dialogues.editor.treeHandler
         event EventHandler<TreeNode> OnChildRemoved;
         event EventHandler<List<TreeNode>> OnNodeModelLoaded;
 
-        void AddAssetToRootNode(TreeNode node);
-        bool AddOrUpdateChild(NodeData parent, NodeData child);
+        void CreateAssetToRootNode(TreeNode node);
+        bool CreateOrUpdateChild(NodeData parent, NodeData child);
         (bool, NodeData) CheckForRootNode();
         void CreateAssetInDataBase(TreeNode node);
         NodeData CreateNode(Type type);
@@ -22,5 +22,6 @@ namespace dialogues.editor.treeHandler
         bool RemoveChild(NodeData parent, NodeData child);
         void UpdateNode(NodeData data);
         void UseAnotherRoot(RootNode newRoot);
+        RootNode RootNode { get; }
     }
 }

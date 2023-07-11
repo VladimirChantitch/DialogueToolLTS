@@ -13,18 +13,12 @@ namespace dialogues.node
 
         public List<TreeNode> GetNodeModel()
         {
-            UpdateNodeModel();
             return nodesModel;
         }
 
         public void AddNodeToModel(TreeNode node)
         {
             nodesModel.Add(node);
-        }
-
-        private void UpdateNodeModel()
-        {
-            nodesModel = GetChildrenNodeModel();
         }
 
         public override bool AddChild(TreeNode newChild)

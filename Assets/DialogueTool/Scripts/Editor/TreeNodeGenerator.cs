@@ -16,6 +16,7 @@ public class TreeNodeGenerator
         TreeNode node = ScriptableObject.CreateInstance(type) as TreeNode;
         node.name = type.Name;
         node.guid = GUID.Generate().ToString();
+
         return node;
     }
 

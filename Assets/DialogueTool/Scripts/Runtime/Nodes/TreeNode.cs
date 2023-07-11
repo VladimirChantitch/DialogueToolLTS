@@ -100,12 +100,12 @@ namespace dialogues.node
             }
         }
 
-        public virtual List<TreeNode> GetChildrenNodeModel()
+        public virtual List<TreeNode> GetAllChildrenNodes()
         {
             List<TreeNode> children = new List<TreeNode>();
             DirectChildren.ForEach(dc =>
             {
-                children.AddRange(dc.GetChildrenNodeModel());
+                children.AddRange(dc.GetAllChildrenNodes());
             });
             return children;
         }
