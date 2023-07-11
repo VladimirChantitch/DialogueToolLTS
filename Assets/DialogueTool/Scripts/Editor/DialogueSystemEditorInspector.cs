@@ -59,7 +59,7 @@ public class DialogueSystemEditorInspector : VisualElement
                 ShowEndInspector(endData);
                 break;
 
-            case ConditionalData conditionalData:
+            case ConditionData conditionalData:
                 ShowConditionInspector(conditionalData);
                 break;
 
@@ -100,14 +100,14 @@ public class DialogueSystemEditorInspector : VisualElement
         ShowBasicInspector("End Node");
     }
 
-    private void ShowConditionInspector(ConditionalData conditionalData)
+    private void ShowConditionInspector(ConditionData conditionalData)
     {
         ShowBasicInspector("Condition Node");
         SetUpConditionList(conditionalData);
         LoadUpConditionsList(conditionalData);
     }
 
-    private void LoadUpConditionsList(ConditionalData conditionalData)
+    private void LoadUpConditionsList(ConditionData conditionalData)
     {
         conditionalData.ConditionContainers.ForEach(cc =>
         { 
@@ -209,7 +209,7 @@ public class DialogueSystemEditorInspector : VisualElement
         };
     }
 
-    private void SetUpConditionList(ConditionalData conditionalData)
+    private void SetUpConditionList(ConditionData conditionalData)
     {
         VisualElement ve = new VisualElement();
         listTree.CloneTree(ve);
@@ -265,7 +265,7 @@ public class DialogueSystemEditorInspector : VisualElement
         {
             dialogueConditionsBaseClasses.Add(o.value as DialogueConditionsBaseClass);
         });
-        (currentNodeData as ConditionalData).UpdateConditionsBasedOnFields(dialogueConditionsBaseClasses);
+        (currentNodeData as ConditionData).UpdateConditionsBasedOnFields(dialogueConditionsBaseClasses);
         OnNodeDataChanged?.Invoke(this, currentNodeData);
     }
 

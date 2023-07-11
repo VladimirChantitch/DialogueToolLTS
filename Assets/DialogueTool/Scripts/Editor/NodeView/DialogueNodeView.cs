@@ -88,7 +88,7 @@ public class DialogueNodeView : Node
         portType.PortPrimaryType = PortPrimaryType.InPort;
         switch (nodeData)
         {
-            case ConditionalData conditionalData:
+            case ConditionData conditionalData:
                 nodeType.text = "Condition";
                 portType.PortSecondaryType = PortSecondaryType.Condition;
                 inPort = InstantiatePort(Orientation.Vertical, Direction.Input, Port.Capacity.Multi, typeof(bool), portType);
@@ -124,7 +124,7 @@ public class DialogueNodeView : Node
 
         switch (nodeData)
         {
-            case ConditionalData conditionalData:
+            case ConditionData conditionalData:
                 portType.PortSecondaryType = PortSecondaryType.Condition;
                 outPorts.Add(InstantiatePort(Orientation.Vertical, Direction.Output, Port.Capacity.Multi, typeof(bool), portType));
                 portType.portIndex = 1;

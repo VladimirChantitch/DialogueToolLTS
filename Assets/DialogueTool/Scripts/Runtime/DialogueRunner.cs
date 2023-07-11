@@ -41,7 +41,7 @@ public class DialogueRunner : MonoBehaviour
                 Debug.Log("Dialogue");
                 Debug.Log(dn.GetDialogue());
                 return dn.GetNextNodes();
-            case ConditionalNode cn:
+            case ConditionNode cn:
                 Debug.Log("Condition");
                 return cn.GetNextNodes();
             case EndNode en:

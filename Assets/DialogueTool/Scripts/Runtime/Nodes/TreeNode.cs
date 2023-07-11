@@ -19,6 +19,7 @@ namespace dialogues.node
         public List<TreeNode> DirectParents => directParents;   
 
         [SerializeField] List<EventContainer> eventContainers = new List<EventContainer>();
+        public List<EventContainer> EventContainers => eventContainers;
 
         public virtual TreeNode Clone()
         {

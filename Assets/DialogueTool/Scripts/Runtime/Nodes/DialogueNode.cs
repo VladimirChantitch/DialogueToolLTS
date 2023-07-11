@@ -16,6 +16,10 @@ namespace dialogues.node
         [SerializeField] string dialogue;
         [SerializeField] DialogueSpeakerType dialogueSpeakerType;
 
+        public string SpeakerName => speakerName;
+        public Sprite SpeakerIcon => speakerIcone;
+        public string Dialogue => dialogue;
+
         public override NodeData GetData()
         {
             NodeData nodeData = base.GetData();

@@ -9,9 +9,10 @@ using Utils;
 namespace dialogues.node
 {
     [CreateAssetMenu(menuName = "node/condition")]
-    public class ConditionalNode : TreeNode
+    public class ConditionNode : TreeNode
     {
         [SerializeField] List<ConditionContainer> conditionContainers = new List<ConditionContainer>();
+        public List<ConditionContainer> ConditionContainers => conditionContainers;
 
         public override bool AddChild(TreeNode newChild)
         {
@@ -39,7 +40,7 @@ namespace dialogues.node
         public override NodeData GetData()
         {
             NodeData nodeData = base.GetData();
-            ConditionalData conditionalData = new ConditionalData(nodeData);
+            ConditionData conditionalData = new ConditionData(nodeData);
             conditionalData.ConditionContainers.AddRange(conditionContainers);
             return conditionalData;
         }
@@ -47,7 +48,7 @@ namespace dialogues.node
         public override void SetUpData(NodeData nodeData)
         {
             base.SetUpData(nodeData);
-            ConditionalData conditionalData = nodeData as ConditionalData;
+            ConditionData conditionalData = nodeData as ConditionData;
             conditionContainers.Clear();
             this.conditionContainers.AddRange(conditionalData.ConditionContainers);
         }
@@ -73,16 +74,16 @@ namespace dialogues.node
         }
     }
 
-    public class ConditionalData : NodeData
+    public class ConditionData : NodeData
     {
-        public ConditionalData() { }
+        public ConditionData() { }
 
-        public ConditionalData(NodeData nodeData) : base(nodeData){}
+        public ConditionData(NodeData nodeData) : base(nodeData){}
 
         public override NodeData Clone(NodeData nodeData)
         {
-            ConditionalData Original = (ConditionalData)nodeData;
-            ConditionalData conditionalData = new ConditionalData();
+            ConditionData Original = (ConditionData)nodeData;
+            ConditionData conditionalData = new ConditionData();
 
             conditionalData.position = Original.Position;
             conditionalData.guid = Original.Guid;

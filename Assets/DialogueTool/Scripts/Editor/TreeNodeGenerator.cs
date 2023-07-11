@@ -28,8 +28,8 @@ public class TreeNodeGenerator
                 node = ScriptableObject.CreateInstance<DialogueNode>();
                 node.SetUpData(dialogueData);
                 break;
-            case ConditionalData conditionalData:
-                node = ScriptableObject.CreateInstance<ConditionalNode>();
+            case ConditionData conditionalData:
+                node = ScriptableObject.CreateInstance<ConditionNode>();
                 node.SetUpData(conditionalData);
                 break;
             case EndData endData:

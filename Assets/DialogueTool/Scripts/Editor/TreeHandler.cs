@@ -5,8 +5,9 @@ using UnityEngine;
 using UnityEditor;
 using System;
 using dialogues.node;
+using System.Linq;
 
-namespace dialogues.editor
+namespace dialogues.editor.treeHandler
 {
     public class TreeHandler
     {
@@ -149,9 +150,18 @@ namespace dialogues.editor
         public TreeNode CreateNodeFromData(NodeData data)
         {
             TreeNode node = nodeGenerator.GenerateNodeFromData(data);
-            rootNode.AddNodeToModel(node);
 
-            AddAssetToRootNode(node);
+            if (node is RootNode && rootNode == null)
+            {
+                rootNode = node as RootNode;
+                CreateAssetInDataBase(node);
+            }
+            if (node != null)
+            {
+                this.rootNode.AddNodeToModel(node);
+                AddAssetToRootNode(node);
+            }
+
             return node;
         }
 
@@ -200,7 +210,7 @@ namespace dialogues.editor
         public void CreateAssetInDataBase(TreeNode node)
         {
             string path = "Assets/";
-            path += node.name;
+            path += node.GetType().ToString().Split(".").Last();
             path += ".asset";
             AssetDatabase.CreateAsset(node, path);
             AssetDatabase.SaveAssets();
@@ -208,6 +218,8 @@ namespace dialogues.editor
 
         public void AddAssetToRootNode(TreeNode node)
         {
+            if (node == rootNode) return;
+
             AssetDatabase.AddObjectToAsset(node, rootNode);
             AssetDatabase.SaveAssets();
         }

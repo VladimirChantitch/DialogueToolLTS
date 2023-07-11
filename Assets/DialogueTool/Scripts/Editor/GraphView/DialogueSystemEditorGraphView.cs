@@ -1,5 +1,6 @@
 
 using dialogues.editor;
+using dialogues.editor.treeHandler;
 using dialogues.node;
 using System;
 using System.Collections.Generic;
@@ -212,7 +213,7 @@ public class DialogueSystemEditorGraphView : GraphView
 
             switch (n)
             {
-                case ConditionalNode conditionalNode:
+                case ConditionNode conditionalNode:
                     Edge trueEdge = dialogueNodeView.outPorts[0].ConnectTo(dialogueNodeViews.Find(dnv => dnv.nodeData.Guid == conditionalNode.DirectChildren[0].guid).inPort);
                     Edge falseEdge = dialogueNodeView.outPorts[1].ConnectTo(dialogueNodeViews.Find(dnv => dnv.nodeData.Guid == conditionalNode.DirectChildren[1].guid).inPort);
                     AddElement(trueEdge);
