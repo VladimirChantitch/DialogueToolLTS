@@ -126,10 +126,10 @@ public class DialogueNodeView : Node
         {
             case ConditionData conditionalData:
                 portType.PortSecondaryType = PortSecondaryType.Condition;
-                outPorts.Add(InstantiatePort(Orientation.Vertical, Direction.Output, Port.Capacity.Multi, typeof(bool), portType));
+                outPorts.Add(InstantiatePort(Orientation.Vertical, Direction.Output, Port.Capacity.Single, typeof(bool), portType));
                 portType.portIndex = 1;
                 portType.PortSecondaryType = PortSecondaryType.Condition;
-                outPorts.Add(InstantiatePort(Orientation.Vertical, Direction.Output, Port.Capacity.Multi, typeof(bool), portType));
+                outPorts.Add(InstantiatePort(Orientation.Vertical, Direction.Output, Port.Capacity.Single, typeof(bool), portType));
                 break;
             case DialogueData dialogueData:
                 if (dialogueData.DialogueSpeakerType == DialogueSpeakerType.NPC)

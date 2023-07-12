@@ -154,7 +154,9 @@ public class TreeHandlerTest
             ConditionContainers = new List<Utils.ConditionContainer>()
             {
                 new Utils.ConditionContainer(),
-            }
+            },
+            trueChild = new NodeData(),
+            falseChild = new NodeData()
         };
 
         //When

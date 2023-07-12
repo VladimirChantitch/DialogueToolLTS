@@ -101,6 +101,18 @@ public class GraphViewChangedHandler
             DialogueNodeView parentView = parentPort.node as DialogueNodeView;
             DialogueNodeView childView = childPort.node as DialogueNodeView;
 
+            if(parentView.nodeData is ConditionData conditionData)
+            {
+                if (parentPort == parentView.outPorts[0])
+                {
+                    conditionData.trueChild = childView.nodeData;
+                }
+                else if (parentPort == parentView.outPorts[1])
+                {
+                    conditionData.falseChild = childView.nodeData;
+                }
+            }
+
             OnNodeParented?.Invoke(this, new NodeParentingArgs() { parentNode = parentView.nodeData, childNode = childView.nodeData, outPortIndex = (e.output as PortView).portTypeInnerClass.portIndex});
         });
     }

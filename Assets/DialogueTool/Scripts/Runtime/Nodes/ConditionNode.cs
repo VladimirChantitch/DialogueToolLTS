@@ -1,4 +1,5 @@
 using dialogues;
+using dialogues.editor.treeHandler;
 using dialogues.eventSystem;
 using System.Collections;
 using System.Collections.Generic;
@@ -42,15 +43,26 @@ namespace dialogues.node
             NodeData nodeData = base.GetData();
             ConditionData conditionalData = new ConditionData(nodeData);
             conditionalData.ConditionContainers.AddRange(conditionContainers);
+            if (directChildren.Count < 1)
+            {
+                directChildren.Add(null);
+                directChildren.Add(null);
+            }
+            else if (directChildren.Count > 2)
+            {
+                directChildren.Add(null);
+            }
+            conditionalData.trueChild = directChildren[0]?.GetData();
+            conditionalData.falseChild = directChildren[1]?.GetData();   
             return conditionalData;
         }
 
         public override void SetUpData(NodeData nodeData)
         {
             base.SetUpData(nodeData);
-            ConditionData conditionalData = nodeData as ConditionData;
+            ConditionData conditionData = nodeData as ConditionData;
             conditionContainers.Clear();
-            this.conditionContainers.AddRange(conditionalData.ConditionContainers);
+            this.conditionContainers.AddRange(conditionData.ConditionContainers);
         }
 
         public virtual bool PlayAllConditions()
@@ -95,6 +107,9 @@ namespace dialogues.node
 
         [SerializeField] protected List<ConditionContainer> conditionContainers = new List<ConditionContainer>();
         public List<ConditionContainer> ConditionContainers { get => conditionContainers; set => conditionContainers = value; }
+
+        public NodeData trueChild;
+        public NodeData falseChild;
 
         public void InsertConditionAtIndex(DialogueConditionsBaseClass conditionsBaseClass, int index)
         {

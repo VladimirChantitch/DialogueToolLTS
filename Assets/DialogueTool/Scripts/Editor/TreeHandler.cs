@@ -150,6 +150,18 @@ namespace dialogues.editor.treeHandler
         private void UpdateNodeFromData(NodeData data, TreeNode node)
         {
             node.SetUpData(data);
+
+            if (node is ConditionNode conditionNode)
+            {
+                conditionNode.DirectChildren.Clear();
+                TreeNode trueNode = null;
+                TreeNode falseNode = null;
+                ConditionData conditionData = (data as ConditionData);
+                if (conditionData.trueChild != null) trueNode = rootNode.nodesModel.Find(n => n.guid == conditionData.trueChild.Guid);
+                if (conditionData.falseChild != null) falseNode = rootNode.nodesModel.Find(n => n.guid == conditionData.falseChild.Guid);
+                conditionNode.DirectChildren.Add(trueNode);
+                conditionNode.DirectChildren.Add(falseNode);
+            }
         }
 
         public TreeNode CreateNodeFromData(NodeData data)
