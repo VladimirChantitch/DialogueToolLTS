@@ -41,6 +41,7 @@ public class DialogueSystemEditorWindow : EditorWindow
         if (Selection.activeObject is RootNode rootNode)
         {
             currentRootNode = rootNode;
+            
             DisplayWindow();
             return true;
         }

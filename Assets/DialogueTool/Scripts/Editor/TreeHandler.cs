@@ -30,6 +30,7 @@ namespace dialogues.editor.treeHandler
         {
             rootNode = currentRootNode;
             nodeGenerator = new TreeNodeGenerator();
+            LoadNewTree();
         }
 
 
@@ -42,7 +43,7 @@ namespace dialogues.editor.treeHandler
         private void LoadNewTree()
         {
             nodes.Clear();
-            nodes.AddRange(rootNode.GetNodeModel());
+            nodes.AddRange(rootNode.nodesModel);
             OnNodeModelLoaded?.Invoke(this, nodes);
         }
 
@@ -51,6 +52,7 @@ namespace dialogues.editor.treeHandler
             if (data is RootData) return false;
             try
             {
+                if (data == null) throw new Exception("null data");
                 TreeNode node = LookForNode(data);
                 string path = AssetDatabase.GetAssetPath(node.GetInstanceID());
                 if (node is RootNode)
@@ -152,12 +154,21 @@ namespace dialogues.editor.treeHandler
 
         public TreeNode CreateNodeFromData(NodeData data)
         {
+            if (data == null) return null;
+
             TreeNode node = nodeGenerator.GenerateNodeFromData(data);
 
             if (node is RootNode && rootNode == null)
             {
                 rootNode = node as RootNode;
                 CreateAssetInDataBase(node);
+            }
+            else
+            {
+                if (rootNode.nodesModel.Find(n => n.guid == data.Guid) != null)
+                {
+                    return null;
+                }
             }
             if (node != null)
             {

@@ -45,6 +45,7 @@ public class TreeHandlerTest
             Guid = UnityEditor.GUID.Generate().ToString(),
         };
 
+        nodeData.Guid = UnityEditor.GUID.Generate().ToString();
         RootData rootData = new RootData(nodeData);
 
         //When
@@ -76,6 +77,7 @@ public class TreeHandlerTest
         TreeNode rootNode = treeHandlerService.CreateNodeFromData(rootData);
         Assert.IsTrue(rootNode is RootNode);
 
+        nodeData.Guid = UnityEditor.GUID.Generate().ToString();
         DialogueData dialogueData = new DialogueData(nodeData)
         {
             SpeakerName = "hehe",
@@ -113,6 +115,7 @@ public class TreeHandlerTest
         TreeNode rootNode = treeHandlerService.CreateNodeFromData(rootData);
         Assert.IsTrue(rootNode is RootNode);
 
+        nodeData.Guid = UnityEditor.GUID.Generate().ToString();
         EndData dialogueData = new EndData(nodeData);
 
         //When
@@ -142,6 +145,8 @@ public class TreeHandlerTest
 
         RootData rootData = new RootData(nodeData);
         TreeNode rootNode = treeHandlerService.CreateNodeFromData(rootData);
+
+        nodeData.Guid = UnityEditor.GUID.Generate().ToString();
         Assert.IsTrue(rootNode is RootNode);
 
         ConditionData conditionData = new ConditionData(nodeData)
