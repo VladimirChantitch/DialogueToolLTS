@@ -12,6 +12,7 @@ public class GraphViewChangedHandler
 {
     public event EventHandler<NodeParentingArgs> OnNodeParented;
     public event EventHandler<NodeParentingArgs> OnNodeUnParented;
+    public event EventHandler<NodeMovedArgs> OnNodeMoved;
     public event EventHandler<NodeData> OnNodeDeleted;
 
     internal GraphViewChange HandleGraphViewChanged(GraphViewChange graphViewChange)
@@ -106,7 +107,17 @@ public class GraphViewChangedHandler
 
     private void HandleMovedElements(List<GraphElement> movedElements)
     {
-
+        movedElements.ForEach(me =>
+        {
+            if (me is DialogueNodeView dialogueNodeView)
+            {
+                OnNodeMoved?.Invoke(this, new NodeMovedArgs()
+                {
+                    nodeData = dialogueNodeView.nodeData,
+                    newPosition = dialogueNodeView.GetPosition()
+                });
+            }
+        });
     }
 }
 
@@ -115,4 +126,10 @@ public class NodeParentingArgs
     public NodeData parentNode;
     public NodeData childNode;
     public int outPortIndex = 0;
+}
+
+public class NodeMovedArgs
+{
+    public NodeData nodeData;
+    public Rect newPosition;
 }

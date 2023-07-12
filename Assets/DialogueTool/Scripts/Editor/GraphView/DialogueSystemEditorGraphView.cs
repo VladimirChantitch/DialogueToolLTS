@@ -27,16 +27,7 @@ public class DialogueSystemEditorGraphView : GraphView
     TreeNode currentRoot = null;
     ITreeHandler treeHandlerService = null;
 
-    private Vector2 localMousePosition;
-
     GraphViewChangedHandler graphViewChangedHandler;
-
-    //List<NodeView>
-
-    //private NodeView FindNodeView(dialogues.Node node)
-    //{
-    //    return GetNodeByGuid(node.guid) as NodeView;
-    //}
 
     public DialogueSystemEditorGraphView()
     {
@@ -53,6 +44,7 @@ public class DialogueSystemEditorGraphView : GraphView
         graphViewChangedHandler.OnNodeParented += (handler, args) => OnNodeParented(args);
         graphViewChangedHandler.OnNodeDeleted += (handler, args) => OnNodeDeleted(args);
         graphViewChangedHandler.OnNodeUnParented += (handler, args) => OnNodeUnParented(args);
+        graphViewChangedHandler.OnNodeMoved += (handler, args) => OnNodeMoved(args);
     }
 
     public void Init(StyleSheet styleSheet, DialogueSystemEditorWindow relatedEditorWin, ITreeHandler treeHandlerService)
@@ -66,7 +58,6 @@ public class DialogueSystemEditorGraphView : GraphView
 
     public void PopulateView()
     {
-        //this.currentRoot = currentRoot;
         graphViewChanged -= OnGraphViewChanged;
         DeleteElements(graphElements); 
         graphViewChanged += OnGraphViewChanged;
@@ -195,6 +186,12 @@ public class DialogueSystemEditorGraphView : GraphView
     private void OnNodeUnParented(NodeParentingArgs args)
     {
         treeHandlerService.RemoveChild(args.parentNode, args.childNode);
+    }
+
+    private void OnNodeMoved(NodeMovedArgs args)
+    {
+        args.nodeData.Position = new Vector2(args.newPosition.x, args.newPosition.y);
+        treeHandlerService.UpdateNode(args.nodeData);
     }
 
     internal void LoadNodeView(List<TreeNode> nodeModel)
