@@ -27,6 +27,8 @@ public class DialogueSystemEditorGraphView : GraphView
     TreeNode currentRoot = null;
     ITreeHandler treeHandlerService = null;
 
+    private Vector2 localMousePosition;
+
     GraphViewChangedHandler graphViewChangedHandler;
 
     public DialogueSystemEditorGraphView()
