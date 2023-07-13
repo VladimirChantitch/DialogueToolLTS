@@ -1,6 +1,4 @@
-using dialogues;
-using System;
-using System.Collections;
+using dialogues.data;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -38,16 +36,7 @@ namespace dialogues.node
 
         public override NodeData GetData()
         {
-            return new RootData(base.GetData());
-        }
-    }
-
-    [Serializable]
-    public class RootData : NodeData
-    {
-        public RootData(NodeData nodeData) : base(nodeData)
-        {
-
+            return new RootNodeData(base.GetData());
         }
     }
 }

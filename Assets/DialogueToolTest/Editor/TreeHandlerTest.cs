@@ -1,10 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
-using UnityEngine.TestTools;
-using Moq;
 using dialogues.node;
+using dialogues.data;
 using dialogues.editor.treeHandler;
 
 public class TreeHandlerTest
@@ -21,6 +19,15 @@ public class TreeHandlerTest
     public void TearDown()
     {
          
+    }
+
+    public class FakeCharacter : ScriptableObject, ICharacter
+    {
+        public string CharacterName => "Roblochon";
+
+        public CharacterType CharacterType_ => CharacterType.None;
+
+        public Sprite CharacterIcon => null;
     }
 
     #region CreateNodeFromData
@@ -46,7 +53,7 @@ public class TreeHandlerTest
         };
 
         nodeData.Guid = UnityEditor.GUID.Generate().ToString();
-        RootData rootData = new RootData(nodeData);
+        RootNodeData rootData = new RootNodeData(nodeData);
 
         //When
         TreeNode treeNode = treeHandlerService.CreateNodeFromData(rootData);
@@ -73,15 +80,14 @@ public class TreeHandlerTest
             Guid = UnityEditor.GUID.Generate().ToString(),
         };
 
-        RootData rootData = new RootData(nodeData);
+        RootNodeData rootData = new RootNodeData(nodeData);
         TreeNode rootNode = treeHandlerService.CreateNodeFromData(rootData);
         Assert.IsTrue(rootNode is RootNode);
 
         nodeData.Guid = UnityEditor.GUID.Generate().ToString();
-        DialogueData dialogueData = new DialogueData(nodeData)
+        DialogueNodeData dialogueData = new DialogueNodeData(nodeData)
         {
-            SpeakerName = "hehe",
-            Dialogue = "Bonjour"
+            Dialogue = "bonjour"
         };
 
         //When
@@ -92,7 +98,11 @@ public class TreeHandlerTest
         Assert.IsTrue(treeNode.position == dialogueData.Position);
         Assert.IsTrue(treeNode.guid == dialogueData.Guid);
         Assert.IsTrue(treeNode.EventContainers[0] == dialogueData.EventContainers[0]);
-        Assert.IsTrue((treeNode as DialogueNode).SpeakerName == dialogueData.SpeakerName);
+
+        FakeCharacter fakeCharacter = ScriptableObject.CreateInstance<FakeCharacter>();
+        (treeNode as DialogueNode).character = fakeCharacter;
+
+        Assert.IsTrue((treeNode as DialogueNode).SpeakerName == fakeCharacter.CharacterName);
         Assert.IsTrue((treeNode as DialogueNode).Dialogue == dialogueData.Dialogue);
         Assert.IsTrue(treeHandlerService.RootNode.nodesModel.Count == 2);
     }
@@ -111,12 +121,12 @@ public class TreeHandlerTest
             Guid = UnityEditor.GUID.Generate().ToString(),
         };
 
-        RootData rootData = new RootData(nodeData);
+        RootNodeData rootData = new RootNodeData(nodeData);
         TreeNode rootNode = treeHandlerService.CreateNodeFromData(rootData);
         Assert.IsTrue(rootNode is RootNode);
 
         nodeData.Guid = UnityEditor.GUID.Generate().ToString();
-        EndData dialogueData = new EndData(nodeData);
+        EndNodeData dialogueData = new EndNodeData(nodeData);
 
         //When
         TreeNode treeNode = treeHandlerService.CreateNodeFromData(dialogueData);
@@ -143,13 +153,13 @@ public class TreeHandlerTest
             Guid = UnityEditor.GUID.Generate().ToString(),
         };
 
-        RootData rootData = new RootData(nodeData);
+        RootNodeData rootData = new RootNodeData(nodeData);
         TreeNode rootNode = treeHandlerService.CreateNodeFromData(rootData);
 
         nodeData.Guid = UnityEditor.GUID.Generate().ToString();
         Assert.IsTrue(rootNode is RootNode);
 
-        ConditionData conditionData = new ConditionData(nodeData)
+        ConditionNodeData conditionData = new ConditionNodeData(nodeData)
         {
             ConditionContainers = new List<Utils.ConditionContainer>()
             {
@@ -187,11 +197,11 @@ public class TreeHandlerTest
             Guid = UnityEditor.GUID.Generate().ToString(),
         };
 
-        RootData rootData = new RootData(nodeData);
+        RootNodeData rootData = new RootNodeData(nodeData);
         TreeNode rootNode = treeHandlerService.CreateNodeFromData(rootData);
         Assert.IsTrue(rootNode is RootNode);
 
-        DialogueData dialogueData = new DialogueData(nodeData)
+        DialogueNodeData dialogueData = new DialogueNodeData(nodeData)
         {
             SpeakerName = "hehe",
             Dialogue = "Bonjour",
@@ -223,11 +233,11 @@ public class TreeHandlerTest
             Guid = UnityEditor.GUID.Generate().ToString(),
         };
 
-        RootData rootData = new RootData(nodeData);
+        RootNodeData rootData = new RootNodeData(nodeData);
         TreeNode rootNode = treeHandlerService.CreateNodeFromData(rootData);
         Assert.IsTrue(rootNode is RootNode);
 
-        DialogueData dialogueData = new DialogueData(nodeData)
+        DialogueNodeData dialogueData = new DialogueNodeData(nodeData)
         {
             SpeakerName = "hehe",
             Dialogue = "Bonjour",
@@ -262,7 +272,7 @@ public class TreeHandlerTest
             Guid = UnityEditor.GUID.Generate().ToString(),
         };
 
-        DialogueData dialogueData = new DialogueData(nodeData)
+        DialogueNodeData dialogueData = new DialogueNodeData(nodeData)
         {
             SpeakerName = "hehe",
             Dialogue = "Bonjour",
@@ -291,11 +301,11 @@ public class TreeHandlerTest
             Guid = UnityEditor.GUID.Generate().ToString(),
         };
 
-        RootData rootData = new RootData(nodeData);
+        RootNodeData rootData = new RootNodeData(nodeData);
         TreeNode rootNode = treeHandlerService.CreateNodeFromData(rootData);
         Assert.IsTrue(rootNode is RootNode);
 
-        DialogueData dialogueData = new DialogueData(nodeData)
+        DialogueNodeData dialogueData = new DialogueNodeData(nodeData)
         {
             SpeakerName = "hehe",
             Dialogue = "Bonjour",
@@ -324,7 +334,7 @@ public class TreeHandlerTest
             Guid = UnityEditor.GUID.Generate().ToString(),
         };
 
-        RootData rootData = new RootData(nodeData);
+        RootNodeData rootData = new RootNodeData(nodeData);
         TreeNode rootNode = treeHandlerService.CreateNodeFromData(rootData);
         Assert.IsTrue(rootNode is RootNode);
 
@@ -349,11 +359,11 @@ public class TreeHandlerTest
             Guid = UnityEditor.GUID.Generate().ToString(),
         };
 
-        RootData rootData = new RootData(nodeData);
+        RootNodeData rootData = new RootNodeData(nodeData);
         TreeNode rootNode = treeHandlerService.CreateNodeFromData(rootData);
         Assert.IsTrue(rootNode is RootNode);
 
-        DialogueData dialogueData = new DialogueData(nodeData)
+        DialogueNodeData dialogueData = new DialogueNodeData(nodeData)
         {
             SpeakerName = "hehe",
             Dialogue = "Bonjour",
@@ -387,11 +397,11 @@ public class TreeHandlerTest
             Guid = UnityEditor.GUID.Generate().ToString(),
         };
 
-        RootData rootData = new RootData(nodeData);
+        RootNodeData rootData = new RootNodeData(nodeData);
         TreeNode rootNode = treeHandlerService.CreateNodeFromData(rootData);
         Assert.IsTrue(rootNode is RootNode);
 
-        DialogueData dialogueData = new DialogueData(nodeData)
+        DialogueNodeData dialogueData = new DialogueNodeData(nodeData)
         {
             SpeakerName = "hehe",
             Dialogue = "Bonjour",
@@ -420,11 +430,11 @@ public class TreeHandlerTest
             Guid = UnityEditor.GUID.Generate().ToString(),
         };
 
-        RootData rootData = new RootData(nodeData);
+        RootNodeData rootData = new RootNodeData(nodeData);
         TreeNode rootNode = treeHandlerService.CreateNodeFromData(rootData);
         Assert.IsTrue(rootNode is RootNode);
 
-        DialogueData dialogueData = new DialogueData(nodeData)
+        DialogueNodeData dialogueData = new DialogueNodeData(nodeData)
         {
             SpeakerName = "hehe",
             Dialogue = "Bonjour",
@@ -456,11 +466,11 @@ public class TreeHandlerTest
             Guid = UnityEditor.GUID.Generate().ToString(),
         };
 
-        RootData rootData = new RootData(nodeData);
+        RootNodeData rootData = new RootNodeData(nodeData);
         TreeNode rootNode = treeHandlerService.CreateNodeFromData(rootData);
         Assert.IsTrue(rootNode is RootNode);
 
-        DialogueData dialogueData = new DialogueData(nodeData)
+        DialogueNodeData dialogueData = new DialogueNodeData(nodeData)
         {
             SpeakerName = "hehe",
             Dialogue = "Bonjour",
@@ -471,13 +481,17 @@ public class TreeHandlerTest
         bool isOk = treeHandlerService.CreateOrUpdateChild(rootData ,dialogueData);
         TreeNode treeNode = treeHandlerService.RootNode.nodesModel.Find(n => n.guid == dialogueData.Guid);
 
+
+        FakeCharacter fakeCharacter = ScriptableObject.CreateInstance<FakeCharacter>();
+        (treeNode as DialogueNode).character = fakeCharacter;
+
         //Then
         Assert.IsTrue(isOk);
         Assert.IsTrue(treeNode is DialogueNode);
         Assert.IsTrue(treeNode.position == dialogueData.Position);
         Assert.IsTrue(treeNode.guid == dialogueData.Guid);
         Assert.IsTrue(treeNode.EventContainers[0] == dialogueData.EventContainers[0]);
-        Assert.IsTrue((treeNode as DialogueNode).SpeakerName == dialogueData.SpeakerName);
+        Assert.IsTrue((treeNode as DialogueNode).SpeakerName == fakeCharacter.CharacterName);
         Assert.IsTrue((treeNode as DialogueNode).Dialogue == dialogueData.Dialogue);
         Assert.IsTrue(treeHandlerService.RootNode.nodesModel.Count == 2);
     }
@@ -496,13 +510,12 @@ public class TreeHandlerTest
             Guid = UnityEditor.GUID.Generate().ToString(),
         };
 
-        RootData rootData = new RootData(nodeData);
+        RootNodeData rootData = new RootNodeData(nodeData);
         TreeNode rootNode = treeHandlerService.CreateNodeFromData(rootData);
         Assert.IsTrue(rootNode is RootNode);
 
-        DialogueData dialogueData = new DialogueData(nodeData)
+        DialogueNodeData dialogueData = new DialogueNodeData(nodeData)
         {
-            SpeakerName = "hehe",
             Dialogue = "Bonjour",
             Guid = UnityEditor.GUID.Generate().ToString(),
         };
@@ -519,13 +532,16 @@ public class TreeHandlerTest
         }
         TreeNode treeNode = treeHandlerService.RootNode.nodesModel.Find(n => n.guid == dialogueData.Guid);
 
+        FakeCharacter fakeCharacter = ScriptableObject.CreateInstance<FakeCharacter>();
+        (treeNode as DialogueNode).character = fakeCharacter;
+
         //Then
         Assert.IsTrue(isOk);
         Assert.IsTrue(treeNode is DialogueNode);
         Assert.IsTrue(treeNode.position == dialogueData.Position);
         Assert.IsTrue(treeNode.guid == dialogueData.Guid);
         Assert.IsTrue(treeNode.EventContainers[0] == dialogueData.EventContainers[0]);
-        Assert.IsTrue((treeNode as DialogueNode).SpeakerName == dialogueData.SpeakerName);
+        Assert.IsTrue((treeNode as DialogueNode).SpeakerName == fakeCharacter.CharacterName);
         Assert.IsTrue((treeNode as DialogueNode).Dialogue == dialogueData.Dialogue);
         Assert.IsTrue(treeHandlerService.RootNode.nodesModel.Count == i + 1);
     }
@@ -548,11 +564,11 @@ public class TreeHandlerTest
             Guid = UnityEditor.GUID.Generate().ToString(),
         };
 
-        RootData rootData = new RootData(nodeData);
+        RootNodeData rootData = new RootNodeData(nodeData);
         TreeNode rootNode = treeHandlerService.CreateNodeFromData(rootData);
         Assert.IsTrue(rootNode is RootNode);
 
-        DialogueData dialogueData = new DialogueData(nodeData)
+        DialogueNodeData dialogueData = new DialogueNodeData(nodeData)
         {
             SpeakerName = "hehe",
             Dialogue = "Bonjour",
@@ -602,11 +618,11 @@ public class TreeHandlerTest
             Guid = UnityEditor.GUID.Generate().ToString(),
         };
 
-        RootData rootData = new RootData(nodeData);
+        RootNodeData rootData = new RootNodeData(nodeData);
         TreeNode rootNode = treeHandlerService.CreateNodeFromData(rootData);
         Assert.IsTrue(rootNode is RootNode);
 
-        DialogueData dialogueData = new DialogueData(nodeData)
+        DialogueNodeData dialogueData = new DialogueNodeData(nodeData)
         {
             SpeakerName = "hehe",
             Dialogue = "Bonjour",
@@ -639,11 +655,11 @@ public class TreeHandlerTest
             Guid = UnityEditor.GUID.Generate().ToString(),
         };
 
-        RootData rootData = new RootData(nodeData);
+        RootNodeData rootData = new RootNodeData(nodeData);
         TreeNode rootNode = treeHandlerService.CreateNodeFromData(rootData);
         Assert.IsTrue(rootNode is RootNode);
 
-        DialogueData dialogueData = new DialogueData(nodeData)
+        DialogueNodeData dialogueData = new DialogueNodeData(nodeData)
         {
             SpeakerName = "hehe",
             Dialogue = "Bonjour",

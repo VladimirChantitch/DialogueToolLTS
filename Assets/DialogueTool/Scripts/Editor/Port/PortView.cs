@@ -110,5 +110,5 @@ public enum PortPrimaryType
 
 public enum PortSecondaryType
 {
-    Player, Npc, Root, End, Condition
+    None, Player, Npc, Root, End, Condition
 }

@@ -1,7 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using dialogues.data;
 
 namespace dialogues.node
 {
@@ -15,13 +13,7 @@ namespace dialogues.node
 
         public override NodeData GetData()
         {
-            return new EndData(base.GetData());
+            return new EndNodeData(base.GetData());
         }
-    }
-
-    [Serializable]
-    public class EndData : NodeData 
-    {
-        public EndData(NodeData nodeData) : base(nodeData) { }
     }
 }

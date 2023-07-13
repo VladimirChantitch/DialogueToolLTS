@@ -1,17 +1,14 @@
-
-using dialogues.editor;
 using dialogues.editor.treeHandler;
 using dialogues.node;
+using dialogues.data;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Unity.Plastic.Antlr3.Runtime.Tree;
-using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
 using static UnityEditor.Experimental.GraphView.GraphView;
+using System.Collections.Generic;
 
 public class DialogueSystemEditorGraphView : GraphView
 {

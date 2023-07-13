@@ -1,6 +1,4 @@
-using dialogues;
-using dialogues.editor.treeHandler;
-using dialogues.eventSystem;
+using dialogues.data;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Build;
@@ -41,7 +39,7 @@ namespace dialogues.node
         public override NodeData GetData()
         {
             NodeData nodeData = base.GetData();
-            ConditionData conditionalData = new ConditionData(nodeData);
+            ConditionNodeData conditionalData = new ConditionNodeData(nodeData);
             conditionalData.ConditionContainers.AddRange(conditionContainers);
             if (directChildren.Count < 1)
             {
@@ -60,7 +58,7 @@ namespace dialogues.node
         public override void SetUpData(NodeData nodeData)
         {
             base.SetUpData(nodeData);
-            ConditionData conditionData = nodeData as ConditionData;
+            ConditionNodeData conditionData = nodeData as ConditionNodeData;
             conditionContainers.Clear();
             this.conditionContainers.AddRange(conditionData.ConditionContainers);
         }
@@ -83,54 +81,6 @@ namespace dialogues.node
             }
 
             return false;
-        }
-    }
-
-    public class ConditionData : NodeData
-    {
-        public ConditionData() { }
-
-        public ConditionData(NodeData nodeData) : base(nodeData){}
-
-        public override NodeData Clone(NodeData nodeData)
-        {
-            ConditionData Original = (ConditionData)nodeData;
-            ConditionData conditionalData = new ConditionData();
-
-            conditionalData.position = Original.Position;
-            conditionalData.guid = Original.Guid;
-            conditionalData.eventContainers = Original.EventContainers;
-            conditionalData.conditionContainers = Original.conditionContainers;
-
-            return conditionalData;
-        }
-
-        [SerializeField] protected List<ConditionContainer> conditionContainers = new List<ConditionContainer>();
-        public List<ConditionContainer> ConditionContainers { get => conditionContainers; set => conditionContainers = value; }
-
-        public NodeData trueChild;
-        public NodeData falseChild;
-
-        public void InsertConditionAtIndex(DialogueConditionsBaseClass conditionsBaseClass, int index)
-        {
-            conditionContainers.Insert(index, new ConditionContainer(conditionsBaseClass));        
-        }
-
-        public void RemoveConditionAtIndex(int index)
-        {
-            if (index >= 0 && index < conditionContainers.Count)
-            {
-                conditionContainers.RemoveAt(index);
-            }
-        }
-
-        public void UpdateConditionsBasedOnFields(List<DialogueConditionsBaseClass> dialogueConditionsBaseClasses)
-        {
-            ConditionContainers.Clear();
-            dialogueConditionsBaseClasses.ForEach((dc) =>
-            {
-                ConditionContainers.Add(new ConditionContainer(dc));
-            });
         }
     }
 }

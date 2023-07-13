@@ -1,10 +1,7 @@
 using dialogues.eventSystem;
-using dialogues.node;
+using dialogues.data;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
-using UnityEditor.UI;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -55,19 +52,19 @@ public class DialogueSystemEditorInspector : VisualElement
         Clear();
         switch (nodeData)
         {
-            case EndData endData:
+            case EndNodeData endData:
                 ShowEndInspector(endData);
                 break;
 
-            case ConditionData conditionalData:
+            case ConditionNodeData conditionalData:
                 ShowConditionInspector(conditionalData);
                 break;
 
-            case RootData rootData:
+            case RootNodeData rootData:
                 ShowRootInspector(rootData);
                 break;
 
-            case DialogueData dialogueData:
+            case DialogueNodeData dialogueData:
                 ShowDialogueInspector(dialogueData);
                 break;
         }
@@ -95,19 +92,19 @@ public class DialogueSystemEditorInspector : VisualElement
         });
     }
 
-    private void ShowEndInspector(EndData endData)
+    private void ShowEndInspector(EndNodeData endData)
     {
         ShowBasicInspector("End Node");
     }
 
-    private void ShowConditionInspector(ConditionData conditionalData)
+    private void ShowConditionInspector(ConditionNodeData conditionalData)
     {
         ShowBasicInspector("Condition Node");
         SetUpConditionList(conditionalData);
         LoadUpConditionsList(conditionalData);
     }
 
-    private void LoadUpConditionsList(ConditionData conditionalData)
+    private void LoadUpConditionsList(ConditionNodeData conditionalData)
     {
         conditionalData.ConditionContainers.ForEach(cc =>
         { 
@@ -115,12 +112,12 @@ public class DialogueSystemEditorInspector : VisualElement
         });
     }
 
-    private void ShowRootInspector(RootData rootData)
+    private void ShowRootInspector(RootNodeData rootData)
     {
         ShowBasicInspector("Root Node");
     }
 
-    private void ShowDialogueInspector(DialogueData dialogueData)
+    private void ShowDialogueInspector(DialogueNodeData dialogueData)
     {
         ShowBasicInspector("Dialogue Node");
 
@@ -209,7 +206,7 @@ public class DialogueSystemEditorInspector : VisualElement
         };
     }
 
-    private void SetUpConditionList(ConditionData conditionalData)
+    private void SetUpConditionList(ConditionNodeData conditionalData)
     {
         VisualElement ve = new VisualElement();
         listTree.CloneTree(ve);
@@ -265,7 +262,7 @@ public class DialogueSystemEditorInspector : VisualElement
         {
             dialogueConditionsBaseClasses.Add(o.value as DialogueConditionsBaseClass);
         });
-        (currentNodeData as ConditionData).UpdateConditionsBasedOnFields(dialogueConditionsBaseClasses);
+        (currentNodeData as ConditionNodeData).UpdateConditionsBasedOnFields(dialogueConditionsBaseClasses);
         OnNodeDataChanged?.Invoke(this, currentNodeData);
     }
 

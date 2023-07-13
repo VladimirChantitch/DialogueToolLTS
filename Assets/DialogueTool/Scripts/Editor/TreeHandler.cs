@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEditor;
 using System;
 using dialogues.node;
+using dialogues.data;
 using System.Linq;
 
 namespace dialogues.editor.treeHandler
@@ -49,7 +50,7 @@ namespace dialogues.editor.treeHandler
 
         public bool DeleteNodeFromData(NodeData data)
         {
-            if (data is RootData) return false;
+            if (data is RootNodeData) return false;
             try
             {
                 if (data == null) throw new Exception("null data");
@@ -156,7 +157,7 @@ namespace dialogues.editor.treeHandler
                 conditionNode.DirectChildren.Clear();
                 TreeNode trueNode = null;
                 TreeNode falseNode = null;
-                ConditionData conditionData = (data as ConditionData);
+                ConditionNodeData conditionData = (data as ConditionNodeData);
                 if (conditionData.trueChild != null) trueNode = rootNode.nodesModel.Find(n => n.guid == conditionData.trueChild.Guid);
                 if (conditionData.falseChild != null) falseNode = rootNode.nodesModel.Find(n => n.guid == conditionData.falseChild.Guid);
                 conditionNode.DirectChildren.Add(trueNode);

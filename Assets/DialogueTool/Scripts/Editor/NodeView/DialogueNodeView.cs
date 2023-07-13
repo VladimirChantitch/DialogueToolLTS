@@ -1,9 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine.UIElements;
 using dialogues.node;
+using dialogues.data;
 using System;
 using UnityEditor;
 
@@ -47,7 +47,7 @@ public class DialogueNodeView : Node
     public void Init(NodeData nodeData)
     {
         this.nodeData = nodeData;
-        if (nodeData is RootData)
+        if (nodeData is RootNodeData)
         {
             capabilities = Capabilities.Selectable;
         }
@@ -88,18 +88,18 @@ public class DialogueNodeView : Node
         portType.PortPrimaryType = PortPrimaryType.InPort;
         switch (nodeData)
         {
-            case ConditionData conditionalData:
+            case ConditionNodeData conditionalData:
                 nodeType.text = "Condition";
                 portType.PortSecondaryType = PortSecondaryType.Condition;
                 inPort = InstantiatePort(Orientation.Vertical, Direction.Input, Port.Capacity.Multi, typeof(bool), portType);
                 break;
-            case DialogueData dialogueData:
+            case DialogueNodeData dialogueData:
                 nodeType.text = "Dialogue";
-                if (dialogueData.DialogueSpeakerType == DialogueSpeakerType.NPC) portType.PortSecondaryType = PortSecondaryType.Npc;
-                if (dialogueData.DialogueSpeakerType == DialogueSpeakerType.Player) portType.PortSecondaryType = PortSecondaryType.Player;
+                if (dialogueData.DialogueSpeakerType == CharacterType.NPC) portType.PortSecondaryType = PortSecondaryType.Npc;
+                if (dialogueData.DialogueSpeakerType == CharacterType.Player) portType.PortSecondaryType = PortSecondaryType.Player;
                 inPort = InstantiatePort(Orientation.Vertical, Direction.Input, Port.Capacity.Multi, typeof(bool), portType);
                 break;
-            case EndData endData:
+            case EndNodeData endData:
                 nodeType.text = "End";
                 portType.PortSecondaryType = PortSecondaryType.End;
                 inPort = InstantiatePort(Orientation.Vertical, Direction.Input, Port.Capacity.Multi, typeof(bool), portType);
@@ -124,27 +124,32 @@ public class DialogueNodeView : Node
 
         switch (nodeData)
         {
-            case ConditionData conditionalData:
+            case ConditionNodeData conditionalData:
                 portType.PortSecondaryType = PortSecondaryType.Condition;
                 outPorts.Add(InstantiatePort(Orientation.Vertical, Direction.Output, Port.Capacity.Single, typeof(bool), portType));
                 portType.portIndex = 1;
                 portType.PortSecondaryType = PortSecondaryType.Condition;
                 outPorts.Add(InstantiatePort(Orientation.Vertical, Direction.Output, Port.Capacity.Single, typeof(bool), portType));
                 break;
-            case DialogueData dialogueData:
-                if (dialogueData.DialogueSpeakerType == DialogueSpeakerType.NPC)
+            case DialogueNodeData dialogueData:
+                if (dialogueData.DialogueSpeakerType == CharacterType.None)
+                {
+                    portType.PortSecondaryType = PortSecondaryType.None;
+                    outPorts.Add(InstantiatePort(Orientation.Vertical, Direction.Output, Port.Capacity.Multi, typeof(bool), portType));
+                }
+                if (dialogueData.DialogueSpeakerType == CharacterType.NPC)
                 {
                     portType.PortSecondaryType = PortSecondaryType.Npc;
                     outPorts.Add(InstantiatePort(Orientation.Vertical, Direction.Output, Port.Capacity.Multi, typeof(bool), portType));
                 }
-                else if (dialogueData.DialogueSpeakerType == DialogueSpeakerType.Player)
+                else if (dialogueData.DialogueSpeakerType == CharacterType.Player)
                 {
                     portType.PortSecondaryType = PortSecondaryType.Player;
                     outPorts.Add(InstantiatePort(Orientation.Vertical, Direction.Output, Port.Capacity.Single, typeof(bool), portType));
                 }
 
                 break;
-            case RootData rootData:
+            case RootNodeData rootData:
                 nodeType.text = "Root";
                 portType.PortSecondaryType = PortSecondaryType.Root;
                 outPorts.Add(InstantiatePort(Orientation.Vertical, Direction.Output, Port.Capacity.Single, typeof(bool), portType));

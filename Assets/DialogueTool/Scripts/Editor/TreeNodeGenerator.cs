@@ -1,13 +1,8 @@
 using dialogues.node;
-using log4net;
+using dialogues.data;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Security.AccessControl;
 using UnityEditor;
 using UnityEngine;
-using static Codice.Client.Common.Connection.AskCredentialsToUser;
-using static UnityEditor.Progress;
 
 public class TreeNodeGenerator
 {
@@ -25,19 +20,19 @@ public class TreeNodeGenerator
         TreeNode node = null;
         switch (data)
         {
-            case DialogueData dialogueData:
+            case DialogueNodeData dialogueData:
                 node = ScriptableObject.CreateInstance<DialogueNode>();
                 node.SetUpData(dialogueData);
                 break;
-            case ConditionData conditionalData:
+            case ConditionNodeData conditionalData:
                 node = ScriptableObject.CreateInstance<ConditionNode>();
                 node.SetUpData(conditionalData);
                 break;
-            case EndData endData:
+            case EndNodeData endData:
                 node = ScriptableObject.CreateInstance<EndNode>();
                 node.SetUpData(endData);
                 break;
-            case RootData rootData:
+            case RootNodeData rootData:
                 node = ScriptableObject.CreateInstance<RootNode>();
                 node.SetUpData(rootData);
                 break;

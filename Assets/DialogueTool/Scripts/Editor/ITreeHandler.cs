@@ -1,4 +1,5 @@
 ﻿using dialogues.node;
+using dialogues.data;
 using System;
 using System.Collections.Generic;
 

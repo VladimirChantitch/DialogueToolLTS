@@ -1,10 +1,8 @@
 using dialogues.node;
+using dialogues.data;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.Plastic.Antlr3.Runtime.Tree;
-using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
@@ -42,7 +40,7 @@ public class GraphViewChangedHandler
         {
             if (elem != null)
             {
-                if ((elem as DialogueNodeView)?.nodeData is not RootData)
+                if ((elem as DialogueNodeView)?.nodeData is not RootNodeData)
                 {
                     edge_remove.AddRange(HandleRemoveElement(elem));
                 }
@@ -101,7 +99,7 @@ public class GraphViewChangedHandler
             DialogueNodeView parentView = parentPort.node as DialogueNodeView;
             DialogueNodeView childView = childPort.node as DialogueNodeView;
 
-            if(parentView.nodeData is ConditionData conditionData)
+            if(parentView.nodeData is ConditionNodeData conditionData)
             {
                 if (parentPort == parentView.outPorts[0])
                 {
