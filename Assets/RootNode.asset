@@ -13,13 +13,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   guid: 5503e3c4e472a4644a26469e6d33eba0
-  position: {x: 0, y: 1}
-  directChildren: []
+  position: {x: 70, y: 135}
+  directChildren:
+  - {fileID: 1432124022461072910}
   directParents: []
   eventContainers:
   - eventableObject: {fileID: 0}
   dialogue: Bonjour
   character: {fileID: 0}
+--- !u!114 &-149523488637203269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcb9bac03379d774eb84cefdc7d93101, type: 3}
+  m_Name: EndNode
+  m_EditorClassIdentifier: 
+  guid: 24fa02a71064d3849aa37272fc767635
+  position: {x: 0, y: 0}
+  directChildren: []
+  directParents: []
+  eventContainers: []
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34,10 +52,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   guid: a237782fb355424458a58ed0417dcbea
   position: {x: 0, y: 1}
-  directChildren: []
+  directChildren:
+  - {fileID: -3153108474174125770}
   directParents: []
   eventContainers:
   - eventableObject: {fileID: 0}
   nodesModel:
   - {fileID: 11400000}
   - {fileID: -3153108474174125770}
+  - {fileID: 1432124022461072910}
+  - {fileID: -149523488637203269}
+--- !u!114 &1432124022461072910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59fd3209e5210924cbe988db83d45a84, type: 3}
+  m_Name: ConditionNode
+  m_EditorClassIdentifier: 
+  guid: 0762a90d3350f2d4590a5fac2972767a
+  position: {x: 69, y: 275}
+  directChildren:
+  - {fileID: 0}
+  - {fileID: 0}
+  directParents:
+  - {fileID: -3153108474174125770}
+  eventContainers: []
+  conditionContainers: []

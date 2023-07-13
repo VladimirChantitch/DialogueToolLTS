@@ -212,13 +212,19 @@ public class DialogueSystemEditorGraphView : GraphView
                 case ConditionNode conditionNode:
                     if (conditionNode.DirectChildren.Count > 0)
                     {
-                        Edge trueEdge = dialogueNodeView.outPorts[0].ConnectTo(dialogueNodeViews.Find(dnv => dnv.nodeData.Guid == conditionNode.DirectChildren[0].guid).inPort);
-                        AddElement(trueEdge);
+                        if (conditionNode.DirectChildren[0] != null)
+                        {
+                            Edge trueEdge = dialogueNodeView.outPorts[0].ConnectTo(dialogueNodeViews.Find(dnv => dnv.nodeData.Guid == conditionNode.DirectChildren[0]?.guid).inPort);
+                            if (trueEdge != null) AddElement(trueEdge);
+                        }
                     }
                     if (conditionNode.DirectChildren.Count > 1)
                     {
-                        Edge falseEdge = dialogueNodeView.outPorts[1].ConnectTo(dialogueNodeViews.Find(dnv => dnv.nodeData.Guid == conditionNode.DirectChildren[1].guid).inPort);
-                        AddElement(falseEdge);
+                        if (conditionNode.DirectChildren[1] != null)
+                        {
+                            Edge falseEdge = dialogueNodeView.outPorts[1].ConnectTo(dialogueNodeViews.Find(dnv => dnv.nodeData.Guid == conditionNode.DirectChildren[1]?.guid).inPort);
+                            if (falseEdge != null) AddElement(falseEdge);
+                        }
                     }
 
                     break;
@@ -232,5 +238,10 @@ public class DialogueSystemEditorGraphView : GraphView
                 break;
             }
         });
+    }
+
+    internal void Disable()
+    {
+        
     }
 }

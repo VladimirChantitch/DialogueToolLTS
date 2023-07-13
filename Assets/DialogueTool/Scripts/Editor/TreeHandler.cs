@@ -251,6 +251,11 @@ namespace dialogues.editor.treeHandler
             AssetDatabase.AddObjectToAsset(node, rootNode);
             AssetDatabase.SaveAssets();
         }
+
+        public void Disable()
+        {
+            nodes.Clear();
+        }
     }
 }
 

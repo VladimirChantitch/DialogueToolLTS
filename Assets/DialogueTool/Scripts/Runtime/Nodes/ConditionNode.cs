@@ -46,7 +46,7 @@ namespace dialogues.node
                 directChildren.Add(null);
                 directChildren.Add(null);
             }
-            else if (directChildren.Count > 2)
+            else if (directChildren.Count < 2)
             {
                 directChildren.Add(null);
             }

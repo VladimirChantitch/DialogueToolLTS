@@ -23,6 +23,8 @@ namespace dialogues.editor.treeHandler
         bool RemoveChild(NodeData parent, NodeData child);
         void UpdateNode(NodeData data);
         void UseAnotherRoot(RootNode newRoot);
+        void Disable();
+
         RootNode RootNode { get; }
     }
 }

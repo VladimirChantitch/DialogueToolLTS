@@ -45,6 +45,21 @@ public class DialogueSystemEditorWindow : EditorWindow
         return false;
     }
 
+    private void OnEnable()
+    {
+        InstantiateServices();
+    }
+
+    private void OnDisable()
+    {
+        graphView.Disable();
+        graphView = null;
+        inspector.Disable();
+        inspector = null;
+        treeHandlerService.Disable();
+        treeHandlerService = null;
+    }
+
     public void CreateGUI()
     {
         VisualElement root = rootVisualElement;

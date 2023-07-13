@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-3153108474174125770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dbde80ba66519b4d9ece113a0ce9cd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  guid: 5503e3c4e472a4644a26469e6d33eba0
+  position: {x: 0, y: 1}
+  directChildren: []
+  directParents: []
+  eventContainers:
+  - eventableObject: {fileID: 0}
+  dialogue: Bonjour
+  character: {fileID: 0}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d8a43ba0861a394e980dde613549137, type: 3}
+  m_Name: RootNode 1
+  m_EditorClassIdentifier: 
+  guid: a237782fb355424458a58ed0417dcbea
+  position: {x: 0, y: 1}
+  directChildren: []
+  directParents: []
+  eventContainers:
+  - eventableObject: {fileID: 0}
+  nodesModel:
+  - {fileID: 11400000}
+  - {fileID: -3153108474174125770}

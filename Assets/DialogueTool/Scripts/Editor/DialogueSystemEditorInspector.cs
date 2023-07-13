@@ -297,5 +297,10 @@ public class DialogueSystemEditorInspector : VisualElement
 
         return of;
     }
+
+    internal void Disable()
+    {
+        currentNodeData = null;
+    }
 }
 
